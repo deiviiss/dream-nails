@@ -24,11 +24,11 @@ const Navbar: NextPage = async () => {
 
   return (
     <>
-      <nav className='w-full bg-primary shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-xl text-secondary font-bold p-4' >
+      <nav className='w-full bg-white shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-xl text-secondary font-bold p-4'>
         <div className='flex items-center justify-between container mx-auto'>
           <Link href={'/'}>
-            <div className='w-24 h-auto p-2 bg-white border border-black'>
-              <Image src="/logo_dream-nails.png" alt="logo_dream-nails" width={256} height={144} className="bg-primary animate-fade-up animate-infinite animate-duration-500 animate-delay-500 animate-ease-in animate-alternate-reverse animate-fill-backwards"></Image>
+            <div className='w-24 h-auto bg-white'>
+              <Image src="/logo_dream-nails.png" alt="logo_dream-nails" width={256} height={144} className="bg-white"></Image>
             </div>
           </Link>
 
@@ -41,7 +41,7 @@ const Navbar: NextPage = async () => {
 
                     {(nav.submenu != null) && nav.submenu.length > 0 && (
                       <div className='hidden w-[110px] group-hover:block absolute top-[2.4rem] -right-[7px] z-10 transition ease-in-out delay-150 duration-300'>
-                        <ul className='bg-primary border-secondary border rounded-md shadow-md py-1 px-4'>
+                        <ul className='bg-white border-secondary border rounded-md shadow-md py-1 px-4'>
                           {nav.submenu.map((submenuItem) => (
                             <li className='hover:underline' key={submenuItem.id}><Link href={submenuItem.url}>{submenuItem.label}</Link></li>
                           ))}

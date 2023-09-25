@@ -34,7 +34,7 @@ export default function DropDown({ navigations }: { navigations: NavigationItem[
         <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-menu-2" width="32" height="32" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6l16 0"></path><path d="M4 12l16 0"></path><path d="M4 18l16 0"></path></svg>
       </button>
       {isOpen && (
-        <ul className="absolute w-[130px] top-[2.4rem] -right-[7px] p-2 rounded-md bg-primary-gradient border border-secondary bg-primary">
+        <ul className="absolute w-[130px] top-[2.4rem] -right-[7px] p-2 rounded-md bg-primary-gradient border border-secondary bg-white">
           {navigations.map((nav: NavigationItem) => (
             <li className="w-full flex justify-center items-center" key={nav.id}>
               <Link

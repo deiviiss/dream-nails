@@ -1,10 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Caveat } from 'next/font/google'
-
 import Providers from './providers'
 import { Footer } from '@/components/Footer'
 import Navbar from '@/components/Navbar'
+import Topbar from '@/components/Topbar'
 
 const inter = Caveat({ subsets: ['latin'] })
 
@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
         <Providers>
+          <Topbar></Topbar>
           <Navbar />
           {children}
           <Footer />
