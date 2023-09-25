@@ -1,7 +1,7 @@
 import { type User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { HiPencil, HiTrash } from 'react-icons/hi'
-import { useUsers } from '@/context/UserContext'
+import { useUsers } from '@/context/UsersContext'
 
 export const UserCard = ({ user }: { user: User }): JSX.Element => {
   const { deleteUser } = useUsers()
@@ -11,7 +11,7 @@ export const UserCard = ({ user }: { user: User }): JSX.Element => {
     await deleteUser(id)
   }
   return (
-    <div className='flex justify-between bg-neutral-950 p-4 rounded-lg max-w-md min-w-[300px] mx-auto'>
+    <div className='flex justify-between bg-primary p-4 rounded-lg max-w-md min-w-[300px] mx-auto'>
       <div className="flex flex-col">
         <h2 className='text-2xl font-bold' key={user.id}>{user.name} {user.lastname}</h2>
         <p>{user.user}</p>
@@ -25,7 +25,7 @@ export const UserCard = ({ user }: { user: User }): JSX.Element => {
         }}>
           <HiTrash className='text-2xl text-red-600' />
         </button>
-        <button onClick={() => { router.push(`/users/${user.id}`) }} >
+        <button onClick={() => { router.push(`/users/${String(user.id)}`) }} >
           <HiPencil className='text-2xl' />
         </button>
       </div>

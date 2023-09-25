@@ -2,7 +2,7 @@
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent, type ChangeEvent, useEffect } from 'react'
-import { useUsers } from '@/context/UserContext'
+import { useUsers } from '@/context/UsersContext'
 import { type UpdateUser } from '@/interfaces/User'
 
 interface FormUserProps {
@@ -67,7 +67,7 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
         error !== undefined ? <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div> : null
       }
 
-      <form onSubmit={handleSubmit} className=' bg-neutral-950 flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'>
+      <form onSubmit={handleSubmit} className=' bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'>
 
         <h1 className=' text-2xl font-bold mb-4'>
           Update User
@@ -79,7 +79,7 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           name='name'
           value={userData.name}
           onChange={handleChange}
-          className='bg-zinc-800 px-4 py-2 block mb-2 w-full rounded-sm'
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
         <input
           type="text"
@@ -87,7 +87,7 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           name='lastname'
           value={userData.lastname}
           onChange={handleChange}
-          className='bg-zinc-800 px-4 py-2 block mb-2 w-full rounded-sm'
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
         <input
           type="text"
@@ -95,7 +95,7 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           name='user'
           value={userData.user}
           onChange={handleChange}
-          className='bg-zinc-800 px-4 py-2 block mb-2 w-full rounded-sm'
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
         <input
           type="email"
@@ -103,10 +103,10 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           name='email'
           value={userData.email}
           onChange={handleChange}
-          className='bg-zinc-800 px-4 py-2 block mb-2 w-full rounded-sm'
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
         <div className="flex gap-x-3">
-          <> <button type='submit' className='bg-indigo-800 px-4 py-2 rounded-md hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed' disabled={isDisabled}>
+          <> <button type='submit' className='bg-highlight px-4 py-2 rounded-md hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed' disabled={isDisabled}>
             Update
           </button><button type='button' onClick={() => { router.push('/users') }} className='bg-red-800 px-4 py-2 rounded-md hover:bg-red-600'>Cancel</button></>
         </div>

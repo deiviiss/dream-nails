@@ -1,45 +1,74 @@
 import { type NextPage } from 'next'
 import { getServerSession } from 'next-auth'
+import Image from 'next/image'
 import Link from 'next/link'
+import DropDown from '@/components/DropDown'
+
+const navigations = [
+  { id: 1, label: 'Precios', url: '/' },
+  { id: 2, label: 'Galeria', url: '/galery' },
+  { id: 3, label: 'Iniciar sesión', url: '/login' },
+  { id: 4, label: 'Registrarse', url: '/register' }
+]
+
+const navigationsProtect = [
+  { id: 1, label: 'Precios', url: '/prices' },
+  { id: 2, label: 'Galeria', url: '/galery' },
+  { id: 3, label: 'Agenda tu cita', url: '/dates' },
+  { id: 4, label: 'Mi perfil', url: '/profile', submenu: [{ id: 1, label: 'Mis visitas', url: '/profile/visits' }, { id: 2, label: 'Mis citas', url: '/profile/dates' }] }
+]
 
 const Navbar: NextPage = async () => {
   // nextAuth
   const session = await getServerSession()
 
   return (
-    <nav className='bg-zinc-900 p-4' >
-      <div className='flex justify-between container mx-auto'>
-        <Link href={'/'}>
-          <h1 className="font-bold text-xl">
-            Template system
-          </h1>
-        </Link>
+    <>
+      <nav className='w-full bg-primary shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-xl text-secondary font-bold p-4' >
+        <div className='flex items-center justify-between container mx-auto'>
+          <Link href={'/'}>
+            <div className='w-24 h-auto p-2 bg-white border border-black'>
+              <Image src="/logo_dream-nails.png" alt="logo_dream-nails" width={256} height={144} className="bg-primary animate-fade-up animate-infinite animate-duration-500 animate-delay-500 animate-ease-in animate-alternate-reverse animate-fill-backwards"></Image>
+            </div>
+          </Link>
 
-        <ul className='flex gap-x-2'>
-          {(session !== null)
-            ? <>
-              <li className='px-3 py-1'>
-                <Link href={'/home'}>Home</Link>
-              </li>
-              <li className='px-3 py-1'>
-                <Link href={'/profile'}>Profile</Link>
-              </li>
-              <li className='px-3 py-1'>
-                <Link href={'/users'}>Users</Link>
-              </li>
-            </>
-            : <>
-              <li className='px-3 py-1'>
-                <Link href={'/login'}>Sign In</Link>
-              </li>
-              <li className='px-3 py-1'>
-                <Link href={'/register'}>Sign Up</Link>
-              </li>
-            </>
+          <ul className='gap-x-2 hidden sm:flex'>
+            {(session !== null)
+              ? <>
+                {navigationsProtect.map((nav) => (
+                  <li key={nav.id} className='px-3 py-1 border-primary border-b-2 border-r-2 hover:border-accent hover:border-b-2 hover:border-r-2 transition ease-in-out delay-150 duration-300 group relative'>
+                    <Link href={nav.url}>{nav.label}</Link>
+
+                    {(nav.submenu != null) && nav.submenu.length > 0 && (
+                      <div className='hidden w-[110px] group-hover:block absolute top-[2.4rem] -right-[7px] z-10 transition ease-in-out delay-150 duration-300'>
+                        <ul className='bg-primary border-secondary border rounded-md shadow-md py-1 px-4'>
+                          {nav.submenu.map((submenuItem) => (
+                            <li className='hover:underline' key={submenuItem.id}><Link href={submenuItem.url}>{submenuItem.label}</Link></li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </>
+              : <>
+                {navigations.map((item) => (
+                  <li key={item.id} className='px-3 py-1 border-primary border-b-2 border-r-2 hover:border-accent hover:border-b-2 hover:border-r-2 transition ease-in-out delay-150 duration-300'>
+                    <Link href={item.url}>{item.label}</Link>
+                  </li>
+                ))}
+              </>
+            }
+          </ul>
+
+          {
+            (session !== null)
+              ? <DropDown navigations={navigationsProtect}></DropDown>
+              : <DropDown navigations={navigations}></DropDown>
           }
-        </ul>
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </>
   )
 }
 

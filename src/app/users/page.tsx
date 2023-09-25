@@ -3,7 +3,7 @@ import { type User } from '@prisma/client'
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
 import { UserCard } from '@/components/UserCard'
-import { useUsers } from '@/context/UserContext'
+import { useUsers } from '@/context/UsersContext'
 
 const UsersPage: NextPage = () => {
   const { users, loadUsers } = useUsers()
