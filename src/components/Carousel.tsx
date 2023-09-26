@@ -30,7 +30,7 @@ const Carousel = ({ autoSlide = false, autoSlideInterval = 4000, slides }: { aut
       <div className='relative bg-primary overflow-hidden'>
         <div className='flex transition-transform ease-out duration-500' style={{ transform: `translateX(-${curr * 100}%)` }}>
           {slides.map((slide) => (
-            <img className='w-full min-w-full h-[600px] bg-center bg-cover object-cover' key={slide.id} src={slide.url} alt={slide.url} />
+            <img className='w-full min-w-full h-[400px] bg-center bg-cover object-cover' key={slide.id} src={slide.url} alt={slide.url} />
           ))}
         </div>
 

@@ -5,10 +5,9 @@ import Link from 'next/link'
 import DropDown from '@/components/DropDown'
 
 const navigations = [
-  { id: 1, label: 'Precios', url: '/' },
+  { id: 1, label: 'Precios', url: '/prices' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Iniciar sesión', url: '/login' },
-  { id: 4, label: 'Registrarse', url: '/register' }
+  { id: 3, label: 'Iniciar sesión', url: '/login' }
 ]
 
 const navigationsProtect = [
@@ -25,7 +24,7 @@ const Navbar: NextPage = async () => {
   return (
     <>
       <nav className='w-full bg-white shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-xl text-secondary font-bold p-4'>
-        <div className='flex items-center justify-between container mx-auto'>
+        <div className='flex items-center justify-between max-w-[768px] container mx-auto'>
           <Link href={'/'}>
             <div className='w-24 h-auto bg-white'>
               <Image src="/logo_dream-nails.png" alt="logo_dream-nails" width={256} height={144} className="bg-white"></Image>
