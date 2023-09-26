@@ -7,8 +7,8 @@ const HomePage: NextPage = () => {
     <main >
       <Carousel slides={slides} autoSlide={true} autoSlideInterval={4000} />
 
-      <section className='px-4 my-3 mt-6'>
-        <h1 className="text-3xl font-bold text-center">
+      <section className='flex flex-col items-center px-4 my-3 mt-6'>
+        <h1 className="text-3xl font-bold">
           ¡Bienvenidos a nuestro oasis de belleza!
         </h1>
 
