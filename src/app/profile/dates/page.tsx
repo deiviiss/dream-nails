@@ -1,4 +1,5 @@
 import { type NextPage } from 'next'
+import Link from 'next/link'
 
 const GaleryPage: NextPage = () => {
   return (
@@ -10,8 +11,10 @@ const GaleryPage: NextPage = () => {
       <section className="flex flex-col items-center w-full">
         <div className='bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded max-w-md'>
           <p>
-            Aquí ira la información de las citas agendadas por el cliente.
+            Aún no has programado ninguna cita con nosotros, pero estamos listos para atenderte cuando lo desees.
           </p>
+
+          <button type="button" className='bg-secondary rounded-md p-2 hover:bg-highlight'><Link href={'/dates'}>Reservar cita</Link></button>
         </div>
       </section>
     </main>

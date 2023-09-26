@@ -12,7 +12,7 @@ const ProfilePage: NextPage = () => {
     <main className='flex flex-col items-center justify-center gap-y-6 py-4'>
       <header className="flex justify-center p-3">
         <h1 className='text-2xl text-center font-bold'>
-          Esta es la pagina que contendra la información del cliente.
+          Bienvenido a tu perfiil
         </h1>
       </header>
 
@@ -28,16 +28,11 @@ const ProfilePage: NextPage = () => {
             <>
               <div className='flex flex-col gap-2'>
                 <div className='flex gap-2'>
-                  <p className='font-bold'>Nombre:</p>
-                  <p>{session.user?.name}</p>
-                </div>
-
-                <div className='flex gap-2'>
                   <p className='font-bold'>Correo eléctronico:</p>
                   <p>{session.user?.email}</p>
                 </div>
               </div>
-              <button className=' bg-red-800 px-2 py-3 rounded-md hover:bg-red-500' onClick={async () => { await signOut() }}>Cerrar sesión</button>
+              <button className=' bg-highlight px-2 py-3 rounded-md hover:opacity-75' onClick={async () => { await signOut() }}>Cerrar sesión</button>
             </>
           }
         </div>

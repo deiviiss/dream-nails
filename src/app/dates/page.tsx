@@ -9,10 +9,10 @@ const DatesPage: NextPage = () => {
         <h1 className='text-2xl font-bold'>No hay citas disponibles :(</h1>
       </header>
 
-      <p>Para mayor información contáctanos</p>
+      <p>Para mayor información contáctanos.</p>
       <Link target='_blank' href={'https://wa.me/529812099475'}>
         <div className="flex justify-center items-center gap-2">
-          <p>Mandame un </p><IoLogoWhatsapp></IoLogoWhatsapp>
+          <p>Mándame un </p><IoLogoWhatsapp></IoLogoWhatsapp>
         </div>
       </Link>
 

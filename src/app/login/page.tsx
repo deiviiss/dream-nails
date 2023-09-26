@@ -34,7 +34,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <section className="flex flex-col items-center w-full">
-      <div className='flex flex-col items-center justify-center h-[calc(100vh-4rem)]'>
+      <div className='flex flex-col items-center justify-center p-4'>
         {
           (error.length > 0) && <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div>
         }
@@ -56,7 +56,7 @@ const LoginPage: NextPage = () => {
             placeholder='******'
             className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
           />
-          <button className='bg-highlight px-4 py-2 rounded-sm hover:opacity-75'>Iniciar sesión</button>
+          <button className='bg-highlight px-4 py-2 rounded-md hover:opacity-75'>Iniciar sesión</button>
         </form>
       </div>
     </section>
