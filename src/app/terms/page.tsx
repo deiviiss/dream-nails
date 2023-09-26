@@ -27,7 +27,7 @@ const TermsPage: NextPage = () => {
             <p className='pb-4'>Todos los contenidos de nuestro sitio web, incluyendo textos, imágenes, logotipos y otros elementos, son propiedad de <span className='font-semibold'>Dream Nails</span> o de sus licenciantes y están protegidos por leyes de propiedad intelectual.</p>
 
             <h2 className='text-slate-700 text-3xl font-bold py-4'>5. Exclusión de Garantías</h2>
-            <p className='pb-4'>Nuestros servicios se proporcionan "tal cual" y no garantizamos que el sitio web esté libre de errores o que el acceso sea continuo e ininterrumpido.</p>
+            <p className='pb-4'>Nuestros servicios se proporcionan &quot;tal cual&quot; y no garantizamos que el sitio web esté libre de errores o que el acceso sea continuo e ininterrumpido.</p>
 
             <h2 className='text-slate-700 text-3xl font-bold py-4'>6. Limitación de Responsabilidad</h2>
             <p className='pb-4'>En ningún caso <span className='font-semibold'>Dream Nails</span> será responsable de daños indirectos, especiales, consecuentes o punitivos que resulten del uso de nuestro sitio web o servicios.</p>
