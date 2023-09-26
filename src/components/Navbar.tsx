@@ -7,7 +7,8 @@ import DropDown from '@/components/DropDown'
 const navigations = [
   { id: 1, label: 'Precios', url: '/prices' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Iniciar sesión', url: '/login' }
+  { id: 3, label: 'Agenda tu cita', url: '/dates' },
+  { id: 4, label: 'Iniciar sesión', url: '/login' }
 ]
 
 const navigationsProtect = [
@@ -27,7 +28,7 @@ const Navbar: NextPage = async () => {
         <div className='flex items-center justify-between max-w-[768px] container mx-auto'>
           <Link href={'/'}>
             <div className='w-24 h-auto bg-white'>
-              <Image src="/logo_dream-nails.png" alt="logo_dream-nails" width={256} height={144} className="bg-white"></Image>
+              <Image src="/logo_dream-nails.webp" alt="logo_dream-nails" width={256} height={144} className="bg-white"></Image>
             </div>
           </Link>
 
