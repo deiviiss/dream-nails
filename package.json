@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src/** --ignore-pattern src/app/favicon.ico",
-    "postinstall": "prisma db push"
+    "lint": "eslint src/**/*.ts src/**/*.tsx",
+    "postinstall": "if [ -n \"$DATABASE_URL\" ]; then prisma db push; fi"
   },
   "dependencies": {
     "@prisma/client": "5.0.0",
