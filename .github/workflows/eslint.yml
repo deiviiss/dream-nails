@@ -1,4 +1,5 @@
-name: Check eslint
+name: Check Eslint
+run-name: Test linter
 on:
   # Runs on pushes targeting the default branch
   push:
