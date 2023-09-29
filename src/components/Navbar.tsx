@@ -7,14 +7,14 @@ import DropDown from '@/components/DropDown'
 const navigations = [
   { id: 1, label: 'Precios', url: '/prices' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Agenda tu cita', url: '/dates' },
+  { id: 3, label: 'Agenda ahora', url: '/dates' },
   { id: 4, label: 'Iniciar sesión', url: '/login' }
 ]
 
 const navigationsProtect = [
   { id: 1, label: 'Precios', url: '/prices' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Agenda tu cita', url: '/dates' },
+  { id: 3, label: 'Agenda ahora', url: '/dates' },
   { id: 4, label: 'Mi perfil', url: '/profile', submenu: [{ id: 1, label: 'Mis visitas', url: '/profile/visits' }, { id: 2, label: 'Mis citas', url: '/profile/dates' }] }
 ]
 
@@ -24,11 +24,11 @@ const Navbar: NextPage = async () => {
 
   return (
     <>
-      <nav className='w-full bg-white shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-xl text-secondary font-bold p-4'>
+      <nav className='w-full bg-white shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-secondary font-bold p-2'>
         <div className='flex items-center justify-between max-w-[768px] container mx-auto'>
           <Link href={'/'}>
-            <div className='w-24 h-auto bg-white'>
-              <Image src="/logo_dream-nails.webp" alt="logo_dream-nails" width={256} height={144} className="bg-white"></Image>
+            <div className=" w-32 h-auto">
+              <Image src="/logo_dream-nails-dark.png" alt="logo_dream-nails" width={256} height={144} className='w-full'></Image>
             </div>
           </Link>
 

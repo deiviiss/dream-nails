@@ -39,9 +39,9 @@ const PricesPage: NextPage = () => {
   const servicesAdicional = groupedServices.adicionales
 
   return (
-    <main className='flex flex-col items-center justify-center gap-y-6 py-4 w-full'>
+    <main className='flex flex-col items-center justify-center gap-y-4 py-4 w-full'>
       <header className="flex justify-center p-3">
-        <h1 className='text-3xl font-bold'>Lista de precios</h1>
+        <h1 className='text-2xl font-bold'>Lista de precios</h1>
       </header>
 
       <div className="flex flex-col gap-6 px-2 w-full overflow-hidden">
