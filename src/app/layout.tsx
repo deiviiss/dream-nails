@@ -1,12 +1,10 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Caveat } from 'next/font/google'
+import { arapey, josefin } from './fonts'
 import Providers from './providers'
 import { Footer } from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import Topbar from '@/components/Topbar'
-
-const inter = Caveat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Dream Nails',
@@ -19,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode
 }): JSX.Element {
   return (
-    <html lang="es-Mx">
-      <body className={inter.className}>
+    <html lang="es-Mx" className={`${josefin.variable} ${arapey.variable}`}>
+      <body className={'text-base'}>
         <Providers>
           <Topbar></Topbar>
           <Navbar />
