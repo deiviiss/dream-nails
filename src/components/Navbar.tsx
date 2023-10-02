@@ -6,15 +6,19 @@ import BookNowButton from '@/components/BookNowButton'
 import DropDown from '@/components/DropDown'
 
 const navigations = [
-  { id: 1, label: 'Precios', url: '/prices' },
+  { id: 1, label: 'Servicios', url: '/services' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Iniciar sesión', url: '/login' }
+  { id: 3, label: 'Precios', url: '/prices' },
+  { id: 4, label: 'Sobre nosotros', url: '/about-us' },
+  { id: 5, label: 'Iniciar sesión', url: '/login' }
 ]
 
 const navigationsProtect = [
-  { id: 1, label: 'Precios', url: '/prices' },
+  { id: 1, label: 'Servicios', url: '/services' },
   { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Mi perfil', url: '/profile', submenu: [{ id: 1, label: 'Mis visitas', url: '/profile/visits' }, { id: 2, label: 'Mis citas', url: '/profile/dates' }] }
+  { id: 3, label: 'Precios', url: '/prices' },
+  { id: 4, label: 'Sobre nosotros', url: '/about-us' },
+  { id: 5, label: 'Mi perfil', url: '/profile' }
 ]
 
 const Navbar = ({ session }: { session: object | null }): JSX.Element => {
@@ -30,11 +34,13 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
 
       setCurrentScrollPos(window.scrollY)
 
-      if (isScrollingUp && currentScrollPos < 10) {
+      if (isScrollingUp && currentScrollPos < 45) {
         setBackground('bg-transparent')
       }
 
-      if (currentScrollPos > 10 && currentScrollPos < 200) {
+      console.log('current position', currentScrollPos)
+
+      if (currentScrollPos > 45 && currentScrollPos < 200) {
         setPrevScrollPos(currentScrollPos)
         setBackground('bg-primary-gradient')
       }
@@ -59,7 +65,7 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
 
   return (
 
-    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white font-bold ${isVisible ? background : 'hidden'} `}>
+    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white font-bold ${isVisible ? background : 'hidden'}`}>
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
           <div className=" w-32 h-auto">
@@ -71,24 +77,14 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
           {(session !== null)
             ? <>
               {navigationsProtect.map((nav) => (
-                <li key={nav.id} className='px-3 py-1 border-primary border-b-2 border-r-2 hover:border-accent hover:border-b-2 hover:border-r-2 transition ease-in-out delay-150 duration-300 group relative'>
+                <li key={nav.id} className='px-3 py-1 border-b-2 border-transparent hover:border-b-2 hover:border-white transition ease-in-out delay-150 duration-300 relative'>
                   <Link href={nav.url}>{nav.label}</Link>
-
-                  {(nav.submenu != null) && nav.submenu.length > 0 && (
-                    <div className='hidden w-[110px] group-hover:block absolute top-[34px] -right-[7px] z-10 transition ease-in-out delay-150 duration-300'>
-                      <ul className='bg-secondary border-primary border rounded-md shadow-md py-1 px-4'>
-                        {nav.submenu.map((submenuItem) => (
-                          <li className='hover:underline' key={submenuItem.id}><Link href={submenuItem.url}>{submenuItem.label}</Link></li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
                 </li>
               ))}
             </>
             : <>
               {navigations.map((item) => (
-                <li key={item.id} className='px-3 py-1 border-primary border-b-2 border-r-2 hover:border-accent hover:border-b-2 hover:border-r-2 transition ease-in-out delay-150 duration-300'>
+                <li key={item.id} className='px-3 py-1 border-b-2 border-transparent hover:border-white hover:border-b-2 transition ease-in-out delay-150 duration-300'>
                   <Link href={item.url}>{item.label}</Link>
                 </li>
               ))}

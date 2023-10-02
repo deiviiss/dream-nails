@@ -10,7 +10,7 @@ const PrivacyPage: NextPage = () => {
           <h1 className='text-2xl font-bold px-3'>Políticas de Privacidad</h1>
 
           <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
-            <p>En <span className='font-semibold'>Dream Nails</span>,valoramos y respetamos su privacidad. Esta Política de Privacidad explica cómo recopilamos y utilizamos su información personal a través de nuestro sitio web y los servicios que ofrecemos.</p>
+            <p>En <span className='font-semibold'>Dream Nails</span>, valoramos y respetamos su privacidad. Esta Política de Privacidad explica cómo recopilamos y utilizamos su información personal a través de nuestro sitio web y los servicios que ofrecemos.</p>
           </div>
 
           <div className='px-3'>

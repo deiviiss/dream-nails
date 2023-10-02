@@ -2,12 +2,10 @@
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
 import Hero from '@/components/Hero'
-import { ListServicesPrice } from '@/components/ListPrice'
-import { ListServicesPriceAdicional } from '@/components/ListPriceAdicional'
 import { useSalonService } from '@/context/SalonServicesContext'
 import { type GroupedServices } from '@/interfaces/Props'
 
-const PricesPage: NextPage = () => {
+const ServicesPage: NextPage = () => {
   const { salonServices, loadSalonServices } = useSalonService()
 
   useEffect(() => {
@@ -38,32 +36,22 @@ const PricesPage: NextPage = () => {
 
   const titleAdicional = 'Adicional'
   const servicesAdicional = groupedServices.adicionales
-  const title = 'PRECIOS'
+
+  const title = 'SERVICIOS'
   const urlImg = 'url("./hero.jpg")'
 
   return (
 
     <>
-
       <Hero title={title} urlImg={urlImg}></Hero>
 
       <main className='flex flex-col items-center justify-center gap-y-4 py-4 w-full'>
         <header className="flex justify-center p-3">
-          <h1 className='text-2xl font-bold'>Lista de precios</h1>
+          <h1 className='text-2xl font-bold'>Lista de servicios</h1>
         </header>
 
         <div className="flex flex-col gap-6 px-2 w-full overflow-hidden">
-          <ListServicesPrice title={titleManos} services={servicesManos}></ListServicesPrice>
 
-          <ListServicesPrice title={titlePies} services={servicesPies}></ListServicesPrice>
-
-          <div className="flex flex-col sm:grid grid-cols-2 gap-6 px-2 sm:gap-10 mx-auto w-full max-w-[820px]">
-
-            <ListServicesPrice title={titleExtras} services={servicesExtra}></ListServicesPrice>
-
-            <ListServicesPriceAdicional title={titleAdicional} services={servicesAdicional}></ListServicesPriceAdicional>
-
-          </div>
         </div>
 
       </main>
@@ -72,4 +60,4 @@ const PricesPage: NextPage = () => {
   )
 }
 
-export default PricesPage
+export default ServicesPage
