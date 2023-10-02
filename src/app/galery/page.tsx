@@ -2,7 +2,7 @@ import { type NextPage } from 'next'
 
 const GaleryPage: NextPage = () => {
   return (
-    <main className='flex flex-col items-center justify-center gap-y-2 py-4'>
+    <main className='flex flex-col items-center justify-center gap-y-2 py-4 mt-[150px]'>
       <header className="flex flex-col items-center justify-center p-3">
         <h1 className='text-2xl font-bold text-center'>¡Bienvenidos a nuestra galería!</h1>
         <p>Actualmente en construcción</p>

@@ -4,12 +4,12 @@ import Link from 'next/link'
 const PrivacyPage: NextPage = () => {
   return (
     <>
-      <div className='text-primary tracking-wide mb-20'>
+      <div className='text-primary tracking-wide mb-20 mt-[150px] py-2'>
         <div className='max-w-[920px] mx-auto my-5 '>
 
           <h1 className='text-2xl font-bold px-3'>Políticas de Privacidad</h1>
 
-          <div className='bg-primary m-4 mb-8 p-8 text-justify'>
+          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
             <p>En <span className='font-semibold'>Dream Nails</span>,valoramos y respetamos su privacidad. Esta Política de Privacidad explica cómo recopilamos y utilizamos su información personal a través de nuestro sitio web y los servicios que ofrecemos.</p>
           </div>
 

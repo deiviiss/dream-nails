@@ -4,7 +4,7 @@ import { arapey, josefin } from './fonts'
 import Providers from './providers'
 import { Footer } from '@/components/Footer'
 import Navbar from '@/components/Navbar'
-import Topbar from '@/components/Topbar'
+// import Topbar from '@/components/Topbar'
 
 export const metadata: Metadata = {
   title: 'Dream Nails',
@@ -18,9 +18,9 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="es-Mx" className={`${josefin.variable} ${arapey.variable}`}>
-      <body className={'text-base'}>
+      <body className='text-base'>
         <Providers>
-          <Topbar></Topbar>
+          {/* <Topbar></Topbar> */}
           <Navbar />
           {children}
           <Footer />

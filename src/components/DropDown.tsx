@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { RiMenu3Fill } from 'react-icons/ri'
 
 interface NavigationItem {
   id: number
@@ -29,17 +30,19 @@ export default function DropDown({ navigations }: { navigations: NavigationItem[
   }, [dropdownRef])
 
   return (
-    <div ref={dropdownRef} className="relative w-auto flex flex-col items-center rounded-md z-50 sm:hidden">
+    <div ref={dropdownRef} className="relative w-auto flex flex-col items-center px-5 rounded-md z-50 sm:hidden">
+
       <button onClick={() => { setIsOpen((prev) => !prev) }} className="flex items-center justify-around border-transparent duration-400" >
-        <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-menu-2" width="32" height="32" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round" > <path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6l16 0"></path><path d="M4 12l16 0"></path><path d="M4 18l16 0"></path></svg>
+        <RiMenu3Fill className='text-white font-light text-3xl'></RiMenu3Fill>
       </button>
+
       {isOpen && (
-        <ul className="absolute w-[130px] top-[2.4rem] -right-[7px] p-2 rounded-md bg-primary-gradient border border-secondary bg-white">
+        <ul className="absolute w-[130px] top-10 -right-[6px] p-2 rounded-md border border-primary bg-primary">
           {navigations.map((nav: NavigationItem) => (
             <li className="w-full flex justify-center items-center" key={nav.id}>
               <Link
                 href={nav.url}
-                className="hover:text-secondary"
+                className="text-white hover:text-warning"
                 onClick={() => { setIsOpen(false) }}
               >
                 {nav.label}

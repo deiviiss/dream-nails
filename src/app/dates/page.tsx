@@ -4,7 +4,7 @@ import { IoLogoWhatsapp } from 'react-icons/io'
 
 const DatesPage: NextPage = () => {
   return (
-    <main className='flex flex-col items-center justify-center gap-y-6 py-4'>
+    <main className='flex flex-col items-center justify-center gap-y-6 py-4 mt-[150px]'>
       <header className="flex justify-center p-3">
         <h1 className='text-2xl font-bold'>No hay citas disponibles :(</h1>
       </header>

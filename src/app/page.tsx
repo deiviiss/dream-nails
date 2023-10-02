@@ -1,10 +1,17 @@
 import { type NextPage } from 'next'
 import { slides } from '../../public/slides'
 import Carousel from '@/components/Carousel'
+import Hero from '@/components/Hero'
 
 const HomePage: NextPage = () => {
+  const title = '... porque no hay una sensación mejor que un nuevo juego de uñas.'
+  const urlImg = 'url("/hero.jpg")'
+
   return (
     <main >
+
+      <Hero title={title} urlImg={urlImg}></Hero>
+
       <Carousel slides={slides} autoSlide={true} autoSlideInterval={4000} />
 
       <section className='flex flex-col items-center px-4 my-3 mt-6'>

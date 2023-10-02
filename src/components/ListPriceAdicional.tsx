@@ -19,7 +19,7 @@ export const ListServicesPriceAdicional = ({ title, services }: ListPrices): JSX
 
       </div>
 
-      <div className=" bg-no-repeat bg-center bg-cover bg-[url('/bg-blue.png')] py-8">
+      <div className="bg-no-repeat bg-center bg-cover bg-[url('/bg-blue.png')] py-8">
         {
           services?.map(service => {
             return (

@@ -4,12 +4,12 @@ import Link from 'next/link'
 const ReservationPolicyPage: NextPage = () => {
   return (
     <>
-      <div className='text-primary tracking-wide mb-20'>
+      <div className='text-primary tracking-wide mb-20 mt-[150px] py-2'>
         <div className='max-w-[920px] mx-auto my-5'>
 
           <h1 className='text-2xl font-bold px-3'>Política de Reserva y Cancelación</h1>
 
-          <div className='bg-primary m-4 mb-8 p-8 text-justify'>
+          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
             <p>Lea detenidamente nuestra Política de Reserva y Cancelación antes de programar una cita en nuestro salón de uñas. Al reservar una cita con nosotros, usted acepta cumplir con estas políticas.</p>
           </div>
 

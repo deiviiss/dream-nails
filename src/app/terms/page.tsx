@@ -4,12 +4,12 @@ import Link from 'next/link'
 const TermsPage: NextPage = () => {
   return (
     <>
-      <div className='text-primary tracking-wide mb-20'>
+      <div className='text-primary tracking-wide mb-20 mt-[150px] py-2'>
         <div className='max-w-[920px] mx-auto my-5 '>
 
           <h1 className='text-2xl font-bold px-3'>Términos y Condiciones</h1>
 
-          <div className='bg-primary m-4 mb-8 p-8 text-justify'>
+          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
             <p>Bienvenido a nuestro sitio web. Al utilizar nuestros servicios, incluyendo la reserva de citas y el envío de feedback, usted acepta y está de acuerdo con los siguientes términos y condiciones de uso. Si no está de acuerdo con estos términos, le recomendamos no utilizar nuestros servicios.</p>
           </div>
 
@@ -40,7 +40,7 @@ const TermsPage: NextPage = () => {
           </div>
 
           <button className='flex mt-8 text-center mx-auto'>
-            <Link className='py-5 px-12 transition-all duration-200 bg-primary rounded border-2 border-primary hover:bg-transparent hover:text-secondary' href='/dates'>Contáctanos</Link>
+            <Link className='py-5 px-12 text-white transition-all duration-200 bg-primary rounded border-2 border-primary hover:bg-transparent hover:text-secondary' href='/dates'>Contáctanos</Link>
           </button>
         </div>
       </div>

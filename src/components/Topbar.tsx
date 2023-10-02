@@ -4,7 +4,7 @@ import { CiMail, CiPhone, CiInstagram, CiFacebook } from 'react-icons/ci'
 const Topbar = (): JSX.Element => {
   return (
     <>
-      <nav className='w-full bg-primary shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-sm text-secondary font-bold p-2' >
+      <nav className='absolute z-10 top-0 w-full bg-primary shadow-[0_3px_5px_0px_rgba(0,0,0,0.3)] text-sm text-secondary font-bold p-2' >
         <div className=' sm:grid grid-cols-2 md:flex md:mx-auto md:justify-center md:items-center md:gap-8'>
           <Link href={'mailto:dreamnails.beauty@hotmail.com'}>
             <div className="flex justify-center items-center">

@@ -7,14 +7,15 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
-
     extend: {
       backgroundImage: {
-        adicional: "url('/public/bg-header.png')"
+        adicional: "url('/public/bg-header.png')",
+        hero: "url('/public/Hero.jog)",
+        'primary-gradient': 'linear-gradient(to top, #6E8898 60%, transparent 100%)'
       },
       backgroundColor: {
-        primary: '#AED2D8', // Color Principal
-        secondary: '#6E8898', // Color Secundario
+        primary: '#6E8898', // Color Principal
+        secondary: '#AED2D8', // Color Secundario
         highlight: '#FFA500', // Color de Destacado
         gray: '#D2D2D2' // Color Gris
       },

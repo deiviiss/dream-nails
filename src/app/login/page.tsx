@@ -33,7 +33,7 @@ const LoginPage: NextPage = () => {
   }
 
   return (
-    <section className="flex flex-col items-center w-full">
+    <section className="flex flex-col items-center w-full mt-[150px] py-2">
       <div className='flex flex-col items-center justify-center p-4'>
         {
           (error.length > 0) && <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div>

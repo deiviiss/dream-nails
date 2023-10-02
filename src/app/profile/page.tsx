@@ -9,19 +9,19 @@ const ProfilePage: NextPage = () => {
   const { data: session } = useSession()
 
   return (
-    <main className='flex flex-col items-center justify-center gap-y-6 py-4'>
+    <main className='flex flex-col items-center justify-center gap-y-6 py-4 mt-[150px]'>
       <header className="flex justify-center p-3">
         <h1 className='text-2xl text-center font-bold'>
-          Bienvenido a tu perfiil
+          Bienvenido a tu perfil
         </h1>
       </header>
 
       <div className="flex items-center gap-3">
-        <button type="button" className='bg-secondary rounded p-2 hover:bg-highlight'><Link href={'/profile/visits'}>Mis visitas</Link></button>
-        <button type="button" className='bg-secondary rounded p-2 hover:bg-highlight'><Link href={'/profile/dates'}>Mis citas</Link></button>
+        <button type="button" className='bg-primary text-white rounded p-2 hover:bg-highlight'><Link href={'/profile/visits'}>Mis visitas</Link></button>
+        <button type="button" className='bg-primary text-white rounded p-2 hover:bg-highlight'><Link href={'/profile/dates'}>Mis citas</Link></button>
       </div>
 
-      <section className="flex flex-col items-center w-full">
+      <section className="flex flex-col items-center w-full text-white">
         <div className='bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded max-w-md'>
           {
             (session != null) &&
