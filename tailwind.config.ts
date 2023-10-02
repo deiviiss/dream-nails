@@ -11,7 +11,7 @@ const config: Config = {
       backgroundImage: {
         adicional: "url('/public/bg-header.png')",
         hero: "url('/public/Hero.jog)",
-        'primary-gradient': 'linear-gradient(to top, #6E8898 60%, transparent 100%)'
+        'primary-gradient': 'linear-gradient(to top, #6E8898 85%, transparent 100%)'
       },
       backgroundColor: {
         primary: '#6E8898', // Color Principal

@@ -1,7 +1,7 @@
-import { type NextPage } from 'next'
-import { getServerSession } from 'next-auth'
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import BookNowButton from '@/components/BookNowButton'
 import DropDown from '@/components/DropDown'
 
@@ -17,13 +17,49 @@ const navigationsProtect = [
   { id: 3, label: 'Mi perfil', url: '/profile', submenu: [{ id: 1, label: 'Mis visitas', url: '/profile/visits' }, { id: 2, label: 'Mis citas', url: '/profile/dates' }] }
 ]
 
-const Navbar: NextPage = async () => {
-  // nextAuth
-  const session = await getServerSession()
+const Navbar = ({ session }: { session: object | null }): JSX.Element => {
+  const [currentScrollPos, setCurrentScrollPos] = useState(0)
+  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
+  const [background, setBackground] = useState('bg-transparent')
+
+  useEffect(() => {
+    const handleScroll = (): void => {
+      const isScrollingUp = currentScrollPos < prevScrollPos
+      const isScrollingDown = currentScrollPos > prevScrollPos
+
+      setCurrentScrollPos(window.scrollY)
+
+      if (isScrollingUp && currentScrollPos < 10) {
+        setBackground('bg-transparent')
+      }
+
+      if (currentScrollPos > 10 && currentScrollPos < 200) {
+        setPrevScrollPos(currentScrollPos)
+        setBackground('bg-primary-gradient')
+      }
+
+      if (currentScrollPos > 201 && isScrollingDown) {
+        setPrevScrollPos(currentScrollPos)
+        setIsVisible(false)
+      }
+
+      if (isScrollingUp) {
+        setPrevScrollPos(currentScrollPos)
+        setIsVisible(true)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [prevScrollPos, currentScrollPos])
 
   return (
 
-    <nav className='fixed z-10 top-0 flex flex-col w-full gap-3 py-3 bg-primary-gradient text-white font-bold'>
+    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white font-bold ${isVisible ? background : 'hidden'} `}>
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
           <div className=" w-32 h-auto">
