@@ -38,7 +38,7 @@ const ServicesPage: NextPage = () => {
   const servicesAdicional = groupedServices.adicionales
 
   const title = 'SERVICIOS'
-  const urlImg = 'url("./hero.jpg")'
+  const urlImg = 'url("./services.png")'
 
   return (
 
