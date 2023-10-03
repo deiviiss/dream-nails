@@ -66,7 +66,7 @@ const HomePage: NextPage = () => {
 
           <footer className='flex flex-col items-center justify-center'>
             <button className='w-52 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
-              <Link href={'/dates'}>
+              <Link href={'/services'}>
                 VER TODOS LOS SERVICIOS
               </Link>
             </button>
