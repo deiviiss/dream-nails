@@ -64,7 +64,7 @@ const HomePage: NextPage = () => {
             </ul>
           </article>
 
-          <footer className='flex flex-col items-center justify-center'>
+          <footer className='flex flex-col items-start justify-center'>
             <button className='w-52 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
               <Link href={'/services'}>
                 VER TODOS LOS SERVICIOS
@@ -76,7 +76,6 @@ const HomePage: NextPage = () => {
 
       {/* De prueba */}
       <Carousel slides={slides} autoSlide={true} autoSlideInterval={4000} />
-
       <section className='flex flex-col items-center px-4 my-3 mt-6'>
         <h1 className='font-black text-2xl'>
           ¡Bienvenidos a nuestro oasis de belleza!

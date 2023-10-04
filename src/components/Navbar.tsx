@@ -38,8 +38,6 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
         setBackground('bg-transparent')
       }
 
-      console.log('current position', currentScrollPos)
-
       if (currentScrollPos > 45 && currentScrollPos < 200) {
         setPrevScrollPos(currentScrollPos)
         setBackground('bg-primary-gradient')

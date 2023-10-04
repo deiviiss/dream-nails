@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
 import { prisma } from '@/libs/prisma'
 
 const handler = NextAuth({
@@ -11,7 +12,9 @@ const handler = NextAuth({
         email: { label: 'Email', type: 'email', placeholder: 'Enter email' },
         password: { label: 'Password', type: 'password', placeholder: 'Enter password' }
       },
-      async authorize(credentials) {
+      async authorize(credentials?: Record<'email' | 'password', string>) {
+        if (credentials == null) throw new Error('Invalid credentials')
+
         const userFound = await prisma.user.findFirst({
           where: {
             email: credentials?.email
@@ -20,8 +23,7 @@ const handler = NextAuth({
 
         if (userFound == null) throw new Error('Invalid credentials')
 
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const passwordMatch = await bcrypt.compare(credentials!.password, userFound.password)
+        const passwordMatch = await bcrypt.compare(credentials.password, userFound.password)
         if (!passwordMatch) throw new Error('Invalid credentials')
 
         return {
@@ -30,6 +32,10 @@ const handler = NextAuth({
           email: userFound.email
         }
       }
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
     })
   ],
   callbacks: {
@@ -39,10 +45,19 @@ const handler = NextAuth({
     async session({ session, token }) {
       session.user = token as any
       return session
+    },
+    async redirect({ url, baseUrl }) {
+      // if user signout redirect to home
+      if (url === '/logout') {
+        return '/'
+      }
+
+      // if not, use site URL
+      return baseUrl
     }
   },
   pages: {
-    signIn: '/login'
+    // signIn: '/login'
   }
 })
 
