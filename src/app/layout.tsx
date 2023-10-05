@@ -20,7 +20,7 @@ export default async function RootLayout({
 
   return (
     <html lang="es-Mx" className={`${josefin.variable} ${arapey.variable}`}>
-      <body className='text-base'>
+      <body className='text-base bg-body-gradient text-primary'>
         <Providers>
           <Navbar session={session} />
           {children}

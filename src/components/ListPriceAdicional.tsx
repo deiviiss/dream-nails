@@ -11,7 +11,7 @@ export const ListServicesPriceAdicional = ({ title, services }: ListPrices): JSX
           <Image src='/start.png' alt='start' width={25} height={25} className='absolute -left-2 -bottom-3'></Image>
         </div>
 
-        <h1 className="text-2xl font-semibold text-center my-2">{title}</h1>
+        <h1 className="text-2xl font-semibold text-center my-3">{title}</h1>
 
         <div className='w-full ml-5 border-b-[2px] border-primary rounded relative'>
           <Image src='/start.png' alt='start' width={25} height={25} className='absolute -right-2 -top-3'></Image>

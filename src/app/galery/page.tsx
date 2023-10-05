@@ -9,8 +9,8 @@ const GaleryPage: NextPage = () => {
     <>
       <Hero title={title} urlImg={urlImg}></Hero>
 
-      <main className='flex flex-col items-center justify-center gap-y-2 py-4'>
-        <header className="flex flex-col items-center justify-center p-3">
+      <main className='flex flex-col items-center justify-center gap-y-2 py-4 h-screen'>
+        <header className="flex flex-col items-center justify-center p-3 text-black">
           <h1 className='text-2xl font-bold text-center'>¡Bienvenidos a nuestra galería!</h1>
           <p>Actualmente en construcción</p>
         </header>

@@ -12,7 +12,7 @@ const ServicesPage: NextPage = () => {
       <Hero title={title} urlImg={urlImg}></Hero>
 
       <main className='flex flex-col items-center justify-center gap-y-4 py-4 w-full'>
-        <header className="flex justify-center p-3">
+        <header className="flex justify-center p-3 text-black">
           <h1 className='text-2xl font-bold'>Información de la founder</h1>
         </header>
 

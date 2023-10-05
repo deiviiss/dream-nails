@@ -1,25 +1,23 @@
 import { type NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { slides } from '../../public/slides'
-import Carousel from '@/components/Carousel'
 import Hero from '@/components/Hero'
 
 const HomePage: NextPage = () => {
-  const title = '... porque no hay una sensación mejor que un nuevo juego de uñas.'
+  const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
   const urlImg = 'url("/hero.jpg")'
 
   return (
-    <main >
+    <main>
 
       <Hero title={title} urlImg={urlImg}></Hero>
 
       {/* slogan */}
-      <section className='mb-14'>
-        <div className="px-4 py-10">
+      <section className='flex flex-col gap-4 items-center mb-14 p-5 lg:flex-row text-center'>
+        <div className="py-10 max-w-[800px] mx-auto">
 
           <header className='mb-8'>
-            <h1 className='text-center text-3xl font-semibold'>Haz que unas uñas preciosas formen parte de tu vida.</h1>
+            <h1 className='text-3xl font-semibold text-black'>Haz que unas uñas preciosas formen parte de tu vida</h1>
           </header>
 
           <article className='mb-12'>
@@ -39,17 +37,20 @@ const HomePage: NextPage = () => {
       </section>
 
       {/* services */}
-      <section className='mb-14'>
-
-        <div className=" w-full h-auto">
-          <Image src="/services.png" alt="servicios" width={256} height={144} className='w-full'></Image>
+      <section className='flex flex-col gap-4 items-center mb-14 p-5 lg:flex-row '>
+        {/* image */}
+        <div className="relative w-auto max-w-[700px] h-full border-4 p-4">
+          <Image src="/services.jpg" alt="servicios" width={736} height={920} className='w-full'></Image>
+          <div className='w-40  sm:w-60 md:w-80 lg:w-60 border-4 p-4 absolute -bottom-4 -left-7'>
+            <Image src="/services2.jpg" alt="servicios" width={256} height={144} className='w-full'></Image>
+          </div>
         </div>
-
-        <div className="px-4 py-10">
+        {/* body */}
+        <div className="py-10 max-w-[800px] mx-auto">
 
           <header className='mb-8'>
             <h2 className='text-xl text-gray'>Déjanos mimarte.</h2>
-            <h1 className='text-3xl font-semibold'>Servicios</h1>
+            <h1 className='text-3xl font-semibold text-black'>Servicios</h1>
           </header>
 
           <article className='mb-12'>
@@ -73,19 +74,6 @@ const HomePage: NextPage = () => {
           </footer>
         </div>
       </section>
-
-      {/* De prueba */}
-      <Carousel slides={slides} autoSlide={true} autoSlideInterval={4000} />
-      <section className='flex flex-col items-center px-4 my-3 mt-6'>
-        <h1 className='font-black text-2xl'>
-          ¡Bienvenidos a nuestro oasis de belleza!
-        </h1>
-
-        <p className='max-w-[820px] py-5'>En nuestro encantador salón, fusionamos arte y estilo para brindarte una experiencia de cuidado personalizada que dejará huella. Especializados en manicure y pedicure, te invitamos a sumergirte en un mundo de colores y creatividad mientras mimamos tus manos y pies.</p>
-
-        <p className='max-w-[820px] py-5'>Pero eso no es todo: nuestro equipo de expertos estilistas también se dedica a transformar cabellos en lienzos vivientes. Desde cortes vanguardistas hasta tintes y mechas que deslumbran, cada servicio es una obra maestra única que refleja tu personalidad y esencia.</p>
-      </section>
-      {/* De prueba */}
 
     </main>
   )

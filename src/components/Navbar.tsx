@@ -71,18 +71,18 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
           </div>
         </Link>
 
-        <ul className='gap-x-2 hidden sm:flex'>
+        <ul className='hidden sm:flex'>
           {(session !== null)
             ? <>
               {navigationsProtect.map((nav) => (
-                <li key={nav.id} className='px-3 py-1 border-b-2 border-transparent hover:border-b-2 hover:border-white transition ease-in-out delay-150 duration-300 relative'>
+                <li key={nav.id} className='px-3 py-1 rounded-lg border-b-2 border-transparent hover:bg-secondary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'>
                   <Link href={nav.url}>{nav.label}</Link>
                 </li>
               ))}
             </>
             : <>
               {navigations.map((item) => (
-                <li key={item.id} className='px-3 py-1 border-b-2 border-transparent hover:border-white hover:border-b-2 transition ease-in-out delay-150 duration-300'>
+                <li key={item.id} className='px-3 py-1 rounded border-b-2 border-transparent hover:text-primary hover:bg-secondary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'>
                   <Link href={item.url}>{item.label}</Link>
                 </li>
               ))}

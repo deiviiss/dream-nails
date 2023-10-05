@@ -9,27 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        adicional: "url('/public/bg-header.png')",
-        hero: "url('/public/Hero.jog)",
-        'primary-gradient': 'linear-gradient(to top, #6E8898 85%, transparent 100%)'
+        hero: "url('/hero.jpg')",
+        'legal-gradient': 'linear-gradient(to top, #FFFFFF 70%,#35748C 100%)',
+        'body-gradient': 'linear-gradient(to top, #FFFFFF 60%,#FBE1D9 100%)',
+        'primary-gradient': 'linear-gradient(to top, #35748C 75%,#FBE1D9 100%)',
+        'secondary-gradient': 'linear-gradient(to top, #ECBEAD 30%, #FBE1D9 70%, #FFFFFF 100%)'
       },
       backgroundColor: {
-        primary: '#6E8898', // Color Principal
-        secondary: '#AED2D8', // Color Secundario
-        highlight: '#FFA500', // Color de Destacado
-        gray: '#D2D2D2' // Color Gris
+        primary: '#35748C', // Color Principal
+        secondary: '#ECBEAD', // Color Secundario
+        tertiary: '#FBE1D9', // Color de Destacado
+        gray: '#FCC4C4', // Color Gris
+        white: '#F3F3F3'
       },
       textColor: {
-        primary: '#333333', // Color de Texto Principal
-        secondary: '#666666', // Color de Texto Secundario // Color de Texto Secundario
-        gray: '#D2D2D2', // Color Gris
-        warning: '#FFA500' // Color de Advertencia
+        primary: '#35748C', // Color de Texto Principal
+        secondary: '#ECBEAD', // Color de Texto Secundario
+        tertiary: '#FBE1D9', // Color Gris
+        gray: '#FCC4C4', // Color Gris
+        white: '#F3F3F3'
       },
       borderColor: {
-        primary: '#AED2D8', // Color de Borde Principal
-        secondary: '#6E8898', // Color de Borde Secundario
-        accent: '#FFA500', // Color de Borde de Acento
-        gray: '#D2D2D2' // Color de Borde Gris
+        primary: '#35748C', // Color de Texto Principal
+        secondary: '#ECBEAD', // Color de Texto Secundario
+        tertiary: '#FBE1D9', // Color Gris
+        gray: '#FCC4C4', // Color Gris
+        white: '#F3F3F3'
       }
     }
   },
