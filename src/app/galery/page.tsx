@@ -3,7 +3,7 @@ import Hero from '@/components/Hero'
 
 const GaleryPage: NextPage = () => {
   const title = 'NUESTRA GALERIA'
-  const urlImg = 'url("./hero.jpg")'
+  const urlImg = 'url("./hero.jpeg")'
 
   return (
     <>

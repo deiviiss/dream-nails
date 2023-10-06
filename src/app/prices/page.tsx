@@ -39,7 +39,7 @@ const PricesPage: NextPage = () => {
   const titleAdicional = 'Adicional'
   const servicesAdicional = groupedServices.adicionales
   const title = 'PRECIOS'
-  const urlImg = 'url("./hero.jpg")'
+  const urlImg = 'url("./hero.jpeg")'
 
   return (
     <>

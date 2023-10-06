@@ -4,7 +4,7 @@ import Hero from '@/components/Hero'
 
 const ServicesPage: NextPage = () => {
   const title = 'SOBRE NOSOTROS'
-  const urlImg = 'url("./hero.jpg")'
+  const urlImg = 'url("./hero.jpeg")'
 
   return (
 

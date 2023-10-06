@@ -109,6 +109,24 @@ const HomePage: NextPage = () => {
         </div>
       </section>
 
+      {/* instagram */}
+      <section className='flex flex-col gap-4 items-center mb-10 p-5 lg:flex-row '>
+        {/* body */}
+        <div className="max-w-[800px] mx-auto">
+
+          <header className='mb-8'>
+            <h1 className='text-3xl font-semibold text-black'>Comparte con nosotros</h1>
+          </header>
+
+          <footer className='flex flex-col items-center justify-center'>
+            <button className='w-52 h-16 mt-1 p-2 font-normal border border-transparent border-b-primary rounded hover:border-b-tertiary'>
+              <Link target='_blank' href={'https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg=='}>
+                @dream.nails.vale
+              </Link>
+            </button>
+          </footer>
+        </div>
+      </section>
     </main>
   )
 }
