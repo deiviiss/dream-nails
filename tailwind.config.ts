@@ -13,7 +13,7 @@ const config: Config = {
         'legal-gradient': 'linear-gradient(to top, #FFFFFF 70%,#FCC4C4 100%)',
         'body-gradient': 'linear-gradient(to top, #FFFFFF 55%,#D18E8F 100%)',
         'form-gradient': 'linear-gradient(to top, #FFFFFF 55%,#D18E8F 100%)',
-        'primary-gradient': 'linear-gradient(to top, #D18E8F 75%,#8FC9B9 100%)',
+        'primary-gradient': 'linear-gradient(to top,#8FC9B9 15%, #D18E8F 100%)',
         'secondary-gradient': 'linear-gradient(to top, #ECBEAD 30%, #D18E8F 70%, #FFFFFF 100%)'
       },
       backgroundColor: {
