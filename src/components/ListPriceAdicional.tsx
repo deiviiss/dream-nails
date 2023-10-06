@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { type ListPrices } from '@/interfaces/Props'
 
 export const ListServicesPriceAdicional = ({ title, services }: ListPrices): JSX.Element => {
