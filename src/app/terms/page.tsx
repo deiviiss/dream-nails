@@ -7,9 +7,9 @@ const TermsPage: NextPage = () => {
       <div className='flex items-center justify-center pt-[150.5px] bg-legal-gradient'>
         <div className='max-w-[920px] mx-auto my-5 '>
 
-          <h1 className='text-2xl font-bold px-3 text-black'>Términos y Condiciones</h1>
+          <h1 className='text-2xl font-bold px-3'>Términos y Condiciones</h1>
 
-          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
+          <div className='px-3 py-4'>
             <p>Bienvenido a nuestro sitio web. Al utilizar nuestros servicios, incluyendo la reserva de citas y el envío de feedback, usted acepta y está de acuerdo con los siguientes términos y condiciones de uso. Si no está de acuerdo con estos términos, le recomendamos no utilizar nuestros servicios.</p>
           </div>
 

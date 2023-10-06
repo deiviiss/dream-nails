@@ -10,30 +10,31 @@ const config: Config = {
     extend: {
       backgroundImage: {
         hero: "url('/hero.jpg')",
-        'legal-gradient': 'linear-gradient(to top, #FFFFFF 70%,#35748C 100%)',
-        'body-gradient': 'linear-gradient(to top, #FFFFFF 60%,#FBE1D9 100%)',
-        'primary-gradient': 'linear-gradient(to top, #35748C 75%,#FBE1D9 100%)',
-        'secondary-gradient': 'linear-gradient(to top, #ECBEAD 30%, #FBE1D9 70%, #FFFFFF 100%)'
+        'legal-gradient': 'linear-gradient(to top, #FFFFFF 70%,#FCC4C4 100%)',
+        'body-gradient': 'linear-gradient(to top, #FFFFFF 55%,#D18E8F 100%)',
+        'form-gradient': 'linear-gradient(to top, #FFFFFF 55%,#D18E8F 100%)',
+        'primary-gradient': 'linear-gradient(to top, #D18E8F 75%,#8FC9B9 100%)',
+        'secondary-gradient': 'linear-gradient(to top, #ECBEAD 30%, #D18E8F 70%, #FFFFFF 100%)'
       },
       backgroundColor: {
-        primary: '#35748C', // Color Principal
-        secondary: '#ECBEAD', // Color Secundario
-        tertiary: '#FBE1D9', // Color de Destacado
-        gray: '#FCC4C4', // Color Gris
+        primary: '#D18E8F', // Color de Texto Principal
+        secondary: '#8FC9B9', // Color de Texto Secundario
+        tertiary: '#AB5C72', // Color de Destacado
+        cuartiary: '#FCC4C4', // Color Gris
         white: '#F3F3F3'
       },
       textColor: {
-        primary: '#35748C', // Color de Texto Principal
-        secondary: '#ECBEAD', // Color de Texto Secundario
-        tertiary: '#FBE1D9', // Color Gris
-        gray: '#FCC4C4', // Color Gris
+        primary: '#D18E8F', // Color de Texto Principal
+        secondary: '#8FC9B9', // Color de Texto Secundario
+        tertiary: '#AB5C72', // Color de Destacado
+        cuartiary: '#FCC4C4', // Color Gris
         white: '#F3F3F3'
       },
       borderColor: {
-        primary: '#35748C', // Color de Texto Principal
-        secondary: '#ECBEAD', // Color de Texto Secundario
-        tertiary: '#FBE1D9', // Color Gris
-        gray: '#FCC4C4', // Color Gris
+        primary: '#D18E8F', // Color de Texto Principal
+        secondary: '#8FC9B9', // Color de Texto Secundario
+        tertiary: '#AB5C72', // Color de Destacado
+        cuartiary: '#FCC4C4', // Color Gris
         white: '#F3F3F3'
       }
     }

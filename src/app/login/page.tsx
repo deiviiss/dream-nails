@@ -52,45 +52,44 @@ const LoginPage: NextPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center pt-[150.5px] bg-primary-gradient">
 
-        <div className="flex items-center justify-center py-5 w-full">
-          <div className='flex flex-col items-center justify-center max-w-lg p-4 pb-6 border-2 bg-secondary-gradient rounded-lg'>
+      <main className='pb-10 pt-[150.5px] flex items-center justify-center w-full text-black
+      '>
+        <div className='flex flex-col items-center justify-center max-w-lg px-4 mt-7 pb-6 border-2 border-secondary bg-white rounded-lg'>
 
-            {
-              (error.length > 0) &&
-              <div className='bg-red-500 text-white p-2 mb-2 rounded'>
-                {error}
-              </div>
-            }
+          {
+            (error.length > 0) &&
+            <div className='bg-red-500 text-white p-2 mb-2 rounded'>
+              {error}
+            </div>
+          }
 
-            <form onSubmit={handleSubmitCredentials} className='flex flex-col justify-center items-center p-8 pb-0 gap-y-4'>
-              <h1 className='text-center text-2xl font-bold mb-4'>
-                Inicio de sesión
-              </h1>
+          <form onSubmit={handleSubmitCredentials} className='flex flex-col justify-center items-center px-7 pt-8 pb-0 gap-y-4'>
+            <h1 className='text-center text-2xl font-bold mb-2'>
+              Inicio de sesión
+            </h1>
 
-              <input
-                type="email"
-                placeholder='tu-correo@mail.com'
-                name='email'
-                className='px-4 py-2 block mb-2 w-full rounded-sm'
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder='******'
-                className='px-4 py-2 block mb-2 w-full rounded-sm'
-              />
-              <button className='px-4 py-2 rounded-md  bg-primary-gradient text-white hover:opacity-75'>Iniciar sesión</button>
-            </form>
-            <p className='my-4 font-black'>ó</p>
-            <button className='flex items-center gap-x-2 p-3 bg-white rounded-lg text-black hover:opacity-75' onClick={handleSubmitGoogle}>
-              <FcGoogle></FcGoogle>
-              Continuar con Google</button>
-          </div>
+            <input
+              type="email"
+              placeholder='tu-correo@mail.com'
+              name='email'
+              className='px-4 py-2 block mb-2 w-full rounded-sm'
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder='******'
+              className='px-4 py-2 block mb-2 w-full rounded-sm'
+            />
+            <button className='px-4 py-2 rounded-md transition-all duration-200 border-[1px] border-primary bg-white hover:opacity-75 '>Iniciar sesión</button>
+          </form>
+          <p className='my-4 font-black'>ó</p>
+          <button className='flex items-center gap-x-2 p-3 bg-white rounded-lg border-[1px] border-gray-500 text-black hover:opacity-75' onClick={handleSubmitGoogle}>
+            <FcGoogle></FcGoogle>
+            Continuar con Google</button>
         </div>
+      </main>
 
-      </div>
     </>
 
   )

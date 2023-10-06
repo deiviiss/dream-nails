@@ -5,9 +5,8 @@ import { IoLogoWhatsapp } from 'react-icons/io'
 const DatesPage: NextPage = () => {
   return (
 
-    <div className="flex flex-col items-center justify-center pt-[150.5px] bg-primary-gradient">
-
-      <main className='flex flex-col items-center justify-start gap-y-6 py-4 text-white h-screen'>
+    <main className='py-4 pt-[150.5px]'>
+      <section className="flex flex-col items-center justify-center gap-y-6 p-4 min-h-[200px]">
         <header className="flex justify-center p-3 ">
           <h1 className='text-2xl font-bold'>No hay citas disponibles :(</h1>
         </header>
@@ -18,9 +17,8 @@ const DatesPage: NextPage = () => {
             <p>Mándame un </p><IoLogoWhatsapp></IoLogoWhatsapp>
           </div>
         </Link>
-
-      </main>
-    </div>
+      </section>
+    </main>
 
   )
 }

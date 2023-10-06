@@ -8,9 +8,9 @@ const PrivacyPage: NextPage = () => {
       <div className='flex items-center justify-center pt-[150.5px] bg-legal-gradient'>
         <div className='max-w-[920px] mx-auto my-5 '>
 
-          <h1 className='text-2xl font-bold px-3 text-black'>Políticas de Privacidad</h1>
+          <h1 className='text-2xl font-bold px-3'>Políticas de Privacidad</h1>
 
-          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
+          <div className='px-3 py-4'>
             <p>En <span className='font-semibold'>Dream Nails</span>, valoramos y respetamos su privacidad. Esta Política de Privacidad explica cómo recopilamos y utilizamos su información personal a través de nuestro sitio web y los servicios que ofrecemos.</p>
           </div>
 

@@ -7,9 +7,9 @@ const ReservationPolicyPage: NextPage = () => {
       <div className='flex items-center justify-center pt-[150.5px] bg-legal-gradient'>
         <div className='max-w-[920px] mx-auto my-5'>
 
-          <h1 className='text-2xl font-bold px-3 text-black'>Política de Reserva y Cancelación</h1>
+          <h1 className='text-2xl font-bold px-3'>Política de Reserva y Cancelación</h1>
 
-          <div className='bg-primary text-white m-4 mb-8 p-8 text-justify'>
+          <div className='px-3 py-4'>
             <p>Lea detenidamente nuestra Política de Reserva y Cancelación antes de programar una cita en nuestro salón de uñas. Al reservar una cita con nosotros, usted acepta cumplir con estas políticas.</p>
           </div>
 

@@ -5,7 +5,7 @@ import Hero from '@/components/Hero'
 
 const HomePage: NextPage = () => {
   const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
-  const urlImg = 'url("/hero.jpg")'
+  const urlImg = 'url("/hero.jpeg")'
 
   return (
     <main>
@@ -13,7 +13,7 @@ const HomePage: NextPage = () => {
       <Hero title={title} urlImg={urlImg}></Hero>
 
       {/* slogan */}
-      <section className='flex flex-col gap-4 items-center mb-14 p-5 lg:flex-row text-center'>
+      <section className='flex flex-col gap-4 items-center mb-10 p-5 lg:flex-row text-center'>
         <div className="py-10 max-w-[800px] mx-auto">
 
           <header className='mb-8'>
@@ -37,11 +37,11 @@ const HomePage: NextPage = () => {
       </section>
 
       {/* services */}
-      <section className='flex flex-col gap-4 items-center mb-14 p-5 lg:flex-row '>
+      <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row '>
         {/* image */}
-        <div className="relative w-auto max-w-[700px] h-full border-4 p-4">
+        <div className="relative w-auto max-w-[700px] h-full border-2 border-secondary p-4">
           <Image src="/services.jpg" alt="servicios" width={736} height={920} className='w-full'></Image>
-          <div className='w-40  sm:w-60 md:w-80 lg:w-60 border-4 p-4 absolute -bottom-4 -left-7'>
+          <div className='w-40  sm:w-60 md:w-80 lg:w-60 border-2 border-secondary p-4 absolute -bottom-4 -left-7'>
             <Image src="/services2.jpg" alt="servicios" width={256} height={144} className='w-full'></Image>
           </div>
         </div>
@@ -49,7 +49,7 @@ const HomePage: NextPage = () => {
         <div className="py-10 max-w-[800px] mx-auto">
 
           <header className='mb-8'>
-            <h2 className='text-xl text-gray'>Déjanos mimarte.</h2>
+            <h2 className='text-xl text-cuartiary'>Déjanos mimarte.</h2>
             <h1 className='text-3xl font-semibold text-black'>Servicios</h1>
           </header>
 
