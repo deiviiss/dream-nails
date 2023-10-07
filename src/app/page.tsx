@@ -127,6 +127,7 @@ const HomePage: NextPage = () => {
           </footer>
         </div>
       </section>
+
     </main>
   )
 }

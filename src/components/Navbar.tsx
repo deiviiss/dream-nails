@@ -62,7 +62,6 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
   }, [prevScrollPos, currentScrollPos])
 
   return (
-
     <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white font-bold ${isVisible ? background : 'hidden'}`}>
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
@@ -98,7 +97,6 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
       </div>
       <BookNowButton></BookNowButton>
     </nav>
-
   )
 }
 
