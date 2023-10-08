@@ -62,7 +62,7 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
   }, [prevScrollPos, currentScrollPos])
 
   return (
-    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white font-bold ${isVisible ? background : 'hidden'}`}>
+    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white tracking-wider font-bold ${isVisible ? background : 'hidden'}`}>
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
           <div className=" w-32 h-auto">

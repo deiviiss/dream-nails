@@ -84,7 +84,7 @@ const LoginPage: NextPage = () => {
             <button className='px-4 py-2 rounded-md transition-all duration-200 border-[1px] border-primary bg-white hover:opacity-75 '>Iniciar sesión</button>
           </form>
           <p className='my-4 font-black'>ó</p>
-          <button className='flex items-center gap-x-2 p-3 bg-white rounded-lg border-[1px] border-gray-500 text-black hover:opacity-75' onClick={handleSubmitGoogle}>
+          <button className='flex items-center gap-x-2 p-3 bg-white rounded-lg border-[1px] border-primary text-black hover:opacity-75' onClick={handleSubmitGoogle}>
             <FcGoogle></FcGoogle>
             Continuar con Google</button>
         </div>
