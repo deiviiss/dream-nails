@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Accordion from './Acordion'
+import AccordionFooter from './AcordionFooter'
 
 const items = [
   {
@@ -15,7 +15,7 @@ const items = [
       {
         id: 2,
         title: 'Facebook',
-        url: 'https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==',
+        url: 'https://www.facebook.com/profile.php?id=100095532879449&mibextid=ZbWKwL',
         target: '_blank'
       }
     ]
@@ -75,7 +75,7 @@ export const Footer = (): JSX.Element => {
 
       </div>
       <div className='sm:hidden w-full text-white py-7 bg-primary shadow-[0_-3px_5px_0px_rgba(0,0,0,0.3)]'>
-        <Accordion
+        <AccordionFooter
           items={items}
         />
       </div>

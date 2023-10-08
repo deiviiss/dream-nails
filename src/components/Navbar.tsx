@@ -1,7 +1,9 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+
 import BookNowButton from '@/components/BookNowButton'
 import DropDown from '@/components/DropDown'
 
@@ -22,10 +24,15 @@ const navigationsProtect = [
 ]
 
 const Navbar = ({ session }: { session: object | null }): JSX.Element => {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   const [currentScrollPos, setCurrentScrollPos] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
   const [background, setBackground] = useState('bg-transparent')
+  const [currentPath, setCurrentPath] = useState(pathname + searchParams.toString())
+  const url = pathname + searchParams.toString()
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -44,8 +51,16 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
       }
 
       if (currentScrollPos > 201 && isScrollingDown) {
-        setPrevScrollPos(currentScrollPos)
-        setIsVisible(false)
+        if (currentPath !== url) {
+          setIsVisible(true)
+          setBackground('bg-transparent')
+          setCurrentPath(url)
+        }
+
+        if (currentPath === url) {
+          setPrevScrollPos(currentScrollPos)
+          setIsVisible(false)
+        }
       }
 
       if (isScrollingUp) {
@@ -59,7 +74,7 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [prevScrollPos, currentScrollPos])
+  }, [prevScrollPos, currentScrollPos, pathname, searchParams])
 
   return (
     <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white tracking-wider font-bold ${isVisible ? background : 'hidden'}`}>
