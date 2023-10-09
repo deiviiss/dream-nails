@@ -24,8 +24,8 @@ const GalleryPage: NextPage = () => {
             Mientras tanto, síguenos en nuestras redes sociales para recibir actualizaciones exclusivas y estar al tanto de nuestras novedades.
           </p>
           <div className='mt-4 text-secondary'>
-            <Link href='https://www.facebook.com/profile.php?id=100095532879449&mibextid=ZbWKwL' className='hover:underline mr-4'>Facebook</Link>
-            <Link href='https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==' className='hover:underline mr-4'>Instagram</Link>
+            <Link target='_blank' href='https://www.facebook.com/profile.php?id=100095532879449&mibextid=ZbWKwL' className='hover:underline mr-4'>Facebook</Link>
+            <Link target='_blank' href='https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==' className='hover:underline mr-4'>Instagram</Link>
           </div>
         </section>
       </main>
