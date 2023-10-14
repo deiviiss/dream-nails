@@ -26,10 +26,8 @@ export async function GET(request: Request, { params }: Params): Promise<NextRes
 
     return NextResponse.json({
       id: user.id,
-      name: user.name,
-      lastname: user.lastname,
-      user: user.user,
-      email: user.email
+      email: user.email,
+      role: user.role
     })
   } catch (error) {
     if (error instanceof Error) {
@@ -80,10 +78,8 @@ export async function DELETE(request: Request, { params }: Params): Promise<Next
 
   return NextResponse.json({
     id: userDelete.id,
-    name: userDelete.name,
-    lastname: userDelete.lastname,
-    user: userDelete.user,
-    email: userDelete.email
+    email: userDelete.email,
+    role: userDelete.role
   })
 }
 
@@ -108,7 +104,7 @@ export async function PUT(request: Request, { params }: Params): Promise<NextRes
 
     const body = await request.json()
     // Filtrar solo los campos presentes en el cuerpo de la solicitud
-    const allowedFields = ['name', 'lastname', 'user', 'email', 'password']
+    const allowedFields = ['email', 'password', 'role']
 
     const dataToUpdate = Object.keys(body.user)
       .filter(key => allowedFields.includes(key))

@@ -17,24 +17,38 @@ const config: Config = {
         'secondary-gradient': 'linear-gradient(to top, #ECBEAD 30%, #D18E8F 70%, #FFFFFF 100%)'
       },
       backgroundColor: {
-        primary: '#D18E8F', // Color de Texto Principal
-        secondary: '#8FC9B9', // Color de Texto Secundario
-        tertiary: '#AB5C72', // Color de Destacado
-        cuartiary: '#FCC4C4', // Color Gris
+        primary: '#D18E8F',
+        secondary: '#8FC9B9',
+        tertiary: '#AB5C72',
+        cuartiary: '#FCC4C4',
         white: '#F3F3F3'
       },
       textColor: {
-        primary: '#D18E8F', // Color de Texto Principal
-        secondary: '#8FC9B9', // Color de Texto Secundario
-        tertiary: '#AB5C72', // Color de Destacado
-        cuartiary: '#FCC4C4', // Color Gris
+        primary: '#D18E8F',
+        secondary: '#8FC9B9',
+        tertiary: '#AB5C72',
+        cuartiary: '#FCC4C4',
         white: '#F3F3F3'
       },
       borderColor: {
-        primary: '#D18E8F', // Color de Texto Principal
-        secondary: '#8FC9B9', // Color de Texto Secundario
-        tertiary: '#AB5C72', // Color de Destacado
-        cuartiary: '#FCC4C4', // Color Gris
+        primary: '#D18E8F',
+        secondary: '#8FC9B9',
+        tertiary: '#AB5C72',
+        cuartiary: '#FCC4C4',
+        white: '#F3F3F3'
+      },
+      outlineColor: {
+        primary: '#D18E8F',
+        secondary: '#8FC9B9',
+        tertiary: '#AB5C72',
+        cuartiary: '#FCC4C4',
+        white: '#F3F3F3'
+      },
+      ringColor: {
+        primary: '#D18E8F',
+        secondary: '#8FC9B9',
+        tertiary: '#AB5C72',
+        cuartiary: '#FCC4C4',
         white: '#F3F3F3'
       }
     }

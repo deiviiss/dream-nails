@@ -16,20 +16,16 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
 
   const [userData, setUserData] = useState<UpdateUser>({
     id: user.id,
-    name: '',
-    lastname: '',
-    user: '',
-    email: ''
+    email: '',
+    role: ''
   })
 
   useEffect(() => {
     if (user !== undefined) {
       setUserData((prevUserData) => ({
         ...prevUserData,
-        name: user.name,
-        lastname: user.lastname,
-        user: user.user,
-        email: user.email
+        email: user.email,
+        role: user.role
       }))
     }
   }, [user])
@@ -55,10 +51,8 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
   }
 
   const isDisabled = (
-    userData.name === '' ||
-    userData.lastname === '' ||
     userData.email === '' ||
-    userData.user === ''
+    userData.role === ''
   )
 
   return (
@@ -74,34 +68,18 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
         </h1>
 
         <input
-          type="text"
-          placeholder='Name'
-          name='name'
-          value={userData.name}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="text"
-          placeholder='Lastname'
-          name='lastname'
-          value={userData.lastname}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="text"
-          placeholder='User'
-          name='user'
-          value={userData.user}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
           type="email"
           placeholder='example@mail.com'
           name='email'
           value={userData.email}
+          onChange={handleChange}
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
+        />
+        <input
+          type="text"
+          placeholder='Role'
+          name='role'
+          value={userData.role}
           onChange={handleChange}
           className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />

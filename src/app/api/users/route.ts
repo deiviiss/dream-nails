@@ -21,7 +21,7 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const { name, lastname, user, email, password } = await request.json()
+    const { email, password, role } = await request.json()
 
     if (password === null || password.length < 6) {
       return NextResponse.json(
@@ -55,20 +55,16 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const newUser = await prisma.user.create({
       data: {
-        name,
-        lastname,
-        user,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
       }
     })
 
     return NextResponse.json({
       id: newUser.id,
-      name: newUser.name,
-      lastname: newUser.lastname,
-      user: newUser.user,
-      email: newUser.email
+      email: newUser.email,
+      role
     })
   } catch (error) {
     if (error instanceof Error) {

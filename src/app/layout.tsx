@@ -17,7 +17,6 @@ export default async function RootLayout({
   children: React.ReactNode
 }): Promise<JSX.Element> {
   const session = await getServerSession()
-
   return (
     <html lang="es-Mx" className={`${josefin.variable} ${arapey.variable}`}>
       <body className='text-base bg-body-gradient'>

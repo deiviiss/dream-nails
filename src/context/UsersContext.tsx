@@ -37,10 +37,8 @@ export const UsersProvider = ({ children }: Props): JSX.Element => {
   const createUser = async (user: CreateUser): Promise<void> => {
     console.log('creating user...')
     await axios.post('api/auth/signup', {
-      name: user.name,
-      lastname: user.lastname,
-      user: user.user,
       email: user.email,
+      role: user.role,
       password: user.password
     })
   }

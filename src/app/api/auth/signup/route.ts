@@ -4,7 +4,7 @@ import { prisma } from '@/libs/prisma'
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const { name, lastname, user, email, password } = await request.json()
+    const { email, password, role } = await request.json()
 
     //! CAMBIAR POR ZOD
     if (password === null || password.length < 6) {
@@ -38,18 +38,16 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const newUser = await prisma.user.create({
       data: {
-        name,
-        lastname,
-        user,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
       }
     })
 
     return NextResponse.json({
       id: newUser.id,
-      name: newUser.name,
-      email: newUser.email
+      email: newUser.email,
+      role: newUser.role
     })
   } catch (error) {
     if (error instanceof Error) {

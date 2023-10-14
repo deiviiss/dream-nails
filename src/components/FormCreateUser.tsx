@@ -1,23 +1,29 @@
 'use client'
 import { AxiosError } from 'axios'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useState, type FormEvent, type ChangeEvent } from 'react'
+import { signIn, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { redirect, useRouter } from 'next/navigation'
+import { useState, type FormEvent, type ChangeEvent, useEffect } from 'react'
 import { useUsers } from '@/context/UsersContext'
 import { type CreateUser } from '@/interfaces/User'
 
 export const FormCreateUser = (): JSX.Element => {
+  const [error, setError] = useState('')
   const router = useRouter()
-  const [error, setError] = useState()
   const { createUser } = useUsers()
-
   const [userData, setUserData] = useState<CreateUser>({
-    name: '',
-    lastname: '',
-    user: '',
     email: '',
-    password: ''
+    password: '',
+    role: 'customer'
   })
+
+  // ? Se muestra el register aunque haya sesión
+  const { data: session } = useSession()
+  useEffect(() => {
+    if (session !== null) {
+      redirect('/profile')
+    }
+  }, [session, router])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -51,72 +57,50 @@ export const FormCreateUser = (): JSX.Element => {
   }
 
   const isDisabled = (
-    userData.name === '' ||
-    userData.lastname === '' ||
     userData.email === '' ||
-    userData.user === '' ||
     userData.password === ''
   )
 
   return (
-    <div className='flex flex-col items-center justify-center h-[calc(100vh-4rem)]'>
-      {
-        error !== undefined ? <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div> : null
-      }
+    <main className='pb-10 pt-[150.5px] flex items-center justify-center w-full text-black
+      '>
+      <div className='flex flex-col items-center justify-center max-w-lg px-4 mt-7 pb-6 border-2 border-secondary bg-white rounded-lg'>
+        {
+          (error.length > 0) &&
+          <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}
+          </div>
+        }
 
-      <form onSubmit={handleSubmit} className=' bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'>
+        <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center px-7 pt-8 pb-0 gap-y-4'>
 
-        <h1 className=' text-2xl font-bold mb-4'>
-          Sign Up
-        </h1>
+          <h1 className=' text-2xl font-bold mb-4'>
+            Registrate
+          </h1>
+          <input
+            type="email"
+            placeholder='tu-correo@mail.com'
+            name='email'
+            value={userData.email}
+            onChange={handleChange}
+            className='px-4 py-2 block mb-2 w-full rounded-sm outline-none focus:ring-2 focus:ring-secondary'
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder='******'
+            value={userData.password}
+            onChange={handleChange}
+            className='px-4 py-2 block mb-2 w-full rounded-sm outline-none focus:ring-2 focus:ring-secondary'
+          />
 
-        <input
-          type="text"
-          placeholder='Name'
-          name='name'
-          value={userData.name}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="text"
-          placeholder='Lastname'
-          name='lastname'
-          value={userData.lastname}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="text"
-          placeholder='User'
-          name='user'
-          value={userData.user}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="email"
-          placeholder='example@mail.com'
-          name='email'
-          value={userData.email}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder='******'
-          value={userData.password}
-          onChange={handleChange}
-          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
-        />
-        <div className="flex gap-x-3">
-          <button type='submit' className='bg-highlight px-4 py-2 rounded-md hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed' disabled={isDisabled}
+          <button type='submit' className='flex items-center gap-x-2 p-3 bg-white rounded-lg border-[1px] border-primary text-black hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed' disabled={isDisabled}
           >
-            Sign Up
+            Crear cuenta
           </button>
-        </div>
-      </form >
-    </div >
+          <p className='pt-5 p-0 text-sm'>Ya tienes cuenta <Link href={'/login'} className='hover:underline'>¡inicia sesión!</Link></p>
+
+        </form >
+      </div>
+    </main >
   )
 }
