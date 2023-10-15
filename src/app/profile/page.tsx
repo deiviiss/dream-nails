@@ -30,8 +30,10 @@ const ProfilePage: NextPage = () => {
                   </div>
                   <div className='flex flex-col gap-2'>
                     <div className='flex gap-2'>
-                      <p className='font-bold'>Correo eléctronico:</p>
-                      <p>{session.user?.email}</p>
+                      <p className='font-bold'>Usuario:</p>
+                      <p>{session.user?.id}</p>
+                      <p className='font-bold'>Rol:</p>
+                      <p>{session.user?.role}</p>
                     </div>
                   </div>
                   <button className='text-red-800 p-2 underline hover:opacity-75' onClick={async () => { await signOut() }}>Cerrar sesión</button>
