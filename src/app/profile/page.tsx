@@ -6,7 +6,7 @@ import Link from 'next/link'
 const ProfilePage: NextPage = () => {
   // nextAuth
   const { data: session } = useSession()
-
+  console.log('session', session)
   return (
 
     <>
