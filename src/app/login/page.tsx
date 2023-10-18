@@ -17,7 +17,7 @@ const LoginPage: NextPage = () => {
   const { data: session } = useSession()
   useEffect(() => {
     if (session !== null) {
-      redirect('/profile')
+      redirect('/panel-admin')
     }
   }, [session, router])
 
@@ -46,7 +46,7 @@ const LoginPage: NextPage = () => {
     }
 
     if ((res?.ok) ?? false) {
-      router.push('/profile')
+      router.push('/panel-admin')
       router.refresh()
     }
   }

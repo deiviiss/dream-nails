@@ -66,7 +66,7 @@ const items = [
 
 export const Footer = (): JSX.Element => {
   return (
-    <footer className="flex flex-col gap-3 justify-center items-center w-full ">
+    <footer className="flex flex-col gap-3 justify-center items-center w-full mt-3">
       <h1 className=' opacity-10 tracking-[8px] text-center text-4xl'>DREAM NAILS</h1>
       <div className='hidden sm:flex items-center justify-center w-full gap-5 text-white py-7 bg-primary shadow-[0_-3px_5px_0px_rgba(0,0,0,0.3)]'>
         <Link className='border-b-2 border-transparent hover:border-secondary pb-0' href={'/terms'}>Términos y condiciones</Link>

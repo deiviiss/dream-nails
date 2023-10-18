@@ -4,7 +4,9 @@ import { getServerSession } from 'next-auth'
 import { arapey, josefin } from './fonts'
 import Providers from './providers'
 import { Footer } from '@/components/Footer'
+import LoginButton from '@/components/LoginButton'
 import Navbar from '@/components/Navbar'
+import SignOutButton from '@/components/SignOutButton'
 
 export const metadata: Metadata = {
   title: 'Dream Nails',
@@ -24,6 +26,11 @@ export default async function RootLayout({
           <Navbar session={session} />
           {children}
           <Footer />
+          {
+            session == null
+              ? <LoginButton />
+              : <SignOutButton />
+          }
         </Providers>
       </body>
     </html>

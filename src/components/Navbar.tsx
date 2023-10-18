@@ -11,16 +11,15 @@ const navigations = [
   { id: 1, label: 'Servicios', url: '/services' },
   { id: 2, label: 'Galeria', url: '/galery' },
   { id: 3, label: 'Precios', url: '/prices' },
-  { id: 4, label: 'Sobre nosotros', url: '/about-us' },
-  { id: 5, label: 'Iniciar sesión', url: '/login' }
+  { id: 4, label: 'Sobre nosotros', url: '/salon-about' }
 ]
 
 const navigationsProtect = [
   { id: 1, label: 'Servicios', url: '/services' },
   { id: 2, label: 'Galeria', url: '/galery' },
   { id: 3, label: 'Precios', url: '/prices' },
-  { id: 4, label: 'Sobre nosotros', url: '/about-us' },
-  { id: 5, label: 'Mi perfil', url: '/profile' }
+  { id: 4, label: 'Sobre nosotros', url: '/salon-about' },
+  { id: 5, label: 'Panel Admin', url: '/panel-admin' }
 ]
 
 const Navbar = ({ session }: { session: object | null }): JSX.Element => {
