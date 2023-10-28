@@ -28,7 +28,7 @@ const HomePage: NextPage = () => {
 
           <footer className='flex flex-col items-center justify-center'>
             <button className='w-40 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
-              <Link href={'/dates'}>
+              <Link target='_blank' href={'https://wa.me/529812099475'}>
                 ¡AGENDA AHORA!
               </Link>
             </button>

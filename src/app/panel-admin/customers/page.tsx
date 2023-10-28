@@ -1,29 +1,46 @@
+'use client'
+import { type Customer } from '@prisma/client'
 import { type NextPage } from 'next'
-import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { useEffect } from 'react'
+import { GrUpdate } from 'react-icons/gr'
+import { CustomerCard } from '@/components/CustomerCard'
+import { useCustomers } from '@/context/CustomersContext'
 
-const DatesPage: NextPage = () => {
+const CustomersPage: NextPage = () => {
+  const { data: session } = useSession()
+
+  const { customers, loadCustomers } = useCustomers()
+
+  useEffect(() => {
+    if ((session != null) && (session.user.role === 'admin' || session.user.role === 'stylist')) {
+      loadCustomers()
+    }
+  }, [session])
+
   return (
-    <div className="flex flex-col items-center justify-start pt-[150.5px] bg-primary-gradient  h-screen">
-      <main className='flex flex-col items-center justify-center gap-y-6 py-4 text-white'>
-        <header className="flex justify-center p-3">
-          <h1 className=' text-2xl font-bold'>
-            Mis visitas
-          </h1>
-        </header>
+    <main className='flex flex-col items-center justify-center mx-auto gap-y-6 py-4 px-2 w-full max-w-lg mt-[150.5px]'>
+      <header className="w-full flex justify-between">
+        <h1 className='text-base text-left font-medium'>
+          Listado de clientes
+        </h1>
+        <button className='px-2' ><GrUpdate></GrUpdate></button>
+      </header>
 
-        <section className="flex flex-col items-center w-full">
-          <div className='bg-primary flex flex-col justify-center items-center mx-2 px-8 py-5 gap-y-4 rounded max-w-md'>
-            <p>
-              ¡Hola! En tu historial, no hemos registrado ninguna visita a nuestro salón todavía. Esperamos verte pronto para brindarte una experiencia de cuidado excepcional.
-            </p>
+      <header className="w-full">
+        <h1 className='text-xl text-left font-medium'>
+          Clientes ------------------ {customers.length}
+        </h1>
+      </header>
 
-            <button type="button" className='bg-secondary rounded-md p-2 hover:bg-highlight'><Link href={'/dates'}>Reservar cita</Link></button>
-          </div>
-        </section>
-      </main>
-    </div>
+      {
+        customers.map((customer: Customer) => {
+          return <CustomerCard customer={customer} key={customer.id} />
+        })
+      }
 
+    </main>
   )
 }
 
-export default DatesPage
+export default CustomersPage

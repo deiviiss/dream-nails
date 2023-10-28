@@ -16,7 +16,7 @@ const GaleryPage: NextPage = () => {
               Aún no has programado ninguna cita con nosotros, pero estamos listos para atenderte cuando lo desees.
             </p>
 
-            <button type="button" className='bg-secondary rounded-md p-2 hover:bg-highlight'><Link href={'/dates'}>Reservar cita</Link></button>
+            <button type="button" className='bg-secondary rounded-md p-2 hover:bg-highlight'><Link target='_blank' href={'https://wa.me/529812099475'}>Reservar cita</Link></button>
           </div>
         </section>
       </main>

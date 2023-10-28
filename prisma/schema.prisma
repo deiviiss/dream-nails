@@ -8,13 +8,36 @@ datasource db {
 }
 
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
-  password   String
-  role       String    @default("customer")
-  created_at DateTime  @default(now())
-  updated_at DateTime?
-  Customer   Customer?
+  id                Int                 @id @default(autoincrement())
+  email             String              @unique
+  password          String
+  role              String              @default("customer")
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?
+  Customer          Customer?
+  StylistAssignment StylistAssignment[]
+
+  @@map("users")
+}
+
+model Customer {
+  id                Int                 @id @default(autoincrement())
+  name              String
+  phone             String
+  user_id           Int?                @unique
+  created_at        DateTime            @default(now())
+  updated_at        DateTime?
+  Appointment       Appointment[]
+  User              User?               @relation(fields: [user_id], references: [id])
+  DesignStyle       DesignStyle[]
+  Feedback          Feedback[]
+  NailGrowthHistory NailGrowthHistory[]
+  Preference        Preference[]
+  SpecialEvent      SpecialEvent[]
+  StylistAssignment StylistAssignment[]
+  VisitHistory      VisitHistory[]
+
+  @@map("customers")
 }
 
 model SalonService {
@@ -25,35 +48,21 @@ model SalonService {
   price       Float
   created_at  DateTime  @default(now())
   updated_at  DateTime?
+
+  @@map("salon_services")
 }
 
 model Appointment {
   id          Int       @id @default(autoincrement())
   date        DateTime
   service     String
-  customer_id Int
   nail_status String
+  customer_id Int
   created_at  DateTime  @default(now())
   updated_at  DateTime?
-  Customer    Customer  @relation(fields: [customer_id], references: [id])
-}
+  Customer    Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
 
-model Customer {
-  id                Int                 @id @default(autoincrement())
-  name              String?
-  email             String?             @unique
-  phone             String?
-  user_id           Int                 @unique
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?
-  Appointment       Appointment[]
-  User              User                @relation(fields: [user_id], references: [id])
-  DesignStyle       DesignStyle[]
-  Feedback          Feedback[]
-  NailGrowthHistory NailGrowthHistory[]
-  Preference        Preference[]
-  SpecialEvent      SpecialEvent[]
-  VisitHistory      VisitHistory[]
+  @@map("appointments")
 }
 
 model DesignStyle {
@@ -63,24 +72,30 @@ model DesignStyle {
   created_at  DateTime  @default(now())
   updated_at  DateTime?
   Customer    Customer  @relation(fields: [customer_id], references: [id])
+
+  @@map("design_styles")
 }
 
 model Feedback {
   id          Int      @id @default(autoincrement())
-  customer_id Int
   comment     String
   rating      Int
+  customer_id Int
   created_at  DateTime @default(now())
   Customer    Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("feddbacks")
 }
 
 model NailGrowthHistory {
   id          Int      @id @default(autoincrement())
   date        DateTime
-  customer_id Int
   nail_length Float
+  customer_id Int
   created_at  DateTime @default(now())
   Customer    Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("nail_growth_histories")
 }
 
 model Preference {
@@ -90,6 +105,8 @@ model Preference {
   created_at  DateTime  @default(now())
   updated_at  DateTime?
   Customer    Customer  @relation(fields: [customer_id], references: [id])
+
+  @@map("preferences")
 }
 
 model SpecialEvent {
@@ -100,6 +117,8 @@ model SpecialEvent {
   created_at  DateTime  @default(now())
   updated_at  DateTime?
   Customer    Customer  @relation(fields: [customer_id], references: [id])
+
+  @@map("special_events")
 }
 
 model VisitHistory {
@@ -112,6 +131,19 @@ model VisitHistory {
   customer_id       Int
   created_at        DateTime @default(now())
   Customer          Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("visit_histories")
+}
+
+model StylistAssignment {
+  id          Int      @id @default(autoincrement())
+  customer_id Int
+  user_id     Int
+  created_at  DateTime @default(now())
+  Customer    Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  User        User     @relation(fields: [user_id], references: [id])
+
+  @@map("stylist_assignments")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

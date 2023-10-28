@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export default withAuth(
   function middleware(request: NextRequestWithAuth) {
-    if ((request.nextUrl.pathname.startsWith('/panel-admin') || request.nextUrl.pathname.startsWith('/users')) && request.nextauth.token?.role !== 'admin') {
+    if ((request.nextUrl.pathname.startsWith('/panel-admin') || request.nextUrl.pathname.startsWith('/users')) && request.nextauth.token?.role !== 'admin' && request.nextauth.token?.role !== 'stylist') {
       return NextResponse.rewrite(
         new URL('/', request.url)
       )
@@ -11,7 +11,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => (token?.role === 'admin' || token?.role === 'customer')
+      authorized: ({ token }) => (token?.role === 'admin' || token?.role === 'customer' || token?.role === 'stylist')
     }
   }
 )

@@ -10,6 +10,7 @@ export const UserCard = ({ user }: { user: User }): JSX.Element => {
   const handleDeleteUser = async (id: number): Promise<void> => {
     await deleteUser(id)
   }
+
   return (
     <div className='flex justify-between bg-primary p-4 rounded-lg max-w-md min-w-[300px] mx-auto'>
       <div className="flex flex-col">

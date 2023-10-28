@@ -31,7 +31,7 @@ const ReservationPolicyPage: NextPage = () => {
           </div>
 
           <button className='flex mt-8 text-center mx-auto'>
-            <Link className='py-5 px-12 text-white text-sm transition-all duration-200 bg-primary rounded border-2 border-primary hover:bg-transparent hover:text-primary' href='/dates'>Contáctanos</Link>
+            <Link className='py-5 px-12 text-white text-sm transition-all duration-200 bg-primary rounded border-2 border-primary hover:bg-transparent hover:text-primary' target='_blank' href={'https://wa.me/529812099475'}>Contáctanos</Link>
           </button>
 
         </div>
