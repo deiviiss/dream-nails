@@ -1,9 +1,9 @@
 'use client'
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
-import Hero from '@/components/Hero'
-import { ListServicesPrice } from '@/components/ListPrice'
-import { ListServicesPriceAdicional } from '@/components/ListPriceAdicional'
+import Hero from '@/app/ui/Hero'
+import { ListServicesPrice } from '@/app/ui/ListPrice'
+import { ListServicesPriceAdicional } from '@/app/ui/ListPriceAdicional'
 import { useSalonService } from '@/context/SalonServicesContext'
 import { type GroupedServices } from '@/interfaces/Props'
 

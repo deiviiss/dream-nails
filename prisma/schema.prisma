@@ -21,48 +21,95 @@ model User {
 }
 
 model Customer {
-  id                Int                 @id @default(autoincrement())
-  name              String
-  phone             String
-  user_id           Int?                @unique
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?
-  Appointment       Appointment[]
-  User              User?               @relation(fields: [user_id], references: [id])
-  DesignStyle       DesignStyle[]
-  Feedback          Feedback[]
-  NailGrowthHistory NailGrowthHistory[]
-  Preference        Preference[]
-  SpecialEvent      SpecialEvent[]
-  StylistAssignment StylistAssignment[]
-  VisitHistory      VisitHistory[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  phone                String
+  user_id              Int?                   @unique
+  created_at           DateTime               @default(now())
+  updated_at           DateTime?
+  Appointment          Appointment[]
+  CancelledAppointment CancelledAppointment[]
+  User                 User?                  @relation(fields: [user_id], references: [id])
+  DesignStyle          DesignStyle[]
+  Feedback             Feedback[]
+  NailGrowthHistory    NailGrowthHistory[]
+  Preference           Preference[]
+  SpecialEvent         SpecialEvent[]
+  StylistAssignment    StylistAssignment[]
+  VisitHistory         VisitHistory[]
 
   @@map("customers")
 }
 
 model SalonService {
-  id          Int       @id @default(autoincrement())
-  category    String
-  name        String
-  description String
-  price       Float
-  created_at  DateTime  @default(now())
-  updated_at  DateTime?
+  id                 Int                  @id @default(autoincrement())
+  category           String
+  name               String
+  description        String
+  price              Float
+  created_at         DateTime             @default(now())
+  updated_at         DateTime?
+  AppointmentService AppointmentService[]
 
   @@map("salon_services")
 }
 
 model Appointment {
-  id          Int       @id @default(autoincrement())
-  date        DateTime
-  service     String
-  nail_status String
-  customer_id Int
-  created_at  DateTime  @default(now())
-  updated_at  DateTime?
-  Customer    Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  id                   Int                    @id @default(autoincrement())
+  date                 DateTime
+  nail_status          String
+  customer_id          Int
+  created_at           DateTime               @default(now())
+  updated_at           DateTime?
+  is_active            Boolean                @default(true)
+  Service              AppointmentService[]
+  Customer             Customer               @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  CancelledAppointment CancelledAppointment[]
+  VisitHistory         VisitHistory[]
 
   @@map("appointments")
+}
+
+model CancelledAppointment {
+  id             Int         @id @default(autoincrement())
+  details        String
+  customer_id    Int
+  appointment_id Int
+  created_at     DateTime    @default(now())
+  cancelled_by   String
+  Appointment    Appointment @relation(fields: [appointment_id], references: [id])
+  Customer       Customer    @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+
+  @@map("cancelled_appointments")
+}
+
+model VisitHistory {
+  id                Int         @id @default(autoincrement())
+  date              DateTime
+  nail_status       String
+  nail_photo_before String?
+  nail_photo_after  String?
+  customer_id       Int
+  created_at        DateTime    @default(now())
+  appointmentId     Int
+  details           String
+  updated_at        DateTime?
+  Appointment       Appointment @relation(fields: [appointmentId], references: [id])
+  Customer          Customer    @relation(fields: [customer_id], references: [id])
+
+  @@map("visit_histories")
+}
+
+model AppointmentService {
+  id             Int          @id @default(autoincrement())
+  appointment_id Int
+  service_id     Int
+  created_at     DateTime     @default(now())
+  updated_at     DateTime?
+  Appointment    Appointment  @relation(fields: [appointment_id], references: [id])
+  Service        SalonService @relation(fields: [service_id], references: [id])
+
+  @@map("appointment_services")
 }
 
 model DesignStyle {
@@ -121,27 +168,14 @@ model SpecialEvent {
   @@map("special_events")
 }
 
-model VisitHistory {
-  id                Int      @id @default(autoincrement())
-  date              DateTime
-  service           String
-  nail_status       String
-  nail_photo_before String?
-  nail_photo_after  String?
-  customer_id       Int
-  created_at        DateTime @default(now())
-  Customer          Customer @relation(fields: [customer_id], references: [id])
-
-  @@map("visit_histories")
-}
-
 model StylistAssignment {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   customer_id Int
   user_id     Int
-  created_at  DateTime @default(now())
-  Customer    Customer @relation(fields: [customer_id], references: [id], onDelete: Cascade)
-  User        User     @relation(fields: [user_id], references: [id])
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+  Customer    Customer  @relation(fields: [customer_id], references: [id], onDelete: Cascade)
+  User        User      @relation(fields: [user_id], references: [id])
 
   @@map("stylist_assignments")
 }

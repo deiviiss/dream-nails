@@ -1,12 +1,12 @@
-import './globals.css'
+import './ui/globals.css'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
-import { arapey, josefin } from './fonts'
-import Providers from './providers'
-import { Footer } from '@/components/Footer'
-import LoginButton from '@/components/LoginButton'
-import Navbar from '@/components/Navbar'
-import SignOutButton from '@/components/SignOutButton'
+import { arapey, josefin } from './ui/fonts'
+import Providers from '@/app/providers'
+import { Footer } from '@/app/ui/Footer'
+import LoginButton from '@/app/ui/LoginButton'
+import Navbar from '@/app/ui/Navbar'
+import SignOutButton from '@/app/ui/SignOutButton'
 
 export const metadata: Metadata = {
   title: 'Dream Nails',

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { type NextPage } from 'next'
 import { useParams } from 'next/navigation'
-import { FormEditUser } from '@/components/FormEditUser'
+import { FormEditUser } from '@/app/ui/users/FormEditUser'
 import { type UpdateUser } from '@/interfaces/User'
 
 const fetchUser = async (id: number): Promise<UpdateUser> => {

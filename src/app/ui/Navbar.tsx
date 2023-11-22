@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import BookNowButton from '@/components/BookNowButton'
-import DropDown from '@/components/DropDown'
+import BookNowButton from '@/app/ui/BookNowButton'
+import DropDown from '@/app/ui/DropDown'
 
 const navigations = [
   { id: 1, label: 'Servicios', url: '/services' },

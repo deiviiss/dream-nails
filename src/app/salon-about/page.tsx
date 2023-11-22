@@ -1,6 +1,6 @@
 'use client'
 import { type NextPage } from 'next'
-import Hero from '@/components/Hero'
+import Hero from '@/app/ui/Hero'
 
 const ServicesPage: NextPage = () => {
   const title = 'SOBRE NOSOTROS'

@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import Hero from '@/components/Hero'
+import Hero from '@/app/ui/Hero'
 
 const HomePage: NextPage = () => {
   const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
@@ -67,7 +67,7 @@ const HomePage: NextPage = () => {
 
           <footer className='flex flex-col items-start justify-center'>
             <button className='w-52 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
-              <Link href={'/services'}>
+              <Link href={'/salon-services'}>
                 VER TODOS LOS SERVICIOS
               </Link>
             </button>
@@ -81,7 +81,7 @@ const HomePage: NextPage = () => {
         <div className="relative w-auto max-w-[700px] h-full border-2 border-secondary p-4">
           <Image src="/location.jpg" alt="servicios" width={736} height={920} className='w-full'></Image>
           <div className='w-40  sm:w-60 md:w-80 lg:w-60 border-2 border-secondary p-4 absolute -bottom-4 -left-7'>
-            <Image src="/services2.jpg" alt="servicios" width={256} height={144} className='w-full'></Image>
+            <Image src="/services3.jpg" alt="servicios" width={256} height={144} className='w-full'></Image>
           </div>
         </div>
         {/* body */}

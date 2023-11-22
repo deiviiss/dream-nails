@@ -1,4 +1,5 @@
 import { type User, type SalonService, type Customer } from '@prisma/client'
+
 import { type CreateCustomer, type UpdateCustomer } from './Customer'
 import { type CreateUser, type UpdateUser } from './User'
 

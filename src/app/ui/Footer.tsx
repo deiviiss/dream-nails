@@ -27,13 +27,13 @@ const items = [
       {
         id: 1,
         title: 'Promociones',
-        url: '/services',
+        url: '/salon-services',
         target: undefined
       },
       {
         id: 2,
         title: 'Servicios',
-        url: '/services',
+        url: '/salon-services',
         target: undefined
       }
     ]

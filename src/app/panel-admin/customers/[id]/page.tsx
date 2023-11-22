@@ -4,8 +4,8 @@ import { AxiosError } from 'axios'
 import { type NextPage } from 'next'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { FormEditCustomer } from '@/components/FormEditCustomer'
-import Modal from '@/components/Modal'
+import { FormEditCustomer } from '../../../salon-services/customers/FormEditCustomer'
+import Modal from '@/app/ui/Modal'
 import { useCustomers } from '@/context/CustomersContext'
 
 const CustomerEditPage: NextPage = () => {

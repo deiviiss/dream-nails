@@ -19,8 +19,8 @@ export const FormCreateCustomer = ({ setOpen }: FormCustomerProps): JSX.Element 
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target
-    setCustomerData((prevUserData) => ({
-      ...prevUserData,
+    setCustomerData((prevAppointmentData) => ({
+      ...prevAppointmentData,
       [name]: value
     }))
   }

@@ -40,6 +40,7 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
   const [customers, setCustomers] = useState<Customer[]>([])
 
   const loadCustomers = async (): Promise<void> => {
+    console.log('loading customers...')
     const res = await axios.get('/api/customers')
     const customers = res.data
 
@@ -54,7 +55,6 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
     })
 
     const message = response.data.message
-
     return message
   }
 
@@ -85,10 +85,10 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
 
     if (res.status === 200) {
       setCustomers(customers.filter(customer => customer.id !== id))
-      console.log('res.data.message', res.data.message)
+
       return res.data.message
     }
-    console.log('status is not 200', res.data.message)
+
     return res.data.message
   }
 

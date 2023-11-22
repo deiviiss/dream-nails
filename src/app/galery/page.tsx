@@ -1,6 +1,6 @@
 import { type NextPage } from 'next'
 import Link from 'next/link'
-import Hero from '@/components/Hero'
+import Hero from '@/app/ui/Hero'
 
 const GalleryPage: NextPage = () => {
   const title = 'NUESTRA GALERÍA'
