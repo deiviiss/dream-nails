@@ -27,13 +27,13 @@ const items = [
       {
         id: 1,
         title: 'Promociones',
-        url: '/salon-services',
+        url: '/salon-page/salon-services',
         target: undefined
       },
       {
         id: 2,
         title: 'Servicios',
-        url: '/salon-services',
+        url: '/salon-page/salon-services',
         target: undefined
       }
     ]
@@ -45,19 +45,19 @@ const items = [
       {
         id: 1,
         title: 'Política de privacidad',
-        url: '/privacy',
+        url: '/salon-page/privacy',
         target: undefined
       },
       {
         id: 2,
         title: 'Términos y condiciones',
-        url: '/terms',
+        url: '/salon-page/terms',
         target: undefined
       },
       {
         id: 3,
         title: 'Política de reservación',
-        url: '/reservation-policy',
+        url: '/salon-page/reservation-policy',
         target: undefined
       }
     ]

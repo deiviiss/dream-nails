@@ -5,7 +5,6 @@ import { arapey, josefin } from './ui/fonts'
 import Providers from '@/app/providers'
 import { Footer } from '@/app/ui/Footer'
 import LoginButton from '@/app/ui/LoginButton'
-import Navbar from '@/app/ui/Navbar'
 import SignOutButton from '@/app/ui/SignOutButton'
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default async function RootLayout({
     <html lang="es-Mx" className={`${josefin.variable} ${arapey.variable}`}>
       <body className='text-base bg-body-gradient'>
         <Providers>
-          <Navbar session={session} />
           {children}
           <Footer />
           {

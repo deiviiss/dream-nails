@@ -8,17 +8,17 @@ import BookNowButton from '@/app/ui/BookNowButton'
 import DropDown from '@/app/ui/DropDown'
 
 const navigations = [
-  { id: 1, label: 'Servicios', url: '/services' },
-  { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Precios', url: '/prices' },
-  { id: 4, label: 'Sobre nosotros', url: '/salon-about' }
+  { id: 1, label: 'Servicios', url: '/salon-page/salon-services' },
+  { id: 2, label: 'Galeria', url: '/salon-page/galery' },
+  { id: 3, label: 'Precios', url: '/salon-page/prices' },
+  { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' }
 ]
 
 const navigationsProtect = [
-  { id: 1, label: 'Servicios', url: '/services' },
-  { id: 2, label: 'Galeria', url: '/galery' },
-  { id: 3, label: 'Precios', url: '/prices' },
-  { id: 4, label: 'Sobre nosotros', url: '/salon-about' },
+  { id: 1, label: 'Servicios', url: '/salon-page/salon-services' },
+  { id: 2, label: 'Galeria', url: '/salon-page/galery' },
+  { id: 3, label: 'Precios', url: '/salon-page/prices' },
+  { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' },
   { id: 5, label: 'Panel Admin', url: '/panel-admin' }
 ]
 

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export default withAuth(
   function middleware(request: NextRequestWithAuth) {
-    if ((request.nextUrl.pathname.startsWith('/panel-admin') || request.nextUrl.pathname.startsWith('/users')) && request.nextauth.token?.role !== 'admin' && request.nextauth.token?.role !== 'stylist') {
+    if ((request.nextUrl.pathname.startsWith('/panel-admin') || request.nextUrl.pathname.startsWith('/expenses') || request.nextUrl.pathname.startsWith('/users')) && request.nextauth.token?.role !== 'admin' && request.nextauth.token?.role !== 'stylist') {
       return NextResponse.rewrite(
         new URL('/', request.url)
       )
@@ -17,5 +17,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ['/users/:path*', '/profile/:path*', '/panel-admin/:path*']
+  matcher: ['/profile/:path*', '/panel-admin/:path*', '/users/:path*', '/expenses/:path*']
 }

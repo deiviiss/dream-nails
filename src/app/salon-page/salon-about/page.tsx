@@ -4,7 +4,7 @@ import Hero from '@/app/ui/Hero'
 
 const ServicesPage: NextPage = () => {
   const title = 'SOBRE NOSOTROS'
-  const urlImg = 'url("./hero.jpeg")'
+  const urlImg = 'url("/hero.jpeg")'
 
   return (
 

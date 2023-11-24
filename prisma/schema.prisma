@@ -16,6 +16,7 @@ model User {
   updated_at        DateTime?
   Customer          Customer?
   StylistAssignment StylistAssignment[]
+  Expense           Expense[]
 
   @@map("users")
 }
@@ -178,6 +179,32 @@ model StylistAssignment {
   User        User      @relation(fields: [user_id], references: [id])
 
   @@map("stylist_assignments")
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+  Expense     Expense[]
+
+  @@map("categories")
+}
+
+model Expense {
+  id          Int       @id @default(autoincrement())
+  amount      Float
+  user_id     Int
+  category_id Int
+  date        DateTime
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+
+  User     User     @relation(fields: [user_id], references: [id])
+  Category Category @relation(fields: [category_id], references: [id])
+
+  @@map("expenses")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

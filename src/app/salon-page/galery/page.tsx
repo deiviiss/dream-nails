@@ -4,7 +4,7 @@ import Hero from '@/app/ui/Hero'
 
 const GalleryPage: NextPage = () => {
   const title = 'NUESTRA GALERÍA'
-  const urlImg = 'url("./hero.jpeg")'
+  const urlImg = 'url("/hero.jpeg")'
 
   return (
     <>

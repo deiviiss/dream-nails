@@ -34,10 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/",
-    "src/app/salon-services/customers",
-    ".github/users",
-    "src/app/ui/appointments"
+    "src/"
   ],
   "exclude": [
     "node_modules"

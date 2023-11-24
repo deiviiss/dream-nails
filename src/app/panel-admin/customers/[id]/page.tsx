@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { type NextPage } from 'next'
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { FormEditCustomer } from '../../../salon-services/customers/FormEditCustomer'
+import { FormEditCustomer } from '../../../ui/customers/FormEditCustomer'
 import Modal from '@/app/ui/Modal'
 import { useCustomers } from '@/context/CustomersContext'
 
