@@ -13,14 +13,16 @@ const fetchUser = async (id: number): Promise<UpdateUser> => {
   return user
 }
 
-const UserEditPage: NextPage = async () => {
+const UserEditPage: NextPage = () => {
   const params = useParams()
-  const user: UpdateUser = await fetchUser(Number(params.id))
+  //! implement edit page
+  // const user: UpdateUser = await fetchUser(Number(params.id))
 
   return (
     <div className='flex flex-col items-center justify-center h-[calc(100vh-4rem)]'>
-      <FormEditUser user={user}></FormEditUser>
-    </div >
+      {/* <FormEditUser user={user}></FormEditUser> */}
+      <h1>The form Edit should go here</h1>
+    </div>
   )
 }
 export default UserEditPage

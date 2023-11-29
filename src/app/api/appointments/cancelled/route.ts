@@ -15,7 +15,8 @@ export async function GET(): Promise<NextResponse> {
     })
 
     if (user?.role === 'admin') {
-      const appointmentsCancelled: CancelledAppointment[] = await prisma.cancelledAppointment.findMany({})
+      const appointmentsCancelled: CancelledAppointment[] =
+        await prisma.cancelledAppointment.findMany({})
 
       return NextResponse.json(appointmentsCancelled)
     }
@@ -44,7 +45,6 @@ export async function GET(): Promise<NextResponse> {
     })
   } catch (error) {
     if (error instanceof Error) {
-      console.log('error api', error)
       return NextResponse.json({
         message: error.message
       })

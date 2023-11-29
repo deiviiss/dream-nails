@@ -15,8 +15,8 @@ model User {
   created_at        DateTime            @default(now())
   updated_at        DateTime?
   Customer          Customer?
-  StylistAssignment StylistAssignment[]
   Expense           Expense[]
+  StylistAssignment StylistAssignment[]
 
   @@map("users")
 }
@@ -192,17 +192,31 @@ model Category {
   @@map("categories")
 }
 
-model Expense {
+model Place {
   id          Int       @id @default(autoincrement())
-  amount      Float
-  user_id     Int
-  category_id Int
-  date        DateTime
+  name        String
+  description String?
   created_at  DateTime  @default(now())
   updated_at  DateTime?
+  Expense     Expense[]
 
-  User     User     @relation(fields: [user_id], references: [id])
-  Category Category @relation(fields: [category_id], references: [id])
+  @@map("places")
+}
+
+model Expense {
+  id           Int       @id @default(autoincrement())
+  amount       Float
+  user_id      Int
+  category_id  Int
+  created_at   DateTime  @default(now())
+  updated_at   DateTime?
+  method       String
+  name         String
+  place_id     Int
+  expense_date DateTime  @default(now())
+  Category     Category  @relation(fields: [category_id], references: [id])
+  Place        Place     @relation(fields: [place_id], references: [id])
+  User         User      @relation(fields: [user_id], references: [id])
 
   @@map("expenses")
 }

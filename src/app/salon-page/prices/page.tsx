@@ -12,7 +12,7 @@ const PricesPage: NextPage = () => {
 
   useEffect(() => {
     loadSalonServices()
-  }, [])
+  }, [loadSalonServices])
 
   // Objeto para almacenar los servicios agrupados por categoría
   const groupedServices: GroupedServices = {}
@@ -43,28 +43,36 @@ const PricesPage: NextPage = () => {
 
   return (
     <>
-
       <Hero title={title} urlImg={urlImg}></Hero>
 
       <main className='flex flex-col items-center justify-center gap-y-4 py-4 w-full'>
-        <header className="flex justify-center p-3 text-black">
+        <header className='flex justify-center p-3 text-black'>
           <h1 className='text-2xl font-bold'>Lista de precios</h1>
         </header>
 
-        <div className="flex flex-col gap-6 px-2 w-full overflow-hidden">
-          <ListServicesPrice title={titleManos} services={servicesManos}></ListServicesPrice>
+        <div className='flex flex-col gap-6 px-2 w-full overflow-hidden'>
+          <ListServicesPrice
+            title={titleManos}
+            services={servicesManos}
+          ></ListServicesPrice>
 
-          <ListServicesPrice title={titlePies} services={servicesPies}></ListServicesPrice>
+          <ListServicesPrice
+            title={titlePies}
+            services={servicesPies}
+          ></ListServicesPrice>
 
-          <div className="flex flex-col sm:grid grid-cols-2 gap-6 px-2 sm:gap-10 mx-auto w-full max-w-[820px]">
+          <div className='flex flex-col sm:grid grid-cols-2 gap-6 px-2 sm:gap-10 mx-auto w-full max-w-[820px]'>
+            <ListServicesPrice
+              title={titleExtras}
+              services={servicesExtra}
+            ></ListServicesPrice>
 
-            <ListServicesPrice title={titleExtras} services={servicesExtra}></ListServicesPrice>
-
-            <ListServicesPriceAdicional title={titleAdicional} services={servicesAdicional}></ListServicesPriceAdicional>
-
+            <ListServicesPriceAdicional
+              title={titleAdicional}
+              services={servicesAdicional}
+            ></ListServicesPriceAdicional>
           </div>
         </div>
-
       </main>
     </>
   )

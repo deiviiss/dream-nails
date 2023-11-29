@@ -7,37 +7,42 @@ import { prisma } from '@/libs/prisma'
 
 const handler = NextAuth({
   providers: [
-    CredentialsProvider(
-      {
-        name: 'Email',
-        credentials: {
-          email: { label: 'Email', type: 'email', placeholder: 'Enter email' },
-          password: { label: 'Password', type: 'password', placeholder: 'Enter password' }
-        },
-        async authorize(credentials?: Record<'email' | 'password', string>) {
-          if (credentials == null) throw new Error('Invalid credentials')
-
-          const userFound = await prisma.user.findFirst({
-            where: {
-              email: credentials?.email
-            }
-          })
-
-          if (userFound == null) throw new Error('Invalid credentials')
-
-          const passwordMatch = await bcrypt.compare(credentials.password, userFound.password)
-          if (!passwordMatch) throw new Error('Invalid credentials')
-
-          return {
-            id: userFound.id.toString(),
-            email: userFound.email,
-            role: userFound.role
-          }
+    CredentialsProvider({
+      name: 'Email',
+      credentials: {
+        email: { label: 'Email', type: 'email', placeholder: 'Enter email' },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Enter password'
         }
-      }),
+      },
+      async authorize(credentials?: Record<'email' | 'password', string>) {
+        if (credentials == null) throw new Error('Invalid credentials')
+
+        const userFound = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email
+          }
+        })
+
+        if (userFound == null) throw new Error('Invalid credentials')
+
+        const passwordMatch = await bcrypt.compare(
+          credentials.password,
+          userFound.password
+        )
+        if (!passwordMatch) throw new Error('Invalid credentials')
+
+        return {
+          id: userFound.id.toString(),
+          email: userFound.email,
+          role: userFound.role
+        }
+      }
+    }),
     GoogleProvider({
       profile(profile: GoogleProfile) {
-        console.log('profile', profile)
         return {
           ...profile,
           id: profile.sub.toString(),
@@ -58,7 +63,7 @@ const handler = NextAuth({
     async session({ session, token }) {
       session.user = token as any
 
-      if ((session?.user) != null) session.user.role = token.role
+      if (session?.user != null) session.user.role = token.role
       return session
     },
     async redirect({ url, baseUrl }) {

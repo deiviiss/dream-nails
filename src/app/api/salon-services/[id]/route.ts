@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server'
 import { type Params } from '@/interfaces/Props'
 import { prisma } from '@/libs/prisma'
 
-export async function GET(request: Request, { id }: Params): Promise<NextResponse> {
+export async function GET(
+  request: Request,
+  { id }: Params
+): Promise<NextResponse> {
   try {
     const salonService = await prisma.salonService.findFirst({
       where: {
@@ -50,7 +53,10 @@ export async function GET(request: Request, { id }: Params): Promise<NextRespons
   }
 }
 
-export async function DELETE(request: Request, { id }: Params): Promise<NextResponse> {
+export async function DELETE(
+  request: Request,
+  { id }: Params
+): Promise<NextResponse> {
   const userFound = await prisma.salonService.findFirst({
     where: {
       id: Number(id)
@@ -80,7 +86,10 @@ export async function DELETE(request: Request, { id }: Params): Promise<NextResp
   })
 }
 
-export async function PUT(request: Request, { id }: Params): Promise<NextResponse> {
+export async function PUT(
+  request: Request,
+  { id }: Params
+): Promise<NextResponse> {
   try {
     const salonServiceFound = await prisma.salonService.findFirst({
       where: {
@@ -100,12 +109,12 @@ export async function PUT(request: Request, { id }: Params): Promise<NextRespons
     }
 
     const body = await request.json()
-    console.log(body)
+
     // Filtrar solo los campos presentes en el cuerpo de la solicitud
     const allowedFields = ['name', 'description', 'category', 'price']
 
     const dataToUpdate = Object.keys(body.user)
-      .filter(key => allowedFields.includes(key))
+      .filter((key) => allowedFields.includes(key))
       .reduce((acc, key) => ({ ...acc, [key]: body.user[key] }), {})
 
     await prisma.salonService.update({

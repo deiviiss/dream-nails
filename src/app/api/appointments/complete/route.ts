@@ -15,13 +15,12 @@ export async function GET(): Promise<NextResponse> {
     })
 
     if (user?.role === 'admin') {
-      const appointmentsComplete: Appointment[] = await prisma.appointment.findMany({
-        include: {
-          Customer: true
-        }
-      })
-
-      console.log('appointmentsComplete', appointmentsComplete)
+      const appointmentsComplete: Appointment[] =
+        await prisma.appointment.findMany({
+          include: {
+            Customer: true
+          }
+        })
 
       // return NextResponse.json(appointmentsComplete)
       return NextResponse.json('appointmentsComplete')
@@ -51,7 +50,6 @@ export async function GET(): Promise<NextResponse> {
     })
   } catch (error) {
     if (error instanceof Error) {
-      console.log('error api', error)
       return NextResponse.json({
         message: error.message
       })
@@ -73,7 +71,6 @@ export async function POST(request: Request): Promise<NextResponse> {
         email: session?.user.email
       }
     })
-    console.log('user in API Appoinments Complete', user)
     // se recibe los datos del la cita completa
     // se marca el appointment como complete
     // se crea registro en tabla de visitHistory

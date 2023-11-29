@@ -3,28 +3,32 @@ import { type Customer } from '@prisma/client'
 import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
 import { type CreateCustomer, type UpdateCustomer } from '@/interfaces/Customer'
-import { type Props, type CustomersContextType, type Message } from '@/interfaces/Props'
+import {
+  type Props,
+  type CustomersContextType,
+  type Message
+} from '@/interfaces/Props'
 
-const CustomersContext = createContext<CustomersContextType>(
-  {
-    customers: [],
-    loadCustomers: async () => { },
-    // ? Estos son los valores por defecto cuando se crea el contexto, ¿Cómo lo defino? Lo tuve que implementar aquí y en el provider
-    getOneCustomer: async (id: number) => {
-      const res = await axios.get<{ customer: Customer }>(`/api/customers/${id}`)
-      const customer = res.data.customer
+const CustomersContext = createContext<CustomersContextType>({
+  customers: [],
+  loadCustomers: async () => { },
+  // ? Estos son los valores por defecto cuando se crea el contexto, ¿Cómo lo defino? Lo tuve que implementar aquí y en el provider
+  getOneCustomer: async (id: number) => {
+    const res = await axios.get<{ customer: Customer }>(`/api/customers/${id}`)
+    const customer = res.data.customer
 
-      return customer
-    },
-    createCustomer: async (customer: CreateCustomer) => {
-      return { message: '' }
-    },
-    updateCustomer: async (id: number, customer: UpdateCustomer) => {
-      return { message: '' }
-    },
-    deleteCustomer: async (id: number) => { return id }
+    return customer
+  },
+  createCustomer: async (customer: CreateCustomer) => {
+    return { message: '' }
+  },
+  updateCustomer: async (id: number, customer: UpdateCustomer) => {
+    return { message: '' }
+  },
+  deleteCustomer: async (id: number) => {
+    return id
   }
-)
+})
 
 export const useCustomers = (): CustomersContextType => {
   const context = useContext(CustomersContext)
@@ -71,7 +75,7 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
     const res = await axios.delete(`/api/customers/${id}`)
 
     if (res.status === 200) {
-      setCustomers(customers.filter(customer => customer.id !== id))
+      setCustomers(customers.filter((customer) => customer.id !== id))
       return id
     }
 
@@ -79,12 +83,15 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
     return id
   }
 
-  const updateCustomer = async (id: number, customer: UpdateCustomer): Promise<Message> => {
+  const updateCustomer = async (
+    id: number,
+    customer: UpdateCustomer
+  ): Promise<Message> => {
     console.log('update customer...')
     const res = await axios.put(`/api/customers/${id}`, { customer })
 
     if (res.status === 200) {
-      setCustomers(customers.filter(customer => customer.id !== id))
+      setCustomers(customers.filter((customer) => customer.id !== id))
 
       return res.data.message
     }
@@ -93,7 +100,16 @@ export const CustomersProvider = ({ children }: Props): JSX.Element => {
   }
 
   return (
-    <CustomersContext.Provider value={{ customers, loadCustomers, getOneCustomer, createCustomer, updateCustomer, deleteCustomer }}>
+    <CustomersContext.Provider
+      value={{
+        customers,
+        loadCustomers,
+        getOneCustomer,
+        createCustomer,
+        updateCustomer,
+        deleteCustomer
+      }}
+    >
       {children}
     </CustomersContext.Provider>
   )

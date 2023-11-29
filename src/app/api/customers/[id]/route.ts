@@ -5,7 +5,10 @@ interface Params {
   params: { id: number }
 }
 
-export async function GET(request: Request, { params }: Params): Promise<NextResponse> {
+export async function GET(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const customer = await prisma.customer.findFirst({
       where: {
@@ -52,7 +55,10 @@ export async function GET(request: Request, { params }: Params): Promise<NextRes
   }
 }
 
-export async function DELETE(request: Request, { params }: Params): Promise<NextResponse> {
+export async function DELETE(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   const customerFound = await prisma.customer.findFirst({
     where: {
       id: Number(params.id)
@@ -84,7 +90,10 @@ export async function DELETE(request: Request, { params }: Params): Promise<Next
   })
 }
 
-export async function PUT(request: Request, { params }: Params): Promise<NextResponse> {
+export async function PUT(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const customerFound = await prisma.customer.findFirst({
       where: {
@@ -121,7 +130,12 @@ export async function PUT(request: Request, { params }: Params): Promise<NextRes
         }
       )
     }
-    if (customer.name === '' || customer.phone === '' || customer.name === null || customer.phone === null) {
+    if (
+      customer.name === '' ||
+      customer.phone === '' ||
+      customer.name === null ||
+      customer.phone === null
+    ) {
       return NextResponse.json(
         {
           message: 'Nombre y teléfono son requeridos'
@@ -135,7 +149,7 @@ export async function PUT(request: Request, { params }: Params): Promise<NextRes
     // Filtrar solo los campos presentes en el cuerpo de la solicitud
     const allowedFields = ['name', 'phone']
     const dataToUpdate = Object.keys(customer)
-      .filter(key => allowedFields.includes(key))
+      .filter((key) => allowedFields.includes(key))
       .reduce((acc, key) => ({ ...acc, [key]: customer[key] }), {})
 
     await prisma.customer.update({

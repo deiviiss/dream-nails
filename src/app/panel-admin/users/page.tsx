@@ -10,19 +10,17 @@ const UsersPage: NextPage = () => {
 
   useEffect(() => {
     loadUsers()
-  }, [])
+  })
 
   return (
-    <div className='flex flex-col gap-2 p-2'>
+    <main className='flex flex-col gap-2 p-2'>
       <h1 className=' text-2xl font-bold'>Users</h1>
-      <div className="flex flex-col gap-2">
-        {
-          users.map((user: User) => {
-            return <UserCard user={user} key={user.id} />
-          })
-        }
+      <div className='flex flex-col gap-2'>
+        {users.map((user: User) => {
+          return <UserCard user={user} key={user.id} />
+        })}
       </div>
-    </div>
+    </main>
   )
 }
 

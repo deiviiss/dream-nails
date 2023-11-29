@@ -5,14 +5,17 @@ import { createContext, useContext, useState } from 'react'
 import { type Props, type UsersContextType } from '@/interfaces/Props'
 import { type CreateUser, type UpdateUser } from '@/interfaces/User'
 
-const UsersContext = createContext<UsersContextType>(
-  {
-    users: [],
-    loadUsers: async () => { },
-    createUser: async () => { },
-    updateUser: async (id: number, user: UpdateUser) => { return id },
-    deleteUser: async (id: number) => { return id }
-  })
+const UsersContext = createContext<UsersContextType>({
+  users: [],
+  loadUsers: async () => { },
+  createUser: async () => { },
+  updateUser: async (id: number, user: UpdateUser) => {
+    return id
+  },
+  deleteUser: async (id: number) => {
+    return id
+  }
+})
 
 export const useUsers = (): UsersContextType => {
   const context = useContext(UsersContext)
@@ -48,7 +51,7 @@ export const UsersProvider = ({ children }: Props): JSX.Element => {
     const res = await axios.put(`/api/users/${id}`, { user })
 
     if (res.status === 200) {
-      setUsers(users.filter(user => user.id !== id))
+      setUsers(users.filter((user) => user.id !== id))
       return user.id
     }
     return user.id
@@ -58,7 +61,7 @@ export const UsersProvider = ({ children }: Props): JSX.Element => {
     console.log('delete user...')
     const res = await axios.delete(`api/users/${id}`)
     if (res.status === 200) {
-      setUsers(users.filter(user => user.id !== id))
+      setUsers(users.filter((user) => user.id !== id))
       return id
     }
     //! handle error
@@ -66,7 +69,9 @@ export const UsersProvider = ({ children }: Props): JSX.Element => {
   }
 
   return (
-    <UsersContext.Provider value={{ users, loadUsers, createUser, updateUser, deleteUser }}>
+    <UsersContext.Provider
+      value={{ users, loadUsers, createUser, updateUser, deleteUser }}
+    >
       {children}
     </UsersContext.Provider>
   )

@@ -19,7 +19,8 @@ const navigationsProtect = [
   { id: 2, label: 'Galeria', url: '/salon-page/galery' },
   { id: 3, label: 'Precios', url: '/salon-page/prices' },
   { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' },
-  { id: 5, label: 'Panel Admin', url: '/panel-admin' }
+  { id: 5, label: 'Panel Admin', url: '/panel-admin' },
+  { id: 6, label: 'Gastos', url: '/expenses' }
 ]
 
 const Navbar = ({ session }: { session: object | null }): JSX.Element => {
@@ -30,7 +31,9 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
   const [background, setBackground] = useState('bg-transparent')
-  const [currentPath, setCurrentPath] = useState(pathname + searchParams.toString())
+  const [currentPath, setCurrentPath] = useState(
+    pathname + searchParams.toString()
+  )
   const url = pathname + searchParams.toString()
 
   useEffect(() => {
@@ -73,41 +76,64 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [prevScrollPos, currentScrollPos, pathname, searchParams])
+  }, [
+    prevScrollPos,
+    currentScrollPos,
+    pathname,
+    searchParams,
+    currentPath,
+    url
+  ])
 
   return (
-    <nav className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white tracking-wider font-bold ${isVisible ? background : 'hidden'}`}>
+    <nav
+      className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white tracking-wider font-bold ${isVisible ? background : 'hidden'
+        }`}
+    >
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
-          <div className=" w-32 h-auto">
-            <Image src="/logo_dream-nails-white.png" alt="logo_dream-nails" width={256} height={144} className='w-full'></Image>
+          <div className=' w-32 h-auto'>
+            <Image
+              src='/logo_dream-nails-white.png'
+              alt='logo_dream-nails'
+              width={256}
+              height={144}
+              className='w-full'
+            ></Image>
           </div>
         </Link>
 
         <ul className='hidden sm:flex'>
-          {(session !== null)
-            ? <>
+          {session !== null ? (
+            <>
               {navigationsProtect.map((nav) => (
-                <li key={nav.id} className='px-3 py-1 rounded-lg border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'>
+                <li
+                  key={nav.id}
+                  className='px-3 py-1 rounded-lg border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
+                >
                   <Link href={nav.url}>{nav.label}</Link>
                 </li>
               ))}
             </>
-            : <>
+          ) : (
+            <>
               {navigations.map((item) => (
-                <li key={item.id} className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'>
+                <li
+                  key={item.id}
+                  className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
+                >
                   <Link href={item.url}>{item.label}</Link>
                 </li>
               ))}
             </>
-          }
+          )}
         </ul>
 
-        {
-          (session !== null)
-            ? <DropDown navigations={navigationsProtect}></DropDown>
-            : <DropDown navigations={navigations}></DropDown>
-        }
+        {session !== null ? (
+          <DropDown navigations={navigationsProtect}></DropDown>
+        ) : (
+          <DropDown navigations={navigations}></DropDown>
+        )}
       </div>
       <BookNowButton></BookNowButton>
     </nav>

@@ -6,12 +6,18 @@ const LoginButton = (): JSX.Element => {
   const { data: session } = useSession()
   return (
     <>
-      {
-        (session != null) &&
+      {session != null && (
         <>
-          <button className='w-full bg-primary h-10 p-0 font-xs text-white underline cursor-pointer' onClick={async () => { await signOut() }}>Cerrar sesión</button>
+          <button
+            className='w-full bg-primary h-10 p-0 font-xs text-white underline cursor-pointer'
+            onClick={async () => {
+              await signOut()
+            }}
+          >
+            Cerrar sesión
+          </button>
         </>
-      }
+      )}
     </>
   )
 }

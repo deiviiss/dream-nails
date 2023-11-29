@@ -5,7 +5,10 @@ interface Params {
   params: { id: number }
 }
 
-export async function GET(request: Request, { params }: Params): Promise<NextResponse> {
+export async function GET(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -52,7 +55,10 @@ export async function GET(request: Request, { params }: Params): Promise<NextRes
   }
 }
 
-export async function DELETE(request: Request, { params }: Params): Promise<NextResponse> {
+export async function DELETE(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   const userFound = await prisma.user.findFirst({
     where: {
       id: Number(params.id)
@@ -83,7 +89,10 @@ export async function DELETE(request: Request, { params }: Params): Promise<Next
   })
 }
 
-export async function PUT(request: Request, { params }: Params): Promise<NextResponse> {
+export async function PUT(
+  request: Request,
+  { params }: Params
+): Promise<NextResponse> {
   try {
     const userFound = await prisma.user.findFirst({
       where: {
@@ -107,7 +116,7 @@ export async function PUT(request: Request, { params }: Params): Promise<NextRes
     const allowedFields = ['email', 'password', 'role']
 
     const dataToUpdate = Object.keys(body.user)
-      .filter(key => allowedFields.includes(key))
+      .filter((key) => allowedFields.includes(key))
       .reduce((acc, key) => ({ ...acc, [key]: body.user[key] }), {})
 
     await prisma.user.update({

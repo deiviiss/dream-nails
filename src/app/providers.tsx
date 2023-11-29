@@ -13,9 +13,7 @@ const Providers: NextPage<Props> = ({ children }: Props) => {
       <UsersProvider>
         <SalonServicesProvider>
           <CustomersProvider>
-            <AppointmentsProvider>
-              {children}
-            </AppointmentsProvider >
+            <AppointmentsProvider>{children}</AppointmentsProvider>
           </CustomersProvider>
         </SalonServicesProvider>
       </UsersProvider>

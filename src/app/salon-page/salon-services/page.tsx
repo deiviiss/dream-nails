@@ -10,7 +10,7 @@ const ServicesPage: NextPage = () => {
 
   useEffect(() => {
     loadSalonServices()
-  }, [])
+  }, [loadSalonServices])
 
   // Objeto para almacenar los servicios agrupados por categoría
   const groupedServices: GroupedServices = {}
@@ -41,73 +41,61 @@ const ServicesPage: NextPage = () => {
   const urlImg = 'url("/services.jpg")'
 
   return (
-
     <>
       <Hero title={title} urlImg={urlImg}></Hero>
 
       <main className='flex flex-col items-center justify-center gap-y-4 py-4 w-full text-black'>
-        <header className="flex justify-center p-3">
+        <header className='flex justify-center p-3'>
           <h1 className='text-2xl font-bold'>Lista de servicios</h1>
         </header>
 
-        <div className="flex flex-col gap-6 px-2 w-full overflow-hidden">
-
-          <div className="flex flex-col">
+        <div className='flex flex-col gap-6 px-2 w-full overflow-hidden'>
+          <div className='flex flex-col'>
             <h1 className='py-1 font-semibold'>{titleManos}</h1>
-            {
-              servicesManos?.map((service) => {
-                return (
-                  <div key={service.id}>
-                    <h1>{service.name}</h1>
-                  </div>
-                )
-              })
-            }
+            {servicesManos?.map((service) => {
+              return (
+                <div key={service.id}>
+                  <h1>{service.name}</h1>
+                </div>
+              )
+            })}
           </div>
 
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             <h1 className='py-1 font-semibold'>{titlePies}</h1>
-            {
-              servicesPies?.map((service) => {
-                return (
-                  <div key={service.id}>
-                    <h1>{service.name}</h1>
-                  </div>
-                )
-              })
-            }
+            {servicesPies?.map((service) => {
+              return (
+                <div key={service.id}>
+                  <h1>{service.name}</h1>
+                </div>
+              )
+            })}
           </div>
 
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             <h1 className='py-1 font-semibold'>{titleExtras}</h1>
-            {
-              servicesExtra?.map((service) => {
-                return (
-                  <div key={service.id}>
-                    <h1>{service.name}</h1>
-                  </div>
-                )
-              })
-            }
+            {servicesExtra?.map((service) => {
+              return (
+                <div key={service.id}>
+                  <h1>{service.name}</h1>
+                </div>
+              )
+            })}
           </div>
 
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             <h1 className='py-1 font-semibold'>{titleAdicional}</h1>
-            {
-              servicesAdicional?.map((service) => {
-                return (
-                  <div key={service.id}>
-                    <h1>{service.name}</h1>
-                  </div>
-                )
-              })
-            }
+            {servicesAdicional?.map((service) => {
+              return (
+                <div key={service.id}>
+                  <h1>{service.name}</h1>
+                </div>
+              )
+            })}
           </div>
         </div>
-
       </main>
     </>
-
   )
 }
 

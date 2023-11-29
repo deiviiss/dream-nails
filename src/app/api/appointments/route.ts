@@ -43,7 +43,6 @@ export async function GET(): Promise<NextResponse> {
           Customer: true
         }
       })
-      console.log('appointments in api', appointments)
       return NextResponse.json(appointments)
     }
 
@@ -52,7 +51,6 @@ export async function GET(): Promise<NextResponse> {
     })
   } catch (error) {
     if (error instanceof Error) {
-      console.log('error api', error)
       return NextResponse.json({
         message: error.message
       })

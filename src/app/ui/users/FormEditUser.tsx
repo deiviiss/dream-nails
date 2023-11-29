@@ -50,25 +50,22 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
     }))
   }
 
-  const isDisabled = (
-    userData.email === '' ||
-    userData.role === ''
-  )
+  const isDisabled = userData.email === '' || userData.role === ''
 
   return (
     <div className='flex flex-col items-center justify-center h-[calc(100vh-4rem)]'>
-      {
-        error !== undefined ? <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div> : null
-      }
+      {error !== undefined ? (
+        <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div>
+      ) : null}
 
-      <form onSubmit={handleSubmit} className=' bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'>
-
-        <h1 className=' text-2xl font-bold mb-4'>
-          Update User
-        </h1>
+      <form
+        onSubmit={handleSubmit}
+        className=' bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'
+      >
+        <h1 className=' text-2xl font-bold mb-4'>Update User</h1>
 
         <input
-          type="email"
+          type='email'
           placeholder='example@mail.com'
           name='email'
           value={userData.email}
@@ -76,19 +73,35 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
         <input
-          type="text"
+          type='text'
           placeholder='Role'
           name='role'
           value={userData.role}
           onChange={handleChange}
           className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />
-        <div className="flex gap-x-3">
-          <> <button type='submit' className='bg-highlight px-4 py-2 rounded-md hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed' disabled={isDisabled}>
-            Update
-          </button><button type='button' onClick={() => { router.push('/users') }} className='bg-red-800 px-4 py-2 rounded-md hover:bg-red-600'>Cancel</button></>
+        <div className='flex gap-x-3'>
+          <>
+            {' '}
+            <button
+              type='submit'
+              className='bg-highlight px-4 py-2 rounded-md hover:opacity-75 disabled:opacity-50 disabled:cursor-not-allowed'
+              disabled={isDisabled}
+            >
+              Update
+            </button>
+            <button
+              type='button'
+              onClick={() => {
+                router.push('/users')
+              }}
+              className='bg-red-800 px-4 py-2 rounded-md hover:bg-red-600'
+            >
+              Cancel
+            </button>
+          </>
         </div>
-      </form >
-    </div >
+      </form>
+    </div>
   )
 }
