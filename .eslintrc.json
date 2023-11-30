@@ -23,27 +23,27 @@
     //   //   "proseWrap": "always"
     //   // }
     // ],
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          [
-            "builtin",
-            "external"
-          ],
-          "internal",
-          [
-            "parent",
-            "sibling",
-            "index"
-          ]
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
-      }
-    ],
+    // "import/order": [
+    //   "error",
+    //   {
+    //     "groups": [
+    //       [
+    //         "builtin",
+    //         "external"
+    //       ],
+    //       "internal",
+    //       [
+    //         "parent",
+    //         "sibling",
+    //         "index"
+    //       ]
+    //     ],
+    //     "alphabetize": {
+    //       "order": "asc",
+    //       "caseInsensitive": true
+    //     }
+    //   }
+    // ],
     "@typescript-eslint/object-curly-spacing": "off",
     "@typescript-eslint/space-before-function-paren": "off",
     "react/prop-types": "off",
