@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 import './ui/globals.css'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
@@ -29,6 +30,7 @@ export default async function RootLayout({
           <Footer />
           {session == null ? <LoginButton /> : <SignOutButton />}
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
