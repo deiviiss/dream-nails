@@ -2,6 +2,7 @@
 import { type NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
+
 import { AppointmentCard } from '@/app/ui/apointments/AppointmentCard'
 import { AppointmentFormCreate } from '@/app/ui/apointments/AppointmentFormCreate'
 import Modal from '@/app/ui/Modal'

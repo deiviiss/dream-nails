@@ -1,6 +1,7 @@
 import { type User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import { HiPencil, HiTrash } from 'react-icons/hi'
+
 import { useUsers } from '@/context/UsersContext'
 
 export const UserCard = ({ user }: { user: User }): JSX.Element => {

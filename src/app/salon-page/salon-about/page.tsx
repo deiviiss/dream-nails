@@ -1,5 +1,6 @@
 'use client'
 import { type NextPage } from 'next'
+
 import Hero from '@/app/ui/Hero'
 
 const ServicesPage: NextPage = () => {

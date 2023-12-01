@@ -1,6 +1,7 @@
 'use client'
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
+
 import Hero from '@/app/ui/Hero'
 import { ListServicesPrice } from '@/app/ui/ListPrice'
 import { ListServicesPriceAdicional } from '@/app/ui/ListPriceAdicional'

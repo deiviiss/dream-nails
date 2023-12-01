@@ -8,6 +8,7 @@ import { FaRegCreditCard } from 'react-icons/fa6'
 import { IoStorefrontOutline } from 'react-icons/io5'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
+
 import { Button } from '@/app/ui/button'
 import { type CategoryForm } from '@/interfaces/Category'
 import { type PlaceForm } from '@/interfaces/Place'

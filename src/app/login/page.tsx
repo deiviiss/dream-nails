@@ -1,8 +1,9 @@
 'use client'
 import { type NextPage } from 'next'
-import { useSession, signIn } from 'next-auth/react'
 import { useRouter, redirect } from 'next/navigation'
+import { useSession, signIn } from 'next-auth/react'
 import { useState, type FormEvent, type ChangeEvent, useEffect } from 'react'
+
 import { type SignUpUser } from '@/interfaces/User'
 
 const LoginPage: NextPage = () => {

@@ -2,6 +2,7 @@
 import { type CancelledAppointment, type Appointment } from '@prisma/client'
 import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
+
 import {
   type AppointmentCustomer,
   type CreateAppointment,
@@ -54,9 +55,7 @@ export const useAppointments = (): AppointmentsContextType => {
 export const AppointmentsProvider = ({ children }: Props): JSX.Element => {
   const [appointments, setAppointments] = useState<AppointmentCustomer[]>([])
 
-  const [cancelledAppointments, setCancelledAppointments] = useState<
-    CancelledAppointment[]
-  >([])
+  const [cancelledAppointments, setCancelledAppointments] = useState<CancelledAppointment[]>([])
 
   const loadAppointments = async (): Promise<void> => {
     try {

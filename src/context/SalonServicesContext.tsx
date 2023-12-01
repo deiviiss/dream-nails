@@ -2,11 +2,12 @@
 import { type SalonService } from '@prisma/client'
 import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
+
 import { type Props, type SalonServiceContextType } from '@/interfaces/Props'
 
 const SalonServiceContext = createContext<SalonServiceContextType>({
   salonServices: [],
-  loadSalonServices: async () => { }
+  loadSalonServices: async () => {}
 })
 export const useSalonService = (): SalonServiceContextType => {
   const context = useContext(SalonServiceContext)

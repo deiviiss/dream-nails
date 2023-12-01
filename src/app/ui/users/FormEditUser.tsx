@@ -2,6 +2,7 @@
 import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent, type ChangeEvent, useEffect } from 'react'
+
 import { useUsers } from '@/context/UsersContext'
 import { type UpdateUser } from '@/interfaces/User'
 
@@ -54,10 +55,9 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
 
   return (
     <div className='flex flex-col items-center justify-center h-[calc(100vh-4rem)]'>
-      {error !== undefined ? (
-        <div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div>
-      ) : null}
-
+      {error !== undefined
+        ? (<div className='bg-red-500 text-white p-2 mb-2 rounded'>{error}</div>)
+        : null}
       <form
         onSubmit={handleSubmit}
         className=' bg-primary flex flex-col justify-center items-center mx-2 px-8 py-10 gap-y-4 rounded'

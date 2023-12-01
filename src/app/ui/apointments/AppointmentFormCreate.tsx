@@ -2,11 +2,13 @@
 import { type Customer } from '@prisma/client'
 import { AxiosError } from 'axios'
 import { useState, type ChangeEvent, type FormEvent, useEffect } from 'react'
+
 // import { useAppointments } from '@/context/AppointmentsContext'
-import { CustomerSearch } from '../customers/CustomerSearch'
 import { useSalonService } from '@/context/SalonServicesContext'
 import { type CreateAppointmentService } from '@/interfaces/Appointment'
 import { formatDateToYYYYMMDD, groupServicesByCategory } from '@/libs/utils'
+
+import { CustomerSearch } from '../customers/CustomerSearch'
 
 interface AppointmentFormProps {
   setOpen: (open: boolean) => void
@@ -42,11 +44,8 @@ export const AppointmentFormCreate = ({
     loadSalonServices()
   }, [loadSalonServices])
 
-  const handleChange = <
-    T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-  >(
-    e: ChangeEvent<T>
-  ): void => {
+  const handleChange = <T extends HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+    e: ChangeEvent<T>): void => {
     const { name, value } = e.target
     setAppointmentData((prevAppointmentData) => ({
       ...prevAppointmentData,
@@ -57,7 +56,6 @@ export const AppointmentFormCreate = ({
   const handleCreateAppointment = async (
     e: FormEvent<HTMLFormElement>
   ): Promise<void> => {
-
     try {
       // const rta = await createAppointment(appointmentData)
       // //! changed with toast
@@ -93,11 +91,11 @@ export const AppointmentFormCreate = ({
 
           <div className='grid grid-cols-2 items-center'>
             <label htmlFor='customer'>Cliente:</label>
-            {selectedCustomer !== undefined ? (
-              <p>{selectedCustomer.name}</p>
-            ) : (
-              <p>Por elegir</p>
-            )}
+            {
+              selectedCustomer !== undefined
+                ? (<p>{selectedCustomer.name}</p>)
+                : (<p>Por elegir</p>)
+            }
           </div>
 
           <div className='grid grid-cols-2 items-center'>

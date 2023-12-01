@@ -1,6 +1,7 @@
 import { type Appointment } from '@prisma/client'
-import { getServerSession } from 'next-auth'
 import { NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth'
+
 import { prisma } from '@/libs/prisma'
 
 export async function GET(): Promise<NextResponse> {
@@ -21,7 +22,7 @@ export async function GET(): Promise<NextResponse> {
             Customer: true
           }
         })
-
+      console.log('appointmentsComplete', appointmentsComplete)
       // return NextResponse.json(appointmentsComplete)
       return NextResponse.json('appointmentsComplete')
     }
@@ -71,6 +72,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         email: session?.user.email
       }
     })
+    console.log('user', user)
     // se recibe los datos del la cita completa
     // se marca el appointment como complete
     // se crea registro en tabla de visitHistory

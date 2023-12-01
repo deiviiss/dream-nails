@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import Form from '@/app/ui/expenses/edit-form'
 import {

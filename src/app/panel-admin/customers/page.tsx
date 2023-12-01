@@ -4,8 +4,10 @@ import { type NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { GrUpdate } from 'react-icons/gr'
-import { CustomerCard } from '../../ui/customers/CustomerCard'
+
 import { useCustomers } from '@/context/CustomersContext'
+
+import { CustomerCard } from '../../ui/customers/CustomerCard'
 
 const CustomersPage: NextPage = () => {
   const { data: session } = useSession()

@@ -2,6 +2,7 @@
 import { type Customer } from '@prisma/client'
 import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
+
 import { type CreateCustomer, type UpdateCustomer } from '@/interfaces/Customer'
 import {
   type Props,
@@ -11,7 +12,7 @@ import {
 
 const CustomersContext = createContext<CustomersContextType>({
   customers: [],
-  loadCustomers: async () => { },
+  loadCustomers: async () => {},
   // ? Estos son los valores por defecto cuando se crea el contexto, ¿Cómo lo defino? Lo tuve que implementar aquí y en el provider
   getOneCustomer: async (id: number) => {
     const res = await axios.get<{ customer: Customer }>(`/api/customers/${id}`)

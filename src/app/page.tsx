@@ -2,6 +2,7 @@ import { type NextPage } from 'next'
 import { getServerSession } from 'next-auth'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import Hero from '@/app/ui/Hero'
 import Navbar from '@/app/ui/Navbar'
 

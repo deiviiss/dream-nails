@@ -1,4 +1,5 @@
 import { type NextPage } from 'next'
+
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import Form from '@/app/ui/expenses/create-form'
 import { fetchCategoriesToForm, fetchPlacesToForm } from '@/libs/data'

@@ -1,6 +1,6 @@
 import { type Expense } from '@prisma/client'
 
-export type StateExpense = {
+export interface StateExpense {
   errors?: {
     name?: string[]
     amount?: string[]

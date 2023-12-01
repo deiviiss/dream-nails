@@ -12,7 +12,7 @@ interface SlideButtonsProps {
 const SlideButtons = ({
   slides,
   curr = 0,
-  setCurr = () => { }
+  setCurr = () => {}
 }: SlideButtonsProps): JSX.Element => {
   return (
     <div className='absolute bottom-4 right-0 left-0'>
@@ -20,8 +20,9 @@ const SlideButtons = ({
         {slides.map((slide, i) => (
           <button
             key={i}
-            className={`transition-all w-2 h-2 bg-primary rounded-full ${curr === i ? 'p-2' : 'opacity-75'
-              }`}
+            className={`transition-all w-2 h-2 bg-primary rounded-full ${
+              curr === i ? 'p-2' : 'opacity-75'
+            }`}
             onClick={() => {
               setCurr(i)
             }}

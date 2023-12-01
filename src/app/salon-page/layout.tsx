@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import { getServerSession } from 'next-auth'
+
 import Navbar from '@/app/ui/Navbar'
 
 export const metadata: Metadata = {

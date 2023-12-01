@@ -1,59 +1,36 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
   "extends": [
-    "next/core-web-vitals"
+    "plugin:react/recommended",
+    "standard-with-typescript"
   ],
-  // "plugins": [
-  //   "prettier"
-  // ],
   "settings": {
     "react": {
       "version": "detect"
     }
   },
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
   "rules": {
-    // "prettier/prettier": [
-    //   "error"
-    //   // {
-    //   //   "semi": false,
-    //   //   "jsxSingleQuote": true,
-    //   //   "singleQuote": true,
-    //   //   "trailingComma": "none",
-    //   //   "endOfLine": "auto",
-    //   //   "objectCurlySpacing": false,
-    //   //   "proseWrap": "always"
-    //   // }
-    // ],
-    // "import/order": [
-    //   "error",
-    //   {
-    //     "groups": [
-    //       [
-    //         "builtin",
-    //         "external"
-    //       ],
-    //       "internal",
-    //       [
-    //         "parent",
-    //         "sibling",
-    //         "index"
-    //       ]
-    //     ],
-    //     "alphabetize": {
-    //       "order": "asc",
-    //       "caseInsensitive": true
-    //     }
-    //   }
-    // ],
-    "@typescript-eslint/object-curly-spacing": "off",
     "@typescript-eslint/space-before-function-paren": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/no-floating-promises": "off",
-    "@typescript-eslint/no-misused-promises": "off"
-  },
-  "ignorePatterns": [
-    "src/app/globals.css",
-    "/next-env.d.ts",
-    "src/app/favicon.ico"
-  ]
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/prefer-optional-chain": "off",
+    "@typescript-eslint/unbound-method": "off"
+  }
 }

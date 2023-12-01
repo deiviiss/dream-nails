@@ -1,5 +1,6 @@
 import { clsx } from 'clsx'
 import Link from 'next/link'
+
 import { arapey } from '@/app/ui/fonts'
 
 interface Breadcrumb {
@@ -25,9 +26,9 @@ export default function Breadcrumbs({
             )}
           >
             <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-            {index < breadcrumbs.length - 1 ? (
-              <span className='mx-3 inline-block'>/</span>
-            ) : null}
+            {index < breadcrumbs.length - 1
+              ? (<span className='mx-3 inline-block'>/</span>)
+              : null}
           </li>
         ))}
       </ol>

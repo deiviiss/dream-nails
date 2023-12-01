@@ -1,8 +1,10 @@
 import { Suspense } from 'react'
+
+import ExpensesTable from '@/app/ui/expenses/table'
+
 import Breadcrumbs from '../ui/Breadcrumbs'
 import { CreateExpense } from '../ui/expenses/buttons'
 import Search from '../ui/search'
-import ExpensesTable from '@/app/ui/expenses/table'
 
 export default async function ExpensesPage({
   searchParams

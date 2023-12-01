@@ -1,4 +1,5 @@
 import { type SalonService } from '@prisma/client'
+
 import { type GroupedServices } from '@/interfaces/Props'
 
 export const formatDateToLocal = (

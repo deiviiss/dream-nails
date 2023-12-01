@@ -1,5 +1,6 @@
 import { type Customer } from '@prisma/client'
 import { type ChangeEvent, useState, useEffect } from 'react'
+
 import { useCustomers } from '@/context/CustomersContext'
 
 interface CustomerSearchProps {
@@ -26,7 +27,6 @@ export const CustomerSearch = ({
   }
 
   const handleResultClick = (customer: Customer): void => {
-
     setSelectedCustomer(customer)
     setSearchTerm('')
   }

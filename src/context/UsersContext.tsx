@@ -2,13 +2,14 @@
 import { type User } from '@prisma/client'
 import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
+
 import { type Props, type UsersContextType } from '@/interfaces/Props'
 import { type CreateUser, type UpdateUser } from '@/interfaces/User'
 
 const UsersContext = createContext<UsersContextType>({
   users: [],
-  loadUsers: async () => { },
-  createUser: async () => { },
+  loadUsers: async () => {},
+  createUser: async () => {},
   updateUser: async (id: number, user: UpdateUser) => {
     return id
   },

@@ -1,5 +1,6 @@
 import { unstable_noStore as noStore } from 'next/cache'
 import { notFound } from 'next/navigation'
+
 import { type CategoryForm } from '@/interfaces/Category'
 import {
   type ExpenseForm,
@@ -16,6 +17,7 @@ export async function fetchFilteredExpenses(
 ): Promise<ExpenseWithCategoryAndPlace[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
+  console.log('offset', offset)
   try {
     const expenses = await prisma.expense.findMany({
       where: {

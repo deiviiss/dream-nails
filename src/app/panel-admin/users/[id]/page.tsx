@@ -1,20 +1,22 @@
 'use client'
-import axios from 'axios'
+
 import { type NextPage } from 'next'
 import { useParams } from 'next/navigation'
-import { FormEditUser } from '@/app/ui/users/FormEditUser'
-import { type UpdateUser } from '@/interfaces/User'
 
-const fetchUser = async (id: number): Promise<UpdateUser> => {
-  const response = await axios.get<UpdateUser>(`/api/users/${id}`)
+// import { FormEditUser } from '@/app/ui/users/FormEditUser'
+// import { type UpdateUser } from '@/interfaces/User'
 
-  const user: UpdateUser = response.data
+// const fetchUser = async (id: number): Promise<UpdateUser> => {
+//   const response = await axios.get<UpdateUser>(`/api/users/${id}`)
 
-  return user
-}
+//   const user: UpdateUser = response.data
+
+//   return user
+// }
 
 const UserEditPage: NextPage = () => {
   const params = useParams()
+  console.log(params)
   //! implement edit page
   // const user: UpdateUser = await fetchUser(Number(params.id))
 

@@ -54,15 +54,17 @@ export default function AccordionFooter({
           >
             <h1 className='font-medium text-lg'>{item.title}</h1>
             <BsPlusLg
-              className={`ml-auto transition-all duration-1000 ease-in-out transform ${item.id === activeItem ? 'rotate-45' : ''
-                }`}
+              className={`ml-auto transition-all duration-1000 ease-in-out transform ${
+                item.id === activeItem ? 'rotate-45' : ''
+              }`}
               size={25}
               color='#fff'
             />
           </div>
           <div
-            className={`transition-all duration-1000 ease-in-out ${item.id === activeItem ? '' : 'hidden'
-              }`}
+            className={`transition-all duration-1000 ease-in-out ${
+              item.id === activeItem ? '' : 'hidden'
+            }`}
           >
             {item.enlaces.map((enlace) => (
               <ul key={enlace.id}>
