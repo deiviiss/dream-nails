@@ -42,7 +42,7 @@ export async function fetchFilteredExpenses(
         }
       },
       orderBy: {
-        name: 'asc'
+        expense_date: 'desc'
       }
       // ,
       // take: ITEMS_PER_PAGE, // Estableces el límite aquí
