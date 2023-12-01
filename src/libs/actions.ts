@@ -57,10 +57,7 @@ export async function createExpense(
   let expenseDateValue: FormDataEntryValue | null | Date =
     formData.get('expenseDate')
 
-  if (
-    expenseDateValue !== null &&
-    expenseDateValue !== '' &&
-    expenseDateValue instanceof Date
+  if (expenseDateValue !== null && expenseDateValue !== ''
   ) {
     expenseDateValue = new Date(expenseDateValue.toString())
   }
@@ -149,11 +146,7 @@ export async function updateExpense(
   let expenseDateValue: FormDataEntryValue | null | Date =
     formData.get('expenseDate')
 
-  if (
-    expenseDateValue !== null &&
-    expenseDateValue !== '' &&
-    expenseDateValue instanceof Date
-  ) {
+  if (expenseDateValue !== null && expenseDateValue !== '') {
     expenseDateValue = new Date(expenseDateValue.toString())
   }
 
@@ -170,7 +163,7 @@ export async function updateExpense(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Campos faltantes. No se pudo crear la factura.'
+      message: 'Campos faltantes. No se pudo actualiazar el gasto.'
     }
   }
 
