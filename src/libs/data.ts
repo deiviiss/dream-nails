@@ -17,14 +17,14 @@ export async function fetchFilteredExpenses(
 ): Promise<ExpenseWithCategoryAndPlace[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
-  console.log('offset', offset)
+
   try {
     const expenses = await prisma.expense.findMany({
       where: {
         OR: [
-          { name: { contains: query, mode: 'insensitive' } }
-          // { metodo: { contains: query, mode: 'insensitive' } }
-          // { amount: { equals: parseFloat(query) } }
+          { name: { contains: query, mode: 'insensitive' } },
+          { method: { contains: query, mode: 'insensitive' } },
+          { amount: { equals: Number(query) } }
         ]
       },
       include: {
@@ -43,10 +43,9 @@ export async function fetchFilteredExpenses(
       },
       orderBy: {
         expense_date: 'desc'
-      }
-      // ,
-      // take: ITEMS_PER_PAGE, // Estableces el límite aquí
-      // skip: offset // Aplicas el offset para la paginación
+      },
+      take: ITEMS_PER_PAGE, // Establece el límite aquí
+      skip: offset // Aplicas el offset para la paginación
     })
     return expenses
   } catch (error) {
@@ -55,9 +54,28 @@ export async function fetchFilteredExpenses(
   }
 }
 
+export async function fetchExpensesPages(query: string): Promise<number> {
+  noStore()
+  try {
+    const count = await prisma.expense.count({
+      where: {
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } }
+        ]
+      }
+    })
+
+    const totalPages = Math.ceil(Number(count) / ITEMS_PER_PAGE)
+
+    return totalPages
+  } catch (error) {
+    console.error('Database Error:', error)
+    throw new Error('Failed to fetch total number of expenses.')
+  }
+}
+
 export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
   noStore()
-
   try {
     const categories = await prisma.category.findMany({
       select: {
@@ -75,7 +93,6 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
 
 export async function fetchPlacesToForm(): Promise<PlaceForm[]> {
   noStore()
-
   try {
     const places = await prisma.place.findMany({
       select: {
@@ -92,7 +109,6 @@ export async function fetchPlacesToForm(): Promise<PlaceForm[]> {
 
 export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
   noStore()
-
   try {
     const expense = await prisma.expense.findFirst({
       where: {
