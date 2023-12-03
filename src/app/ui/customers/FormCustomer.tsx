@@ -1,9 +1,9 @@
 'use client'
 import { AxiosError } from 'axios'
-import { type CreateCustomer } from '@/interfaces/Customer'
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 
 import { useCustomers } from '@/context/CustomersContext'
+import { type CreateCustomer } from '@/interfaces/Customer'
 
 interface FormCustomerProps {
   open: boolean

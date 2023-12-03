@@ -5,11 +5,10 @@ import { useEffect, useState } from 'react'
 import { BsFillSearchHeartFill } from 'react-icons/bs'
 import { GrUpdate } from 'react-icons/gr'
 
+import { FormCreateCustomer } from '../ui/customers/FormCustomer'
 import Modal from '@/app/ui/Modal'
 import { useAppointments } from '@/context/AppointmentsContext'
 import { useCustomers } from '@/context/CustomersContext'
-
-import { FormCreateCustomer } from '../ui/customers/FormCustomer'
 
 const AdminPage: NextPage = () => {
   const [openModal, setOpenModal] = useState(false)

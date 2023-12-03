@@ -2,10 +2,9 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import Modal from '../Modal'
 import { AppointmentForm } from '@/app/ui/apointments/AppointmentFormCancel'
 import { type AppointmentCustomer } from '@/interfaces/Appointment'
-
-import Modal from '../Modal'
 
 interface AppointmentCardProps {
   appointment: AppointmentCustomer

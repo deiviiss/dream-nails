@@ -1,7 +1,6 @@
+import { DeleteExpense, UpdateExpense } from './buttons'
 import { fetchFilteredExpenses } from '@/libs/data'
 import { formatDateToLocal, formatMethod, formatCurrency } from '@/libs/utils'
-
-import { DeleteExpense, UpdateExpense } from './buttons'
 
 export default async function ExpensesTable({
   query,

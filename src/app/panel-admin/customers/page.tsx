@@ -5,9 +5,8 @@ import { useSession } from 'next-auth/react'
 import { useEffect } from 'react'
 import { GrUpdate } from 'react-icons/gr'
 
-import { useCustomers } from '@/context/CustomersContext'
-
 import { CustomerCard } from '../../ui/customers/CustomerCard'
+import { useCustomers } from '@/context/CustomersContext'
 
 const CustomersPage: NextPage = () => {
   const { data: session } = useSession()
