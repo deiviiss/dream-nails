@@ -23,8 +23,7 @@ export async function fetchFilteredExpenses(
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } },
-          { method: { contains: query, mode: 'insensitive' } },
-          { amount: { equals: Number(query) } }
+          { method: { contains: query, mode: 'insensitive' } }
         ]
       },
       include: {
