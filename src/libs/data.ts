@@ -39,7 +39,34 @@ export async function fetchFilteredExpenses(
       take: ITEMS_PER_PAGE, // Establece el límite aquí
       skip: offset // Aplicas el offset para la paginación
     })
+
     return expenses
+  } catch (error) {
+    console.error('Database Error:', error)
+    throw new Error('Failed to fetch expenses.')
+  }
+}
+
+export async function fetchAmountExpenses(
+  query: string
+): Promise<number> {
+  noStore()
+
+  try {
+    const expensesAmount = await prisma.expense.aggregate({
+      where: {
+        OR: [
+          { name: { contains: query, mode: 'insensitive' } },
+          { method: { contains: query, mode: 'insensitive' } }
+        ]
+      },
+      _sum: {
+        amount: true
+      }
+    })
+    const totalAmount = expensesAmount._sum.amount || 0
+
+    return totalAmount
   } catch (error) {
     console.error('Database Error:', error)
     throw new Error('Failed to fetch expenses.')

@@ -4,6 +4,7 @@ import Breadcrumbs from '../ui/Breadcrumbs'
 import { CreateExpense } from '../ui/expenses/buttons'
 import Pagination from '../ui/pagination'
 import Search from '../ui/search'
+import ExpensesAmount from '@/app/ui/expenses/amounts-expenses'
 import ExpensesTable from '@/app/ui/expenses/table'
 import { fetchExpensesPages } from '@/libs/data'
 
@@ -32,6 +33,8 @@ export default async function ExpensesPage({
       </div>
 
       <div className='flex flex-col gap-2'>
+
+        <ExpensesAmount query={query} currentPage={currentPage} />
 
         <div className="mt-5 flex w-full justify-center">
           <Pagination totalPages={totalPages} />
