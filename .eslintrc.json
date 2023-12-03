@@ -22,6 +22,27 @@
     "react"
   ],
   "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          [
+            "builtin",
+            "external"
+          ],
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "@typescript-eslint/space-before-function-paren": "off",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
