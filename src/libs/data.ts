@@ -4,9 +4,8 @@ import { notFound } from 'next/navigation'
 import { type CategoryForm } from '@/interfaces/Category'
 import {
   type ExpenseForm,
-  type ExpenseWithCategoryAndPlace
+  type ExpenseWithCategory
 } from '@/interfaces/Expenses'
-import { type PlaceForm } from '@/interfaces/Place'
 import { prisma } from '@/libs/prisma'
 
 const ITEMS_PER_PAGE = 6
@@ -14,7 +13,7 @@ const ITEMS_PER_PAGE = 6
 export async function fetchFilteredExpenses(
   query: string,
   currentPage: number
-): Promise<ExpenseWithCategoryAndPlace[]> {
+): Promise<ExpenseWithCategory[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
@@ -28,12 +27,6 @@ export async function fetchFilteredExpenses(
       },
       include: {
         Category: {
-          select: {
-            id: true,
-            name: true
-          }
-        },
-        Place: {
           select: {
             id: true,
             name: true
@@ -90,22 +83,6 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
   }
 }
 
-export async function fetchPlacesToForm(): Promise<PlaceForm[]> {
-  noStore()
-  try {
-    const places = await prisma.place.findMany({
-      select: {
-        id: true,
-        name: true
-      }
-    })
-    return places
-  } catch (error) {
-    console.error('Database Error:', error)
-    throw new Error('Failed to fetch places.')
-  }
-}
-
 export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
   noStore()
   try {
@@ -119,7 +96,6 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
         amount: true,
         expense_date: true,
         category_id: true,
-        place_id: true,
         method: true
       }
     })

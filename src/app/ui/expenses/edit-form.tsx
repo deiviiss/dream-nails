@@ -5,24 +5,20 @@ import { useFormState } from 'react-dom'
 import { BsCashStack } from 'react-icons/bs'
 import { FaDollarSign } from 'react-icons/fa'
 import { FaRegCreditCard } from 'react-icons/fa6'
-import { IoStorefrontOutline } from 'react-icons/io5'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 
 import { Button } from '@/app/ui/button'
 import { type CategoryForm } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expenses'
-import { type PlaceForm } from '@/interfaces/Place'
 import { updateExpense } from '@/libs/actions'
 
 export default function EditExpenseForm({
   expense,
-  categories,
-  places
+  categories
 }: {
   expense: ExpenseForm
   categories: CategoryForm[]
-  places: PlaceForm[]
 }): JSX.Element {
   const updateExpenseWithId = updateExpense.bind(null, Number(expense.id))
   const initialState = { message: null, errors: {} }
@@ -165,39 +161,6 @@ export default function EditExpenseForm({
           </div>
           <div id='category-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.categoryId?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
-                {error}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        {/* Place */}
-        <div className='mb-4'>
-          <label htmlFor='place' className='mb-2 block text-sm font-medium'>
-            Elige un lugar
-          </label>
-          <div className='relative'>
-            <select
-              id='place'
-              name='placeId'
-              className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500'
-              defaultValue={expense.place_id}
-              aria-describedby='place-error'
-            >
-              <option value='' disabled>
-                Selecciona un lugar
-              </option>
-              {places.map((place) => (
-                <option key={place.id} value={place.id}>
-                  {place.name}
-                </option>
-              ))}
-            </select>
-            <IoStorefrontOutline className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500' />
-          </div>
-          <div id='place-error' aria-live='polite' aria-atomic='true'>
-            {state.errors?.placeId?.map((error: string) => (
               <p className='mt-2 text-sm text-red-500' key={error}>
                 {error}
               </p>

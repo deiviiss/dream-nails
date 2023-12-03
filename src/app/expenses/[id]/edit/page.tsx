@@ -4,8 +4,7 @@ import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import Form from '@/app/ui/expenses/edit-form'
 import {
   fetchExpenseById,
-  fetchCategoriesToForm,
-  fetchPlacesToForm
+  fetchCategoriesToForm
 } from '@/libs/data'
 
 export default async function Page({
@@ -15,13 +14,12 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const id = Number(params.id)
 
-  const [expense, categories, places] = await Promise.all([
+  const [expense, categories] = await Promise.all([
     fetchExpenseById(id),
-    fetchCategoriesToForm(),
-    fetchPlacesToForm()
+    fetchCategoriesToForm()
   ])
 
-  if (expense == null || categories == null || places === null) {
+  if (expense == null || categories == null) {
     notFound()
   }
 
@@ -37,7 +35,7 @@ export default async function Page({
           }
         ]}
       />
-      <Form expense={expense} categories={categories} places={places} />
+      <Form expense={expense} categories={categories} />
     </main>
   )
 }

@@ -192,30 +192,17 @@ model Category {
   @@map("categories")
 }
 
-model Place {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime?
-  Expense     Expense[]
-
-  @@map("places")
-}
-
 model Expense {
   id           Int       @id @default(autoincrement())
+  name         String
   amount       Float
-  user_id      Int
+  method       String
+  expense_date DateTime  @default(now())
   category_id  Int
+  user_id      Int
   created_at   DateTime  @default(now())
   updated_at   DateTime?
-  method       String
-  name         String
-  place_id     Int
-  expense_date DateTime  @default(now())
   Category     Category  @relation(fields: [category_id], references: [id])
-  Place        Place     @relation(fields: [place_id], references: [id])
   User         User      @relation(fields: [user_id], references: [id])
 
   @@map("expenses")

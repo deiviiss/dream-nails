@@ -29,9 +29,6 @@ const FormExpenseSchema = z.object({
   }),
   categoryId: z.string({
     invalid_type_error: 'Por favor seleccione una categoria.'
-  }),
-  placeId: z.string({
-    invalid_type_error: 'Por favor seleccione un lugar.'
   })
 })
 
@@ -67,8 +64,7 @@ export async function createExpense(
     amount: formData.get('amount'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
-    categoryId: formData.get('categoryId'),
-    placeId: formData.get('placeId')
+    categoryId: formData.get('categoryId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -95,7 +91,7 @@ export async function createExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, placeId, expenseDate, method } =
+  const { name, amount, categoryId, expenseDate, method } =
     validatedFields.data
 
   try {
@@ -104,7 +100,6 @@ export async function createExpense(
         name,
         amount,
         category_id: Number(categoryId),
-        place_id: Number(placeId),
         expense_date: expenseDate,
         method,
         user_id: user.id
@@ -129,7 +124,7 @@ export async function deleteExpense(
         id
       }
     })
-    revalidatePath('/dashboard/invoices')
+    revalidatePath('/expenses')
     return { message: 'Deleted expense.' }
   } catch (error) {
     return {
@@ -155,8 +150,7 @@ export async function updateExpense(
     amount: formData.get('amount'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
-    categoryId: formData.get('categoryId'),
-    placeId: formData.get('placeId')
+    categoryId: formData.get('categoryId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -168,7 +162,7 @@ export async function updateExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, placeId, expenseDate, method } =
+  const { name, amount, categoryId, expenseDate, method } =
     validatedFields.data
 
   try {
@@ -180,7 +174,6 @@ export async function updateExpense(
         name,
         amount,
         category_id: Number(categoryId),
-        place_id: Number(placeId),
         expense_date: expenseDate,
         method
       }

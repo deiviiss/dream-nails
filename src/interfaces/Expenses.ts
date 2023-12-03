@@ -7,18 +7,13 @@ export interface StateExpense {
     method?: string[]
     expenseDate?: string[]
     categoryId?: string[]
-    placeId?: string[]
     userId?: string[]
   }
   message?: string | null
 }
 
-export interface ExpenseWithCategoryAndPlace extends Expense {
+export interface ExpenseWithCategory extends Expense {
   Category: {
-    id: number
-    name: string
-  }
-  Place: {
     id: number
     name: string
   }
@@ -30,6 +25,5 @@ export interface ExpenseForm {
   amount: number
   expense_date: Date
   category_id: number
-  place_id: number
   method: string
 }

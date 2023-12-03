@@ -2,11 +2,10 @@ import { type NextPage } from 'next'
 
 import Breadcrumbs from '@/app/ui/Breadcrumbs'
 import Form from '@/app/ui/expenses/create-form'
-import { fetchCategoriesToForm, fetchPlacesToForm } from '@/libs/data'
+import { fetchCategoriesToForm } from '@/libs/data'
 
 const Page: NextPage = async () => {
   const categories = await fetchCategoriesToForm()
-  const places = await fetchPlacesToForm()
 
   return (
     <main>
@@ -20,7 +19,7 @@ const Page: NextPage = async () => {
           }
         ]}
       />
-      <Form categories={categories} places={places} />
+      <Form categories={categories} />
     </main>
   )
 }

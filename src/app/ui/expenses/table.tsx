@@ -78,9 +78,6 @@ export default async function ExpensesTable({
                     <th scope='col' className='px-4 py-5 font-medium'>
                       Fecha
                     </th>
-                    <th scope='col' className='px-4 py-5 font-medium'>
-                      Lugar
-                    </th>
                   </tr>
                 </thead>
 
@@ -106,9 +103,6 @@ export default async function ExpensesTable({
                           expense.expense_date.toISOString(),
                           'es-Mx'
                         )}
-                      </td>
-                      <td className='whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
-                        {expense.Place.name}
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>
