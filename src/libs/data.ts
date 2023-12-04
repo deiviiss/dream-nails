@@ -73,6 +73,30 @@ export async function fetchAmountExpenses(
   }
 }
 
+export async function fetchCreditExpenses(
+  query: string
+): Promise<number> {
+  noStore()
+
+  try {
+    const creditExpensesTotal = await prisma.expense.aggregate({
+      where: {
+        method: { contains: 'credit', mode: 'insensitive' }
+      },
+      _sum: {
+        amount: true
+      }
+    })
+
+    const totalCreditExpenses = creditExpensesTotal._sum.amount || 0
+
+    return totalCreditExpenses
+  } catch (error) {
+    console.error('Database Error:', error)
+    throw new Error('Failed to fetch total credit expenses.')
+  }
+}
+
 export async function fetchExpensesPages(query: string): Promise<number> {
   noStore()
   try {
