@@ -41,7 +41,7 @@ export default async function ExpensesPage({
 
         <div className="mt-5 flex w-full justify-center">
           <Pagination totalPages={totalPages} />
-          TotalCredit</div>
+        </div>
 
         <Suspense key={`${query}${currentPage}`} fallback='Loading'>
           <ExpensesTable query={query} currentPage={currentPage} />
