@@ -33,9 +33,10 @@ export async function fetchFilteredExpenses(
           }
         }
       },
-      orderBy: {
-        expense_date: 'desc'
-      },
+      orderBy: [
+        { expense_date: 'desc' },
+        { created_at: 'desc' }
+      ],
       take: ITEMS_PER_PAGE, // Establece el límite aquí
       skip: offset // Aplicas el offset para la paginación
     })
