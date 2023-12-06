@@ -125,6 +125,9 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
       select: {
         id: true,
         name: true
+      },
+      orderBy: {
+        name: 'asc'
       }
     })
 
