@@ -5,8 +5,7 @@ import { CreateExpense } from '../ui/expenses/buttons'
 import Pagination from '../ui/pagination'
 import Search from '../ui/search'
 import ExpensesTable from '@/app/ui/expenses/table'
-import TotalCredit from '@/app/ui/expenses/total-credit'
-import TotalAllExpenses from '@/app/ui/expenses/total-general'
+
 import { fetchExpensesPages } from '@/libs/data'
 
 export default async function ExpensesPage({
@@ -35,17 +34,13 @@ export default async function ExpensesPage({
 
       <div className='flex flex-col gap-2'>
 
-        <TotalAllExpenses query={query} />
-
-        <TotalCredit query={query} />
+        <Suspense key={`${query}${currentPage}`} fallback='Loading'>
+          <ExpensesTable query={query} currentPage={currentPage} />
+        </Suspense>
 
         <div className="mt-5 flex w-full justify-center">
           <Pagination totalPages={totalPages} />
         </div>
-
-        <Suspense key={`${query}${currentPage}`} fallback='Loading'>
-          <ExpensesTable query={query} currentPage={currentPage} />
-        </Suspense>
       </div>
     </main>
   )
