@@ -1,4 +1,3 @@
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
 import TotalCredit from '@/app/ui/monedex/expenses/total-credit'
 import TotalAllExpenses from '@/app/ui/monedex/expenses/total-general'
 import { fetchTotalAmountByCategory } from '@/libs/data'
