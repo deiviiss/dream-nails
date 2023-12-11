@@ -5,7 +5,7 @@ export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     if (
       (request.nextUrl.pathname.startsWith('/panel-admin') ||
-        request.nextUrl.pathname.startsWith('/expenses') ||
+        request.nextUrl.pathname.startsWith('/monedex') ||
         request.nextUrl.pathname.startsWith('/users')) &&
       request.nextauth.token?.role !== 'admin' &&
       request.nextauth.token?.role !== 'stylist'
@@ -28,6 +28,6 @@ export const config = {
     '/profile/:path*',
     '/panel-admin/:path*',
     '/users/:path*',
-    '/expenses/:path*'
+    '/monedex/:path*'
   ]
 }

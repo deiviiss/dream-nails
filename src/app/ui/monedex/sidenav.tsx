@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import { FaPowerOff } from 'react-icons/fa6'
-import NavLinks from '@/app/ui/dashboard/nav-links'
-import AppLogo from '@/app/ui/logo-app'
+import AppLogo from '@/app/ui/monedex/logo-app'
+import NavLinks from '@/app/ui/monedex/nav-links'
 
 export default function SideNav() {
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link
         className="mb-2 flex h-20 items-end justify-start rounded-md bg-tertiary p-4 md:h-40"
-        href="/expenses/dashboard"
+        href="/monedex"
       >
         <div className=" text-white ">
           <AppLogo />

@@ -15,7 +15,7 @@ export default function Breadcrumbs({
   breadcrumbs: Breadcrumb[]
 }): JSX.Element {
   return (
-    <nav aria-label='Breadcrumb' className='mb-6 block'>
+    <nav aria-label='Breadcrumb' className='mb-4 block'>
       <ol className={clsx(arapey.className, 'flex text-xl md:text-2xl')}>
         {breadcrumbs.map((breadcrumb, index) => (
           <li

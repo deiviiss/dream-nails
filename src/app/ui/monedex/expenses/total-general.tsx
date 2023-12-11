@@ -9,10 +9,8 @@ export default async function TotalAllExpenses({
   const totalAmount = await fetchAmountExpenses(query)
 
   return (
-    <div className='w-full'>
-      <div className='mt-6 flow-root text-end'>
-        <h1>Total gastado: {formatCurrency(totalAmount)}</h1>
-      </div>
+    <div className='flex w-full py-2'>
+      <h1>Total gastado: {formatCurrency(totalAmount)}</h1>
     </div>
   )
 }

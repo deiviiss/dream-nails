@@ -1,10 +1,10 @@
 import { type Metadata } from 'next'
-import SideNav from '@/app/ui/dashboard/sidenav'
+import SideNav from '@/app/ui/monedex/sidenav'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Gastos',
-    default: 'Gastos'
+    template: '%s | Monedex',
+    default: 'Monedex'
   }
 }
 
@@ -18,7 +18,9 @@ export default async function RootLayout({
       <div className="w-full flex-none md:w-64">
         <SideNav />
       </div>
-      <div className="p-6 md:overflow-y-auto md:p-12">{children}</div>
+      <div className="px-3 py-4 md:overflow-y-auto md:p-12">
+        {children}
+      </div>
     </div>
   )
 }

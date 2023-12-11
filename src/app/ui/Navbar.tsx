@@ -20,7 +20,7 @@ const navigationsProtect = [
   { id: 3, label: 'Precios', url: '/salon-page/prices' },
   { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' },
   { id: 5, label: 'Panel Admin', url: '/panel-admin' },
-  { id: 6, label: 'Gastos', url: '/expenses' }
+  { id: 6, label: 'Gastos', url: '/monedex' }
 ]
 
 const Navbar = ({ session }: { session: object | null }): JSX.Element => {

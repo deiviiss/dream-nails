@@ -22,7 +22,8 @@ export async function fetchFilteredExpenses(
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } },
-          { method: { contains: query, mode: 'insensitive' } }
+          { method: { contains: query, mode: 'insensitive' } },
+          { Category: { name: { contains: query, mode: 'insensitive' } } }
         ]
       },
       include: {
@@ -58,7 +59,8 @@ export async function fetchAmountExpenses(
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } },
-          { method: { contains: query, mode: 'insensitive' } }
+          { method: { contains: query, mode: 'insensitive' } },
+          { Category: { name: { contains: query, mode: 'insensitive' } } }
         ]
       },
       _sum: {
@@ -163,5 +165,53 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
   } catch (error) {
     console.error('Database Error:', error)
     throw new Error('Failed to fetch expense.')
+  }
+}
+
+export async function fetchTotalAmountByCategory(
+  query: string
+) {
+  noStore()
+
+  try {
+    // Primero, obtenemos las sumas de los gastos por categoría
+    const groupedExpenses = await prisma.expense.groupBy({
+      by: [
+        'category_id'
+      ],
+      _sum: {
+        amount: true
+      },
+      orderBy: [{
+        _sum: {
+          amount: 'desc'
+        }
+      }]
+    })
+
+    // Luego, obtenemos las categorías para esas sumas
+    const groupedExpensesWithCategory = await Promise.all(
+      groupedExpenses.map(async (groupedExpense) => {
+        const category = await prisma.category.findUnique({
+          where: {
+            id: groupedExpense.category_id
+          },
+          select: {
+            name: true
+          }
+        })
+
+        return {
+          ...groupedExpense,
+          Category: category
+        }
+      })
+    )
+
+    // Finalmente,retornamos el resultado
+    return groupedExpensesWithCategory
+  } catch (error) {
+    console.error('Database Error:', error)
+    throw new Error('Failed to fetch total amount by category.')
   }
 }

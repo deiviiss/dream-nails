@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 
-import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import Form from '@/app/ui/expenses/create-form'
+import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
+import Form from '@/app/ui/monedex/expenses/create-form'
 import { fetchCategoriesToForm } from '@/libs/data'
 
 const Page: NextPage = async () => {
@@ -11,10 +11,10 @@ const Page: NextPage = async () => {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Gastos', href: '/expenses' },
+          { label: 'Gastos', href: '/monedex/expenses' },
           {
             label: 'Crear Gasto',
-            href: '/expenses/create',
+            href: '/monedex/expenses/create',
             active: true
           }
         ]}

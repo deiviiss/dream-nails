@@ -9,9 +9,8 @@ import { TbCurrencyDollar } from 'react-icons/tb'
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Inicio', href: '/expenses/dashboard', icon: IoHomeOutline },
-  { name: 'Gastos', href: '/expenses', icon: TbCurrencyDollar }
-  // { name: 'Clientes', href: '/dashboard/customers', icon: FaRegUser }
+  { name: 'Inicio', href: '/monedex', icon: IoHomeOutline },
+  { name: 'Gastos', href: '/monedex/expenses', icon: TbCurrencyDollar }
 ]
 
 export default function NavLinks() {

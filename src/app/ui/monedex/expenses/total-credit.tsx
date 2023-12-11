@@ -9,10 +9,8 @@ export default async function TotalCredit({
   const totalCredit = await fetchCreditExpenses(query)
 
   return (
-    <div className='w-full'>
-      <div className='mt-6 flow-root text-end'>
-        <h1>Crédito usado: {formatCurrency(totalCredit)}</h1>
-      </div>
+    <div className='flex w-full py-2'>
+      <h1>Crédito usado: {formatCurrency(totalCredit)}</h1>
     </div>
   )
 }

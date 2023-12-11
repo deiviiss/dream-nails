@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 
-import Breadcrumbs from '@/app/ui/Breadcrumbs'
-import Form from '@/app/ui/expenses/edit-form'
+import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
+import Form from '@/app/ui/monedex/expenses/edit-form'
 import {
   fetchExpenseById,
   fetchCategoriesToForm
@@ -27,10 +27,10 @@ export default async function Page({
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Gastos', href: '/expenses' },
+          { label: 'Gastos', href: '/monedex/expenses' },
           {
             label: 'Editar Expense',
-            href: `/expenses/${id}/edit`,
+            href: `/monedex/expenses/${id}/edit`,
             active: true
           }
         ]}

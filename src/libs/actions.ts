@@ -111,8 +111,8 @@ export async function createExpense(
     }
   }
 
-  revalidatePath('/expenses')
-  redirect('/expenses')
+  revalidatePath('/monedex/expenses')
+  redirect('/monedex/expenses')
 }
 
 export async function deleteExpense(
@@ -124,7 +124,7 @@ export async function deleteExpense(
         id
       }
     })
-    revalidatePath('/expenses')
+    revalidatePath('/monedex/expenses')
     return { message: 'Deleted expense.' }
   } catch (error) {
     return {
@@ -184,6 +184,6 @@ export async function updateExpense(
     }
   }
 
-  revalidatePath('/expenses')
-  redirect('/expenses')
+  revalidatePath('/monedex/expenses')
+  redirect('/monedex/expenses')
 }
