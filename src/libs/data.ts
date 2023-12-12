@@ -45,7 +45,7 @@ export async function fetchFilteredExpenses(
     return expenses
   } catch (error) {
     console.error('Database Error:', error)
-    throw new Error('Failed to fetch expenses.')
+    throw new Error('Failed to fetch filtered expenses.')
   }
 }
 
@@ -53,7 +53,6 @@ export async function fetchAmountExpenses(
   query: string
 ): Promise<number> {
   noStore()
-
   try {
     const expensesAmount = await prisma.expense.aggregate({
       where: {
@@ -169,12 +168,12 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
 }
 
 export async function fetchTotalAmountByCategory(
-  query: string
+  // query: string // filter by mouth
 ) {
   noStore()
 
   try {
-    // Primero, obtenemos las sumas de los gastos por categoría
+    // Firts we get the sums of expenses by category
     const groupedExpenses = await prisma.expense.groupBy({
       by: [
         'category_id'
@@ -182,6 +181,7 @@ export async function fetchTotalAmountByCategory(
       _sum: {
         amount: true
       },
+      _count: true,
       orderBy: [{
         _sum: {
           amount: 'desc'
@@ -189,8 +189,8 @@ export async function fetchTotalAmountByCategory(
       }]
     })
 
-    // Luego, obtenemos las categorías para esas sumas
-    const groupedExpensesWithCategory = await Promise.all(
+    // Then, we obtain the categories for those sums
+    const groupedExpensesWithCategoryName = await Promise.all(
       groupedExpenses.map(async (groupedExpense) => {
         const category = await prisma.category.findUnique({
           where: {
@@ -208,10 +208,37 @@ export async function fetchTotalAmountByCategory(
       })
     )
 
-    // Finalmente,retornamos el resultado
-    return groupedExpensesWithCategory
+    // Finally we return the result
+    return groupedExpensesWithCategoryName
   } catch (error) {
     console.error('Database Error:', error)
     throw new Error('Failed to fetch total amount by category.')
+  }
+}
+
+export async function fetchExpenseByCategory(id: number) {
+  noStore()
+  try {
+    const expensesByCategory = await prisma.expense.findMany({
+      where: {
+        category_id: id
+      },
+      select: {
+        id: true,
+        name: true,
+        amount: true,
+        expense_date: true,
+        method: true
+      }
+    })
+
+    if (expensesByCategory === null) {
+      notFound()
+    }
+
+    return expensesByCategory
+  } catch (error) {
+    console.error('Database Error:', error)
+    throw new Error('Failed to fetch expensesByCategory.')
   }
 }
