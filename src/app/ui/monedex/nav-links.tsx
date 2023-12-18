@@ -1,8 +1,8 @@
 'use client'
-
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { BiCategory } from 'react-icons/bi'
 import { IoHomeOutline } from 'react-icons/io5'
 import { TbCurrencyDollar } from 'react-icons/tb'
 
@@ -10,7 +10,8 @@ import { TbCurrencyDollar } from 'react-icons/tb'
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Inicio', href: '/monedex', icon: IoHomeOutline },
-  { name: 'Gastos', href: '/monedex/expenses', icon: TbCurrencyDollar }
+  { name: 'Gastos', href: '/monedex/expenses', icon: TbCurrencyDollar },
+  { name: 'Categorias', href: '/monedex/categories', icon: BiCategory }
 ]
 
 export default function NavLinks() {

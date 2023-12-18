@@ -10,7 +10,7 @@ import { TbCategory } from 'react-icons/tb'
 
 import { Button } from '@/app/ui/button'
 import { type CategoryForm } from '@/interfaces/Category'
-import { type ExpenseForm } from '@/interfaces/Expenses'
+import { type ExpenseForm } from '@/interfaces/Expense'
 import { updateExpense } from '@/libs/actions'
 
 export default function EditExpenseForm({

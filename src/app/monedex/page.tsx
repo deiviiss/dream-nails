@@ -1,6 +1,6 @@
-import CategorysTotalTable from '@/app/ui/monedex/expenses/table-categories-total'
-import TotalCredit from '@/app/ui/monedex/expenses/total-credit'
-import TotalAllExpenses from '@/app/ui/monedex/expenses/total-general'
+import CategoriesTotalTable from '@/app/ui/monedex/categories/table-total'
+import TotalCredit from '@/app/ui/monedex/total-credit'
+import TotalAllExpenses from '@/app/ui/monedex/total-general'
 
 export default async function HomePage({
   searchParams
@@ -20,7 +20,7 @@ export default async function HomePage({
         <TotalCredit query={query} />
       </div>
 
-      <CategorysTotalTable />
+      <CategoriesTotalTable />
 
     </main>
   )

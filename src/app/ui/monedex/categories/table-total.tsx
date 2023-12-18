@@ -3,7 +3,7 @@ import { TbListDetails } from 'react-icons/tb'
 import { fetchTotalAmountByCategory } from '@/libs/data'
 import { formatCurrency } from '@/libs/utils'
 
-export default async function CategorysTotalTable(): Promise<JSX.Element> {
+export default async function CategoriesTotalTable(): Promise<JSX.Element> {
   const expensesByCategory = await fetchTotalAmountByCategory()
 
   return (
@@ -19,7 +19,7 @@ export default async function CategorysTotalTable(): Promise<JSX.Element> {
             <h1>{expense.Category?.name}</h1>
 
             {/*  buttons details */}
-            <Link href={`/monedex/category-details?query=${expense.category_id}`}>
+            <Link href={`/monedex/categories/expenses?query=${expense.category_id}`}>
               <TbListDetails />
             </Link>
 

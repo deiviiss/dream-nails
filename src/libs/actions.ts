@@ -1,4 +1,5 @@
 'use server'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
@@ -6,7 +7,8 @@ import { z } from 'zod'
 
 import { prisma } from './prisma'
 
-import { type StateExpense } from '@/interfaces/Expenses'
+import { type StateResponseCategory, type StateCategory } from '@/interfaces/Category'
+import { type StateExpense } from '@/interfaces/Expense'
 import {
   type DatabaseErrorResponse,
   type SuccessResponse,
@@ -186,4 +188,156 @@ export async function updateExpense(
 
   revalidatePath('/monedex/expenses')
   redirect('/monedex/expenses')
+}
+
+// CATEGORIES
+
+const FormCategorySchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, {
+    message: 'Por favor escriba un nombre.'
+  }),
+  description: z.string().min(1, {
+    message: 'Por favor escriba una descrición.'
+  })
+})
+
+const CreateCategorySchema = FormCategorySchema.omit({ id: true })
+
+const UpdateCategory = FormCategorySchema.omit({ id: true })
+
+export type UpdateCategoryResponse =
+  | SuccessResponse
+  | DatabaseErrorResponse
+  | ValidationErrorResponse
+
+export type DeleteCategoryResponse = SuccessResponse | DatabaseErrorResponse
+
+export async function createCategory(
+  prevStateCategory: StateCategory,
+  formData: FormData
+) {
+  const validatedFields = CreateCategorySchema.safeParse({
+    name: formData.get('name'),
+    description: formData.get('description')
+  })
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Campos faltantes. No se pudo crear la categoria.'
+    }
+  }
+
+  // check user
+  const session = await getServerSession()
+  const email = session?.user.email
+  const user = await prisma.user.findFirst({
+    where: {
+      email
+    }
+  })
+
+  if (user === null) {
+    return {
+      message: 'Credentials no valid'
+    }
+  }
+
+  // Prepare data for insertion into the database
+  const { name, description } =
+    validatedFields.data
+
+  try {
+    await prisma.category.create({
+      data: {
+        name,
+        description
+      }
+    })
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to create expense.'
+    }
+  }
+
+  revalidatePath('/monedex/categories')
+  redirect('/monedex/categories')
+}
+
+export async function updateCategory(
+  id: number,
+  prevStateCategory: StateCategory,
+  formData: FormData
+): Promise<UpdateCategoryResponse> {
+  // let categoryDateValue: FormDataEntryValue | null | Date =
+  //   formData.get('expenseDate')
+
+  // if (expenseDateValue !== null && expenseDateValue !== '') {
+  //   expenseDateValue = new Date(expenseDateValue.toString())
+  // }
+
+  const validatedFields = UpdateCategory.safeParse({
+    name: formData.get('name'),
+    description: formData.get('description')
+  })
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Campos faltantes. No se pudo actualiazar la categoria.'
+    }
+  }
+
+  // Prepare data for insertion into the database
+  const { name, description } =
+    validatedFields.data
+
+  try {
+    await prisma.category.update({
+      where: {
+        id
+      },
+      data: {
+        name,
+        description
+      }
+    })
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Update category.'
+    }
+  }
+
+  revalidatePath('/monedex/categories')
+  redirect('/monedex/categories')
+}
+
+export async function deleteCategory(
+  id: number
+): Promise<StateResponseCategory> {
+  try {
+    await prisma.category.delete({
+      where: {
+        id
+      }
+    })
+
+    revalidatePath('/monedex/categories')
+
+    return { message: 'Deleted category.' }
+  } catch (error) {
+    console.log(error)
+    if (error instanceof PrismaClientKnownRequestError) {
+      return {
+        errors: 'Categoria con gastos asociados. No se puede eliminar.',
+        message: 'Categoria con gastos asociados. No se puede eliminar.'
+      }
+    }
+    return {
+      message: 'Database Error: Failed to Delete category.'
+    }
+  }
 }

@@ -1,13 +1,12 @@
 import { Suspense } from 'react'
 
 import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import { CreateExpense } from '@/app/ui/monedex/expenses/buttons'
-import ExpensesTable from '@/app/ui/monedex/expenses/table'
+import { CreateCategory } from '@/app/ui/monedex/categories/buttons'
+import CategoriesTable from '@/app/ui/monedex/categories/table'
 import Pagination from '@/app/ui/monedex/pagination'
 import Search from '@/app/ui/monedex/search'
-import TotalAllExpenses from '@/app/ui/monedex/total-general'
 
-import { fetchExpensesPages } from '@/libs/data'
+import { fetchCategoriesPages } from '@/libs/data'
 
 export default async function ExpensesPage({
   searchParams
@@ -21,24 +20,22 @@ export default async function ExpensesPage({
 
   const currentPage = Number(searchParams?.page) || 1
 
-  const totalPages = await fetchExpensesPages(query)
+  const totalPages = await fetchCategoriesPages(query)
 
   return (
     <main>
       <Breadcrumbs
-        breadcrumbs={[{ label: 'Gastos', href: '/monedex/expenses', active: true }]}
+        breadcrumbs={[{ label: 'Categorias', href: '/monedex/categories', active: true }]}
       />
       <div className='my-3 flex items-center justify-between gap-2 md:mt-8'>
-        <Search placeholder='Buscar gastos...' />
-        <CreateExpense />
+        <Search placeholder='Buscar categoria...' />
+        <CreateCategory />
       </div>
 
       <div className='flex flex-col gap-2'>
 
-        <TotalAllExpenses query={query} />
-
         <Suspense key={`${query}${currentPage}`} fallback='Loading'>
-          <ExpensesTable query={query} currentPage={currentPage} />
+          <CategoriesTable query={query} currentPage={currentPage} />
         </Suspense>
 
         <div className="mt-5 flex w-full justify-center">
