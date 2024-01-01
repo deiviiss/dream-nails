@@ -9,9 +9,21 @@ import { prisma } from '@/libs/prisma'
 
 const ITEMS_PER_PAGE = 10
 
+async function filteredExpensesByMonth({ month, expenses }: { month: number, expenses: ExpenseWithCategory[] }) {
+  const filterExpenses = expenses.filter(expense => {
+    const expenseDate = new Date(expense.expense_date)
+    const expenseMonth = expenseDate.getMonth() + 1
+    return expenseMonth === Number(month)
+  })
+
+  return filterExpenses
+}
+
+// EXPENSES
 export async function fetchFilteredExpenses(
   query: string,
-  currentPage: number
+  currentPage: number,
+  month: number
 ): Promise<ExpenseWithCategory[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
@@ -19,10 +31,14 @@ export async function fetchFilteredExpenses(
   try {
     const expenses = await prisma.expense.findMany({
       where: {
-        OR: [
-          { name: { contains: query, mode: 'insensitive' } },
-          { method: { contains: query, mode: 'insensitive' } },
-          { Category: { name: { contains: query, mode: 'insensitive' } } }
+        AND: [
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { method: { contains: query, mode: 'insensitive' } },
+              { Category: { name: { contains: query, mode: 'insensitive' } } }
+            ]
+          }
         ]
       },
       include: {
@@ -41,7 +57,9 @@ export async function fetchFilteredExpenses(
       skip: offset // Aplicas el offset para la paginación
     })
 
-    return expenses
+    const expensesByMonth = await filteredExpensesByMonth({ month, expenses })
+
+    return expensesByMonth
   } catch (error) {
     console.error('Database Error:', error)
     throw new Error('Failed to fetch filtered expenses.')
@@ -49,16 +67,22 @@ export async function fetchFilteredExpenses(
 }
 
 export async function fetchAmountExpenses(
-  query: string
+  query: string,
+  month: number
 ): Promise<number> {
   noStore()
   try {
     const expensesAmount = await prisma.expense.aggregate({
       where: {
-        OR: [
-          { name: { contains: query, mode: 'insensitive' } },
-          { method: { contains: query, mode: 'insensitive' } },
-          { Category: { name: { contains: query, mode: 'insensitive' } } }
+        AND: [
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { method: { contains: query, mode: 'insensitive' } },
+              { Category: { name: { contains: query, mode: 'insensitive' } } }
+            ]
+          },
+          { expense_month: { equals: Number(month) } }
         ]
       },
       _sum: {
@@ -75,14 +99,21 @@ export async function fetchAmountExpenses(
 }
 
 export async function fetchCreditExpenses(
-  query: string
+  month: number
 ): Promise<number> {
   noStore()
-
   try {
     const creditExpensesTotal = await prisma.expense.aggregate({
       where: {
-        method: { contains: 'credit', mode: 'insensitive' }
+
+        AND: [
+          { expense_month: { equals: Number(month) } },
+          {
+            OR: [
+              { method: { contains: 'credit', mode: 'insensitive' } }
+            ]
+          }
+        ]
       },
       _sum: {
         amount: true
@@ -98,13 +129,20 @@ export async function fetchCreditExpenses(
   }
 }
 
-export async function fetchExpensesPages(query: string): Promise<number> {
+export async function fetchExpensesPages(query: string, month: number): Promise<number> {
   noStore()
   try {
     const count = await prisma.expense.count({
       where: {
-        OR: [
-          { name: { contains: query, mode: 'insensitive' } }
+        AND: [
+          {
+            OR: [
+              { name: { contains: query, mode: 'insensitive' } },
+              { method: { contains: query, mode: 'insensitive' } },
+              { Category: { name: { contains: query, mode: 'insensitive' } } }
+            ]
+          },
+          { expense_month: { equals: Number(month) } }
         ]
       }
     })
@@ -169,13 +207,16 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
 }
 
 export async function fetchTotalAmountByCategory(
-  // query: string //! filter by mouth
+  month: number
 ) {
   noStore()
 
   try {
     // Firts we get the sums of expenses by category
     const groupedExpenses = await prisma.expense.groupBy({
+      where: {
+        expense_month: { equals: Number(month) }
+      },
       by: [
         'category_id'
       ],
@@ -188,7 +229,8 @@ export async function fetchTotalAmountByCategory(
           amount: 'desc'
         }
       }]
-    })
+    }
+    )
 
     // Then, we obtain the categories for those sums
     const groupedExpensesWithCategoryName = await Promise.all(
@@ -280,7 +322,7 @@ export async function fetchFilteredCategories(
       },
       orderBy: [
         { name: 'asc' },
-        { created_at: 'asc' }
+        { created_at: 'desc' }
       ],
       take: ITEMS_PER_PAGE, // Establece el límite aquí
       skip: offset // Aplicas el offset para la paginación
@@ -300,7 +342,6 @@ export async function fetchCategoryById(id: number) {
       where: {
         id
       }
-
     })
 
     if (category === null) {

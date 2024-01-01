@@ -4,12 +4,15 @@ import { formatDateToLocal, formatMethod, formatCurrency } from '@/libs/utils'
 
 export default async function ExpensesTable({
   query,
-  currentPage
+  currentPage,
+  month
 }: {
   query: string
+  month: number
   currentPage: number
 }): Promise<JSX.Element> {
-  const expenses = await fetchFilteredExpenses(query, currentPage)
+  const expenses = await fetchFilteredExpenses(query, currentPage, month)
+
   return (
     <div className='w-full'>
       <div className='mt-3 flow-root'>

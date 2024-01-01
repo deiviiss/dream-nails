@@ -29,6 +29,9 @@ const FormExpenseSchema = z.object({
   expenseDate: z.date({
     invalid_type_error: 'Por favor ingresa una fecha valida.'
   }),
+  expenseMonth: z.coerce.number().gt(0, {
+    message: 'Por favor ingrese un mes valido.'
+  }),
   categoryId: z.string({
     invalid_type_error: 'Por favor seleccione una categoria.'
   })
@@ -53,12 +56,14 @@ export async function createExpense(
   prevStateExpense: StateExpense,
   formData: FormData
 ) {
-  let expenseDateValue: FormDataEntryValue | null | Date =
-    formData.get('expenseDate')
+  let expenseDateValue: FormDataEntryValue | null | Date = formData.get('expenseDate')
+
+  let currentMonth = new Date().getMonth() + 1
 
   if (expenseDateValue !== null && expenseDateValue !== ''
   ) {
     expenseDateValue = new Date(expenseDateValue.toString())
+    currentMonth = expenseDateValue.getMonth() + 1
   }
 
   const validatedFields = CreateExpenseSchema.safeParse({
@@ -66,6 +71,7 @@ export async function createExpense(
     amount: formData.get('amount'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
+    expenseMonth: currentMonth,
     categoryId: formData.get('categoryId')
   })
 
@@ -93,7 +99,7 @@ export async function createExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
     validatedFields.data
 
   try {
@@ -104,6 +110,7 @@ export async function createExpense(
         category_id: Number(categoryId),
         expense_date: expenseDate,
         method,
+        expense_month: expenseMonth,
         user_id: user.id
       }
     })
@@ -143,8 +150,11 @@ export async function updateExpense(
   let expenseDateValue: FormDataEntryValue | null | Date =
     formData.get('expenseDate')
 
+  let currentMonth = new Date().getMonth() + 1
+
   if (expenseDateValue !== null && expenseDateValue !== '') {
     expenseDateValue = new Date(expenseDateValue.toString())
+    currentMonth = expenseDateValue.getMonth() + 1
   }
 
   const validatedFields = UpdateExpense.safeParse({
@@ -152,6 +162,7 @@ export async function updateExpense(
     amount: formData.get('amount'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
+    expenseMonth: currentMonth,
     categoryId: formData.get('categoryId')
   })
 
@@ -164,7 +175,7 @@ export async function updateExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
     validatedFields.data
 
   try {
@@ -177,6 +188,7 @@ export async function updateExpense(
         amount,
         category_id: Number(categoryId),
         expense_date: expenseDate,
+        expense_month: expenseMonth,
         method
       }
     })
@@ -329,7 +341,6 @@ export async function deleteCategory(
 
     return { message: 'Deleted category.' }
   } catch (error) {
-    console.log(error)
     if (error instanceof PrismaClientKnownRequestError) {
       return {
         errors: 'Categoria con gastos asociados. No se puede eliminar.',

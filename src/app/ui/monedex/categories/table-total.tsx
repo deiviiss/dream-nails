@@ -3,8 +3,12 @@ import { TbListDetails } from 'react-icons/tb'
 import { fetchTotalAmountByCategory } from '@/libs/data'
 import { formatCurrency } from '@/libs/utils'
 
-export default async function CategoriesTotalTable(): Promise<JSX.Element> {
-  const expensesByCategory = await fetchTotalAmountByCategory()
+export default async function CategoriesTotalTable({
+  month
+}: {
+  month: number
+}): Promise<JSX.Element> {
+  const expensesByCategory = await fetchTotalAmountByCategory(month)
 
   return (
     <div className='flex flex-col items-center justify-between gap-1 py-2'>

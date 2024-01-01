@@ -193,17 +193,18 @@ model Category {
 }
 
 model Expense {
-  id           Int       @id @default(autoincrement())
-  name         String
-  amount       Float
-  method       String
-  expense_date DateTime  @default(now())
-  category_id  Int
-  user_id      Int
-  created_at   DateTime  @default(now())
-  updated_at   DateTime?
-  Category     Category  @relation(fields: [category_id], references: [id])
-  User         User      @relation(fields: [user_id], references: [id])
+  id            Int       @id @default(autoincrement())
+  amount        Float
+  user_id       Int
+  category_id   Int
+  created_at    DateTime  @default(now())
+  updated_at    DateTime?
+  method        String
+  name          String
+  expense_date  DateTime  @default(now())
+  expense_month Int       @default(12)
+  Category      Category  @relation(fields: [category_id], references: [id])
+  User          User      @relation(fields: [user_id], references: [id])
 
   @@map("expenses")
 }
