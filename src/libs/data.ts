@@ -9,16 +9,6 @@ import { prisma } from '@/libs/prisma'
 
 const ITEMS_PER_PAGE = 10
 
-async function filteredExpensesByMonth({ month, expenses }: { month: number, expenses: ExpenseWithCategory[] }) {
-  const filterExpenses = expenses.filter(expense => {
-    const expenseDate = new Date(expense.expense_date)
-    const expenseMonth = expenseDate.getMonth() + 1
-    return expenseMonth === Number(month)
-  })
-
-  return filterExpenses
-}
-
 // EXPENSES
 export async function fetchFilteredExpenses(
   query: string,
@@ -31,6 +21,7 @@ export async function fetchFilteredExpenses(
   try {
     const expenses = await prisma.expense.findMany({
       where: {
+        expense_month: { equals: Number(month) },
         AND: [
           {
             OR: [
@@ -57,9 +48,7 @@ export async function fetchFilteredExpenses(
       skip: offset // Aplicas el offset para la paginación
     })
 
-    const expensesByMonth = await filteredExpensesByMonth({ month, expenses })
-
-    return expensesByMonth
+    return expenses
   } catch (error) {
     console.error('Database Error:', error)
     throw new Error('Failed to fetch filtered expenses.')
