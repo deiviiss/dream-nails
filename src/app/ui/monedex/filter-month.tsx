@@ -60,8 +60,7 @@ export default function FilterMonth(): JSX.Element {
   const filterParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('es', { month: 'long' }))
-
+  const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('es', { month: 'numeric' }))
   const params = new URLSearchParams(filterParams)
   const paramsMonthName = params.get('month')
   const existMonthName = !!paramsMonthName

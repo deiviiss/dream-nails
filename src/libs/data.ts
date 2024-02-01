@@ -50,7 +50,6 @@ export async function fetchFilteredExpenses(
 
     return expenses
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch filtered expenses.')
   }
 }
@@ -82,7 +81,6 @@ export async function fetchAmountExpenses(
 
     return totalAmount
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch expenses.')
   }
 }
@@ -113,7 +111,6 @@ export async function fetchCreditExpenses(
 
     return totalCreditExpenses
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch total credit expenses.')
   }
 }
@@ -140,7 +137,6 @@ export async function fetchExpensesPages(query: string, month: number): Promise<
 
     return totalPages
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch total number of expenses.')
   }
 }
@@ -168,7 +164,6 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
 
     return expense
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch expense.')
   }
 }
@@ -190,7 +185,6 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
 
     return categories
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch categories.')
   }
 }
@@ -243,7 +237,6 @@ export async function fetchTotalAmountByCategory(
     // Finally we return the result
     return groupedExpensesWithCategoryName
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch total amount by category.')
   }
 }
@@ -251,7 +244,6 @@ export async function fetchTotalAmountByCategory(
 export async function fetchExpenseByCategory(id: number, month: number) {
   noStore()
   try {
-    console.log('month2', month)
     const expensesByCategory = await prisma.expense.findMany({
       where: {
         category_id: id,
@@ -273,10 +265,8 @@ export async function fetchExpenseByCategory(id: number, month: number) {
     if (expensesByCategory === null) {
       notFound()
     }
-
     return expensesByCategory
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch expensesByCategory.')
   }
 }
@@ -296,7 +286,6 @@ export async function fetchCategoriesPages(query: string): Promise<number> {
 
     return totalPages
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch total number of categories.')
   }
 }
@@ -325,7 +314,6 @@ export async function fetchFilteredCategories(
 
     return expenses
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch filtered expenses.')
   }
 }
@@ -345,7 +333,6 @@ export async function fetchCategoryById(id: number) {
 
     return category
   } catch (error) {
-    console.error('Database Error:', error)
     throw new Error('Failed to fetch category by id.')
   }
 }

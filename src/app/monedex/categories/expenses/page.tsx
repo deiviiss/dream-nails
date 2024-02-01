@@ -10,7 +10,7 @@ export default async function CategoryExpensesPage({
 }): Promise<JSX.Element> {
   const query = searchParams?.query || ''
   const currentMonth = new Date().getMonth() + 1
-  const month = searchParams?.month || Number(currentMonth)
+  const month = Number(searchParams?.month) || Number(currentMonth)
 
   return (
     <main>

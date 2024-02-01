@@ -23,7 +23,7 @@ export default async function CategoriesTotalTable({
             <h1>{expense.Category?.name}</h1>
 
             {/*  buttons details */}
-            <Link href={`/monedex/categories/expenses?query=${expense.category_id}`}>
+            <Link href={`/monedex/categories/expenses?query=${expense.category_id}&month=${month}`}>
               <TbListDetails />
             </Link>
 
