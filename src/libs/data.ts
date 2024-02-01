@@ -7,7 +7,7 @@ import {
 } from '@/interfaces/Expense'
 import { prisma } from '@/libs/prisma'
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 9000
 
 // EXPENSES
 export async function fetchFilteredExpenses(
@@ -248,12 +248,14 @@ export async function fetchTotalAmountByCategory(
   }
 }
 
-export async function fetchExpenseByCategory(id: number) {
+export async function fetchExpenseByCategory(id: number, month: number) {
   noStore()
   try {
+    console.log('month2', month)
     const expensesByCategory = await prisma.expense.findMany({
       where: {
-        category_id: id
+        category_id: id,
+        expense_month: month
       },
       select: {
         id: true,
@@ -261,7 +263,11 @@ export async function fetchExpenseByCategory(id: number) {
         amount: true,
         expense_date: true,
         method: true
-      }
+      },
+      orderBy: [
+        { expense_date: 'desc' },
+        { created_at: 'desc' }
+      ]
     })
 
     if (expensesByCategory === null) {

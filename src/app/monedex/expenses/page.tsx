@@ -1,3 +1,4 @@
+import { type Metadata } from 'next'
 import { Suspense } from 'react'
 
 import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
@@ -8,6 +9,10 @@ import Pagination from '@/app/ui/monedex/pagination'
 import Search from '@/app/ui/monedex/search'
 import TotalAllExpenses from '@/app/ui/monedex/total-general'
 import { fetchExpensesPages } from '@/libs/data'
+
+export const metadata: Metadata = {
+  title: 'Gastos'
+}
 
 export default async function ExpensesPage({
   searchParams

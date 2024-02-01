@@ -3,11 +3,14 @@ import { fetchExpenseByCategory } from '@/libs/data'
 import { formatMethod, formatCurrency } from '@/libs/utils'
 
 export default async function CategorysDetailsTable({
-  query
+  query,
+  month
 }: {
   query: string
+  month: number
 }): Promise<JSX.Element> {
-  const expensesByCategory = await fetchExpenseByCategory(Number(query))
+  const expensesByCategory = await fetchExpenseByCategory(Number(query), month)
+
   return (
     <div className='flex flex-col items-center justify-between gap-1 py-2'>
 
