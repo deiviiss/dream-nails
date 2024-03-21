@@ -1,10 +1,12 @@
+'use client'
+import clsx from 'clsx'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { FaPlus } from 'react-icons/fa6'
+import { IoCheckboxOutline } from 'react-icons/io5'
 import { TiPencil } from 'react-icons/ti'
-
-import { deleteExpense } from '@/libs/actions'
-// import { deleteInvoice } from '@/app/lib/actions'
+import { deleteExpense, toggleReconciledExpense } from '@/libs/actions'
 
 export function CreateExpense(): JSX.Element {
   return (
@@ -29,14 +31,54 @@ export function UpdateExpense({ id }: { id: number }): JSX.Element {
   )
 }
 
-export function DeleteExpense({ id }: { id: number }): JSX.Element {
-  const deleteExpenseWithId = deleteExpense.bind(null, id)
+export function ReconciledExpense({ id, reconciled }: { id: number, reconciled: boolean }): JSX.Element {
   return (
-    <form action={deleteExpenseWithId}>
-      <button className='rounded-md border p-2 hover:bg-gray-100'>
-        <span className='sr-only'>Borrar</span>
-        <FaRegTrashAlt className='w-4' />
-      </button>
-    </form>
+    <button
+      className={
+        clsx(
+          'rounded-md border p-2 hover:bg-gray-100',
+          reconciled ? 'bg-green-300 hover:bg-green-200' : ''
+        )
+      }
+      onClick={async () => { await toggleReconciledExpense(id, !reconciled) }}
+    >
+      <span className='sr-only'>Conciliar</span>
+      <IoCheckboxOutline className='w-4' />
+    </button>
+
+  )
+}
+
+export function DeleteExpense({ id }: { id: number }): JSX.Element {
+  const handleDelete = (expenseId: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    toast((t) => (
+      <div>
+        <p className='text-white py-3'>¿Seguro que quieres borrar el gasto con id: <strong>{expenseId}</strong>?</p>
+
+        <div className='flex items-center justify-between'>
+          <button className="bg-red-800 hover:bg-red-700 text-white px-3 py-2 rounded-md mx-2"
+            onClick={() => {
+              deleteExpense(expenseId)
+              toast.dismiss(t.id)
+            }}
+          >Borrar</button>
+
+          <button className="bg-[#AB5C72] hover:opacity-70  text-white px-3 py-2 rounded-md mx-2"
+            onClick={() => { toast.dismiss(t.id) }}
+          >Cancelar</button>
+        </div>
+      </div>
+    ), {
+      style: {
+        background: '#D18E8F'
+      }
+    })
+  }
+
+  return (
+    <button onClick={handleDelete(id)} className='rounded-md border p-2 hover:bg-gray-100'>
+      <span className='sr-only'>Borrar</span>
+      <FaRegTrashAlt className='w-4' />
+    </button>
   )
 }

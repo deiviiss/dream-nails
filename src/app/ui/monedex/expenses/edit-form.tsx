@@ -197,6 +197,25 @@ export default function EditExpenseForm({
           </div>
         </div>
 
+        {/* with relation */}
+        <div className='mb-4'>
+          <div className='flex items-center gap-2'>
+            <label htmlFor='withRelation' className='block text-sm font-medium'>
+              Con relación:
+            </label>
+            <input
+              id='withRelation'
+              name='withRelation'
+              type='checkbox'
+              placeholder='Sí o No'
+              aria-describedby='withRelation-error'
+              defaultChecked={expense.is_reconciled}
+            />
+
+          </div>
+
+        </div>
+
         {/*  Error all fields */}
         <div id='message-error' aria-live='polite' aria-atomic='true'>
           {state.message && (

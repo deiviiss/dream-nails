@@ -193,18 +193,22 @@ model Category {
 }
 
 model Expense {
-  id            Int       @id @default(autoincrement())
-  amount        Float
-  user_id       Int
-  category_id   Int
-  created_at    DateTime  @default(now())
-  updated_at    DateTime?
-  method        String
+  id            Int      @id @default(autoincrement())
   name          String
-  expense_date  DateTime  @default(now())
-  expense_month Int       @default(12)
-  Category      Category  @relation(fields: [category_id], references: [id])
-  User          User      @relation(fields: [user_id], references: [id])
+  amount        Float
+  method        String
+  expense_date  DateTime @default(now())
+  expense_month Int      @default(12)
+  with_relation Boolean  @default(false)
+  is_reconciled Boolean  @default(false)
+
+  category_id Int
+  Category    Category @relation(fields: [category_id], references: [id])
+  user_id     Int
+  User        User     @relation(fields: [user_id], references: [id])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   @@map("expenses")
 }

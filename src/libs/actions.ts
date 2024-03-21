@@ -15,6 +15,16 @@ import {
   type ValidationErrorResponse
 } from '@/interfaces/Responses'
 
+const formatWithRelation = (strRelations: FormDataEntryValue | null) => {
+  if (strRelations === 'on') {
+    return true
+  }
+
+  if (strRelations === null) {
+    return false
+  }
+}
+
 const FormExpenseSchema = z.object({
   id: z.string(),
   name: z.string().min(1, {
@@ -111,7 +121,8 @@ export async function createExpense(
         expense_date: expenseDate,
         method,
         expense_month: expenseMonth,
-        user_id: user.id
+        user_id: user.id,
+        with_relation: formatWithRelation(formData.get('withRelation'))
       }
     })
   } catch (error) {
@@ -189,7 +200,8 @@ export async function updateExpense(
         category_id: Number(categoryId),
         expense_date: expenseDate,
         expense_month: expenseMonth,
-        method
+        method,
+        with_relation: formatWithRelation(formData.get('withRelation'))
       }
     })
   } catch (error) {
@@ -200,6 +212,21 @@ export async function updateExpense(
 
   revalidatePath('/monedex/expenses')
   redirect('/monedex/expenses')
+}
+
+export async function toggleReconciledExpense(id: number, reconciled: boolean): Promise<void> {
+  try {
+    await prisma.expense.update({
+      where: { id },
+      data: {
+        is_reconciled: reconciled
+      }
+    })
+
+    revalidatePath('/monedex/expenses')
+  } catch (error) {
+    throw new Error('Database Error: Failed to Update category.')
+  }
 }
 
 // CATEGORIES

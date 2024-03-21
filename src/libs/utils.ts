@@ -34,6 +34,14 @@ export const formatMethod = (methodStr: string): string => {
   return 'Por definir'
 }
 
+export const formatWithRelation = (withRelation: boolean): string => {
+  if (!withRelation) {
+    return 'No'
+  }
+
+  return 'Sí'
+}
+
 export const groupServicesByCategory = (
   salonServices: SalonService[]
 ): GroupedServices => {

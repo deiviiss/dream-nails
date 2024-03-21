@@ -19,6 +19,12 @@ export interface ExpenseWithCategory extends Expense {
   }
 }
 
+export interface ExpenseWithCategoryAndUser extends ExpenseWithCategory {
+  User: {
+    email: string
+  }
+}
+
 export interface ExpenseForm {
   id: number
   name: string
@@ -26,4 +32,5 @@ export interface ExpenseForm {
   expense_date: Date
   category_id: number
   method: string
+  is_reconciled: boolean
 }

@@ -1,6 +1,6 @@
-import { DeleteExpense, UpdateExpense } from './buttons'
+import { DeleteExpense, ReconciledExpense, UpdateExpense } from './buttons'
 import { fetchFilteredExpenses } from '@/libs/data'
-import { formatDateToLocal, formatMethod, formatCurrency } from '@/libs/utils'
+import { formatDateToLocal, formatMethod, formatCurrency, formatWithRelation } from '@/libs/utils'
 
 export default async function ExpensesTable({
   query,
@@ -34,31 +34,45 @@ export default async function ExpensesTable({
                         </h2>
                       </div>
 
-                      {/*  buttons delete - update */}
+                      {/*  buttons delete - update - reconciled */}
                       <div className='flex justify-end gap-2'>
+                        <ReconciledExpense id={expense.id} reconciled={expense.is_reconciled} />
                         <UpdateExpense id={expense.id} />
                         <DeleteExpense id={expense.id} />
                       </div>
                     </div>
                     {/* body card */}
-                    <div className='flex w-full items-center justify-between border-b py-5'>
+                    <div className='grid grid-cols-2 col-span-2 gap-2 border-b py-5'>
+
                       <div className='flex w-1/2 flex-col'>
                         <p className='text-xs'>Fecha</p>
                         <p className='font-medium'>
                           {expense.expense_date.toISOString().split('T')[0]}
                         </p>
                       </div>
+
                       <div className='flex w-1/2 flex-col'>
                         <p className='text-xs'>Cateoría</p>
                         <p className='font-medium'>{expense.Category.name}</p>
                       </div>
+
                       <div className='flex w-1/2 flex-col'>
                         <p className='text-xs'>Método</p>
                         <p className='font-medium'>
                           {formatMethod(expense.method)}
                         </p>
                       </div>
+
+                      <div className='flex w-1/2 flex-col'>
+                        <p className='text-xs'>Con relación</p>
+                        <p className='font-medium'>
+                          {formatWithRelation(expense.with_relation)}
+                        </p>
+                      </div>
                     </div>
+
+                    <div className='py-2'>Creado por {expense.User.email}</div>
+
                   </div>
                 ))}
               </div>
@@ -119,7 +133,7 @@ export default async function ExpensesTable({
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }

@@ -2,8 +2,8 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { type CategoryForm } from '@/interfaces/Category'
 import {
-  type ExpenseForm,
-  type ExpenseWithCategory
+  type ExpenseWithCategoryAndUser,
+  type ExpenseForm
 } from '@/interfaces/Expense'
 import { prisma } from '@/libs/prisma'
 
@@ -14,7 +14,7 @@ export async function fetchFilteredExpenses(
   query: string,
   currentPage: number,
   month: number
-): Promise<ExpenseWithCategory[]> {
+): Promise<ExpenseWithCategoryAndUser[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
@@ -37,6 +37,11 @@ export async function fetchFilteredExpenses(
           select: {
             id: true,
             name: true
+          }
+        },
+        User: {
+          select: {
+            email: true
           }
         }
       },
@@ -154,7 +159,9 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
         amount: true,
         expense_date: true,
         category_id: true,
-        method: true
+        method: true,
+        with_relation: true,
+        is_reconciled: true
       }
     })
 

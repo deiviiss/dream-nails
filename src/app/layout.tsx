@@ -3,6 +3,7 @@ import './ui/globals.css'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 
+import { Toaster } from 'react-hot-toast'
 import { arapey, josefin } from './ui/fonts'
 import Providers from '@/app/providers'
 import { Footer } from '@/app/ui/Footer'
@@ -29,6 +30,10 @@ export default async function RootLayout({
           <Footer />
           {session == null ? <LoginButton /> : <SignOutButton />}
         </Providers>
+        <Toaster
+          position="top-right"
+          reverseOrder={true}
+        />
         <Analytics />
       </body>
     </html>
