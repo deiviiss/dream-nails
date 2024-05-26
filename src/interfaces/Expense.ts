@@ -8,6 +8,7 @@ export interface StateExpense {
     expenseDate?: string[]
     categoryId?: string[]
     userId?: string[]
+    placeId?: string[]
   }
   message?: string | null
 }
@@ -19,9 +20,12 @@ export interface ExpenseWithCategory extends Expense {
   }
 }
 
-export interface ExpenseWithCategoryAndUser extends ExpenseWithCategory {
+export interface ExpenseWithCategoryAndUserAndPlace extends ExpenseWithCategory {
   user: {
     email: string
+    name: string | null
+  }
+  place: {
     name: string | null
   }
 }
@@ -32,6 +36,7 @@ export interface ExpenseForm {
   amount: number
   expense_date: Date
   category_id: number
+  place_id: number
   method: string
   is_reconciled: boolean
 }

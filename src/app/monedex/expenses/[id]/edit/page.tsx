@@ -4,7 +4,8 @@ import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
 import Form from '@/app/ui/monedex/expenses/edit-form'
 import {
   fetchExpenseById,
-  fetchCategoriesToForm
+  fetchCategoriesToForm,
+  fetchPlaces
 } from '@/libs/data'
 
 export default async function Page({
@@ -14,9 +15,10 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const id = Number(params.id)
 
-  const [expense, categories] = await Promise.all([
+  const [expense, categories, places] = await Promise.all([
     fetchExpenseById(id),
-    fetchCategoriesToForm()
+    fetchCategoriesToForm(),
+    fetchPlaces()
   ])
 
   if (expense == null || categories == null) {
@@ -35,7 +37,7 @@ export default async function Page({
           }
         ]}
       />
-      <Form expense={expense} categories={categories} />
+      <Form expense={expense} categories={categories} places={places} />
     </main>
   )
 }

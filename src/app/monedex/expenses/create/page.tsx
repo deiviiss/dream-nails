@@ -2,10 +2,11 @@ import { type NextPage } from 'next'
 
 import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
 import Form from '@/app/ui/monedex/expenses/create-form'
-import { fetchCategoriesToForm } from '@/libs/data'
+import { fetchCategoriesToForm, fetchPlaces } from '@/libs/data'
 
 const Page: NextPage = async () => {
   const categories = await fetchCategoriesToForm()
+  const places = await fetchPlaces()
 
   return (
     <main>
@@ -19,7 +20,7 @@ const Page: NextPage = async () => {
           }
         ]}
       />
-      <Form categories={categories} />
+      <Form categories={categories} places={places} />
     </main>
   )
 }

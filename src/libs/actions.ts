@@ -43,6 +43,9 @@ const FormExpenseSchema = z.object({
   }),
   categoryId: z.string({
     invalid_type_error: 'Por favor seleccione una categoria.'
+  }),
+  placeId: z.string({
+    invalid_type_error: 'Por favor seleccione un lugar.'
   })
 })
 
@@ -81,7 +84,8 @@ export async function createExpense(
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
-    categoryId: formData.get('categoryId')
+    categoryId: formData.get('categoryId'),
+    placeId: formData.get('placeId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -108,7 +112,7 @@ export async function createExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth, placeId } =
     validatedFields.data
 
   try {
@@ -117,6 +121,7 @@ export async function createExpense(
         name,
         amount,
         category_id: Number(categoryId),
+        place_id: Number(placeId),
         expense_date: expenseDate,
         method,
         expense_month: expenseMonth,
@@ -173,7 +178,8 @@ export async function updateExpense(
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
-    categoryId: formData.get('categoryId')
+    categoryId: formData.get('categoryId'),
+    placeId: formData.get('placeId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -185,7 +191,7 @@ export async function updateExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth, placeId } =
     validatedFields.data
 
   try {
@@ -197,6 +203,7 @@ export async function updateExpense(
         name,
         amount,
         category_id: Number(categoryId),
+        place_id: Number(placeId),
         expense_date: expenseDate,
         expense_month: expenseMonth,
         method,

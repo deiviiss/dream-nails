@@ -10,7 +10,7 @@ import { authenticate } from '@/actions'
 const LoginPage: NextPage = () => {
   const searchParams = useSearchParams()
   const [state, dispatch] = useFormState(authenticate, undefined)
-  const redirectTo = searchParams.get('redirectTo') || '/'
+  const redirectTo = searchParams.get('redirectTo') || '/monedex'
 
   useEffect(() => {
     if (state === 'SuccessSignin') {

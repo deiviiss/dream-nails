@@ -6,8 +6,8 @@ import prisma from '@/libs/prisma'
 
 export const authConfig: NextAuthConfig = {
   pages: {
-    signIn: '/auth/login'
-    // newUser: '/auth/new-account'
+    signIn: '/auth/login',
+    newUser: '/auth/register-user'
   },
   callbacks: {
     jwt({ token, user }) {

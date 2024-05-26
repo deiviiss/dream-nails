@@ -69,6 +69,11 @@ export default async function ExpensesTable({
                           {formatWithRelation(expense.with_relation)}
                         </p>
                       </div>
+
+                      <div className='flex w-1/2 flex-col'>
+                        <p className='text-xs'>Lugar</p>
+                        <p className='font-medium'>{expense.place.name}</p>
+                      </div>
                     </div>
 
                     <div className='py-2'>Creado por {expense.user.name}</div>

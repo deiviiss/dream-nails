@@ -2,7 +2,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { type CategoryForm } from '@/interfaces/Category'
 import {
-  type ExpenseWithCategoryAndUser,
+  type ExpenseWithCategoryAndUserAndPlace,
   type ExpenseForm
 } from '@/interfaces/Expense'
 import prisma from '@/libs/prisma'
@@ -14,7 +14,7 @@ export async function fetchFilteredExpenses(
   query: string,
   currentPage: number,
   month: number
-): Promise<ExpenseWithCategoryAndUser[]> {
+): Promise<ExpenseWithCategoryAndUserAndPlace[]> {
   noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
@@ -42,6 +42,11 @@ export async function fetchFilteredExpenses(
         user: {
           select: {
             email: true,
+            name: true
+          }
+        },
+        place: {
+          select: {
             name: true
           }
         }
@@ -160,6 +165,7 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
         amount: true,
         expense_date: true,
         category_id: true,
+        place_id: true,
         method: true,
         with_relation: true,
         is_reconciled: true
@@ -173,6 +179,26 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
     return expense
   } catch (error) {
     throw new Error('Failed to fetch expense.')
+  }
+}
+
+// PLACES
+export async function fetchPlaces(): Promise<Array<{
+  id: number
+  name: string
+}>> {
+  noStore()
+  try {
+    const places = await prisma.place.findMany({
+      select: {
+        id: true,
+        name: true
+      }
+    })
+
+    return places
+  } catch (error) {
+    throw new Error('Failed to fetch places.')
   }
 }
 
