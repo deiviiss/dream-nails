@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src/**/*.{js,jsx,ts,tsx}"
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
+    "postinstall": "if [ -n \"$DATABASE_URL\" ]; then prisma db push; fi"
   },
   "dependencies": {
     "@prisma/client": "5.6.0",
