@@ -14,16 +14,7 @@ const navigations = [
   { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' }
 ]
 
-const navigationsProtect = [
-  { id: 1, label: 'Servicios', url: '/salon-page/salon-services' },
-  { id: 2, label: 'Galeria', url: '/salon-page/galery' },
-  { id: 3, label: 'Precios', url: '/salon-page/prices' },
-  { id: 4, label: 'Sobre nosotros', url: '/salon-page/salon-about' },
-  { id: 5, label: 'Panel Admin', url: '/panel-admin' },
-  { id: 6, label: 'Gastos', url: '/monedex' }
-]
-
-const Navbar = ({ session }: { session: object | null }): JSX.Element => {
+const Navbar = (): JSX.Element => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -104,35 +95,17 @@ const Navbar = ({ session }: { session: object | null }): JSX.Element => {
         </Link>
 
         <ul className='hidden sm:flex'>
-          {session !== null
-            ? (
-              <>
-                {navigationsProtect.map((nav) => (
-                  <li
-                    key={nav.id}
-                    className='px-3 py-1 rounded-lg border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
-                  >
-                    <Link href={nav.url}>{nav.label}</Link>
-                  </li>
-                ))}
-              </>)
-            : (
-              <>
-                {navigations.map((item) => (
-                  <li
-                    key={item.id}
-                    className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
-                  >
-                    <Link href={item.url}>{item.label}</Link>
-                  </li>
-                ))}
-              </>)}
+          {navigations.map((item) => (
+            <li
+              key={item.id}
+              className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
+            >
+              <Link href={item.url}>{item.label}</Link>
+            </li>
+          ))}
         </ul>
 
-        {session !== null
-          ? (<DropDown navigations={navigationsProtect}></DropDown>)
-          : (
-            <DropDown navigations={navigations}></DropDown>)}
+        <DropDown navigations={navigations}></DropDown>
       </div>
       <BookNowButton></BookNowButton>
     </nav>

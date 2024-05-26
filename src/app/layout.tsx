@@ -1,10 +1,10 @@
 import { Analytics } from '@vercel/analytics/react'
 import './ui/globals.css'
 import type { Metadata } from 'next'
-import { getServerSession } from 'next-auth'
 
 import { Toaster } from 'react-hot-toast'
 import { arapey, josefin } from './ui/fonts'
+import { getUserSessionServer } from '@/actions'
 import Providers from '@/app/providers'
 import { Footer } from '@/app/ui/Footer'
 import LoginButton from '@/app/ui/LoginButton'
@@ -21,14 +21,15 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }): Promise<JSX.Element> {
-  const session = await getServerSession()
+  const user = await getUserSessionServer()
+
   return (
     <html lang='es-Mx' className={`${josefin.variable} ${arapey.variable}`}>
       <body className='text-base bg-body-gradient'>
         <Providers>
           {children}
           <Footer />
-          {session == null ? <LoginButton /> : <SignOutButton />}
+          {user == null ? <LoginButton /> : <SignOutButton />}
         </Providers>
         <Toaster
           position="top-right"

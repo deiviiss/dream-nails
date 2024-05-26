@@ -1,18 +1,16 @@
 import { type NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getServerSession } from 'next-auth'
-
 import Hero from '@/app/ui/Hero'
 import Navbar from '@/app/ui/Navbar'
 
 const HomePage: NextPage = async () => {
   const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
   const urlImg = 'url("/hero.jpeg")'
-  const session = await getServerSession()
+
   return (
     <>
-      <Navbar session={session} />
+      <Navbar />
       <main>
         <Hero title={title} urlImg={urlImg}></Hero>
 

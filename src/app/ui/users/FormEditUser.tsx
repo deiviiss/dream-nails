@@ -17,6 +17,7 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
 
   const [userData, setUserData] = useState<UpdateUser>({
     id: user.id,
+    name: '',
     email: '',
     role: ''
   })
@@ -77,6 +78,14 @@ export const FormEditUser: React.FC<FormUserProps> = ({ user }) => {
           placeholder='Role'
           name='role'
           value={userData.role}
+          onChange={handleChange}
+          className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
+        />
+        <input
+          type='text'
+          placeholder='Nombre'
+          name='name'
+          value={userData.name || ''}
           onChange={handleChange}
           className='bg-secondary px-4 py-2 block mb-2 w-full rounded-sm'
         />

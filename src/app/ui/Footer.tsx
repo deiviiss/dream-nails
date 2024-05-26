@@ -74,19 +74,19 @@ export const Footer = (): JSX.Element => {
       <div className='hidden sm:flex items-center justify-center w-full gap-5 text-white py-7 bg-primary shadow-[0_-3px_5px_0px_rgba(0,0,0,0.3)]'>
         <Link
           className='border-b-2 border-transparent hover:border-secondary pb-0'
-          href={'/terms'}
+          href={'/salon-page/terms'}
         >
           Términos y condiciones
         </Link>
         <Link
           className='border-b-2 border-transparent hover:border-secondary pb-0'
-          href={'/privacy'}
+          href={'/salon-page/privacy'}
         >
           Política de Privacidad
         </Link>
         <Link
           className='border-b-2 border-transparent hover:border-secondary pb-0'
-          href={'/reservation-policy'}
+          href={'/salon-page/reservation-policy'}
         >
           Política de Reserva y Cancelación
         </Link>

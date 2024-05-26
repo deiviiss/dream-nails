@@ -8,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  email             String              @unique
-  password          String
-  role              String              @default("customer")
-  created_at        DateTime            @default(now())
-  updated_at        DateTime?
-  Customer          Customer?
-  Expense           Expense[]
-  StylistAssignment StylistAssignment[]
+  id                 Int                 @id @default(autoincrement())
+  email              String              @unique
+  password           String
+  role               String              @default("customer")
+  name               String              @default("Anonymous")
+  created_at         DateTime            @default(now())
+  updated_at         DateTime?
+  customer           Customer?
+  expenses           Expense[]
+  stylistAssignments StylistAssignment[]
 
   @@map("users")
 }
@@ -192,6 +193,17 @@ model Category {
   @@map("categories")
 }
 
+model Place {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+  expenses    Expense[]
+
+  @@map("places")
+}
+
 model Expense {
   id            Int      @id @default(autoincrement())
   name          String
@@ -202,10 +214,12 @@ model Expense {
   with_relation Boolean  @default(false)
   is_reconciled Boolean  @default(false)
 
+  place_id    Int?
+  place       Place?   @relation(fields: [place_id], references: [id])
   category_id Int
-  Category    Category @relation(fields: [category_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
   user_id     Int
-  User        User     @relation(fields: [user_id], references: [id])
+  user        User     @relation(fields: [user_id], references: [id])
 
   created_at DateTime  @default(now())
   updated_at DateTime?

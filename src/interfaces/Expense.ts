@@ -13,15 +13,16 @@ export interface StateExpense {
 }
 
 export interface ExpenseWithCategory extends Expense {
-  Category: {
+  category: {
     id: number
     name: string
   }
 }
 
 export interface ExpenseWithCategoryAndUser extends ExpenseWithCategory {
-  User: {
+  user: {
     email: string
+    name: string | null
   }
 }
 

@@ -20,7 +20,7 @@ export default async function CategoriesTotalTable({
         >
           {/* title card */}
           <div className='flex items-center justify-between border-b pb-4'>
-            <h1>{expense.Category?.name}</h1>
+            <h1>{expense.category?.name}</h1>
 
             {/*  buttons details */}
             <Link href={`/monedex/categories/expenses?query=${expense.category_id}&month=${month}`}>

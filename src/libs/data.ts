@@ -5,7 +5,7 @@ import {
   type ExpenseWithCategoryAndUser,
   type ExpenseForm
 } from '@/interfaces/Expense'
-import { prisma } from '@/libs/prisma'
+import prisma from '@/libs/prisma'
 
 const ITEMS_PER_PAGE = 20
 
@@ -27,21 +27,22 @@ export async function fetchFilteredExpenses(
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { Category: { name: { contains: query, mode: 'insensitive' } } }
+              { category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
         ]
       },
       include: {
-        Category: {
+        category: {
           select: {
             id: true,
             name: true
           }
         },
-        User: {
+        user: {
           select: {
-            email: true
+            email: true,
+            name: true
           }
         }
       },
@@ -72,7 +73,7 @@ export async function fetchAmountExpenses(
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { Category: { name: { contains: query, mode: 'insensitive' } } }
+              { category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
           { expense_month: { equals: Number(month) } }
@@ -130,7 +131,7 @@ export async function fetchExpensesPages(query: string, month: number): Promise<
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { Category: { name: { contains: query, mode: 'insensitive' } } }
+              { category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
           { expense_month: { equals: Number(month) } }
@@ -236,7 +237,7 @@ export async function fetchTotalAmountByCategory(
 
         return {
           ...groupedExpense,
-          Category: category
+          category
         }
       })
     )

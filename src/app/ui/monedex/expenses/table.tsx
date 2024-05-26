@@ -53,7 +53,7 @@ export default async function ExpensesTable({
 
                       <div className='flex w-1/2 flex-col'>
                         <p className='text-xs'>Cateoría</p>
-                        <p className='font-medium'>{expense.Category.name}</p>
+                        <p className='font-medium'>{expense.category.name}</p>
                       </div>
 
                       <div className='flex w-1/2 flex-col'>
@@ -71,7 +71,7 @@ export default async function ExpensesTable({
                       </div>
                     </div>
 
-                    <div className='py-2'>Creado por {expense.User.email}</div>
+                    <div className='py-2'>Creado por {expense.user.name}</div>
 
                   </div>
                 ))}
@@ -112,7 +112,7 @@ export default async function ExpensesTable({
                         {expense.method}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm'>
-                        {expense.Category.name}
+                        {expense.category.name}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
                         {formatDateToLocal(

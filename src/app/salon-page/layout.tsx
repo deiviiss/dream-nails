@@ -1,6 +1,4 @@
 import { type Metadata } from 'next'
-import { getServerSession } from 'next-auth'
-
 import Navbar from '@/app/ui/Navbar'
 
 export const metadata: Metadata = {
@@ -12,10 +10,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }): Promise<JSX.Element> {
-  const session = await getServerSession()
   return (
     <div>
-      <Navbar session={session} />
+      <Navbar />
       {children}
     </div>
   )

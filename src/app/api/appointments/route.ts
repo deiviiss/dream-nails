@@ -1,17 +1,15 @@
 import { type Appointment } from '@prisma/client'
 import { NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth'
-
-import { prisma } from '@/libs/prisma'
+import { getUserSessionServer } from '@/actions'
+import prisma from '@/libs/prisma'
 
 export async function GET(): Promise<NextResponse> {
   try {
-    const session = await getServerSession()
+    const userSession = await getUserSessionServer()
 
-    // ? La sessión no tiene el email del usuario, se tuvo que agregar en el middleware
     const user = await prisma.user.findFirst({
       where: {
-        email: session?.user.email
+        email: userSession?.email
       }
     })
 
@@ -65,12 +63,12 @@ export async function GET(): Promise<NextResponse> {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
-    const session = await getServerSession()
+    const userSession = await getUserSessionServer()
 
     // ? La sessión no tiene el email del usuario, se tuvo que agregar en el middleware
     const user = await prisma.user.findFirst({
       where: {
-        email: session?.user.email
+        email: userSession?.email
       }
     })
 

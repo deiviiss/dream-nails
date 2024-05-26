@@ -2,11 +2,10 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth'
 import { z } from 'zod'
+import prisma from './prisma'
 
-import { prisma } from './prisma'
-
+import { getUserSessionServer } from '@/actions'
 import { type StateResponseCategory, type StateCategory } from '@/interfaces/Category'
 import { type StateExpense } from '@/interfaces/Expense'
 import {
@@ -94,8 +93,8 @@ export async function createExpense(
   }
 
   // check user
-  const session = await getServerSession()
-  const email = session?.user.email
+  const userSession = await getUserSessionServer()
+  const email = userSession?.email
   const user = await prisma.user.findFirst({
     where: {
       email
@@ -270,8 +269,8 @@ export async function createCategory(
   }
 
   // check user
-  const session = await getServerSession()
-  const email = session?.user.email
+  const userSession = await getUserSessionServer()
+  const email = userSession?.email
   const user = await prisma.user.findFirst({
     where: {
       email
