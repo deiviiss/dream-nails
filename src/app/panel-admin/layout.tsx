@@ -16,8 +16,6 @@ export default async function RootLayout({
 }): Promise<JSX.Element> {
   const user = await getUserSessionServer()
 
-  console.log('layoutUser:', user)
-
   if (!user) {
     redirect('/')
   }

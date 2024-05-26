@@ -7,7 +7,6 @@ export async function authenticate(
   formData: FormData
 ) {
   try {
-    console.log('formData:', { ...Object.fromEntries(formData) })
     await signIn('credentials', {
       ...Object.fromEntries(formData),
       redirect: false
@@ -15,7 +14,6 @@ export async function authenticate(
 
     return 'SuccessSignin'
   } catch (error) {
-    console.error('error:', JSON.stringify(error, null, 2))
     return 'CredentialsInvalid'
   }
 }
