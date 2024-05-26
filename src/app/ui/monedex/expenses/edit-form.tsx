@@ -25,7 +25,7 @@ export default function EditExpenseForm({
   const updateExpenseWithId = updateExpense.bind(null, Number(expense.id))
   const initialState = { message: null, errors: {} }
   const [state, dispatch] = useFormState(updateExpenseWithId, initialState)
-  
+
   return (
     <form action={dispatch}>
       <div className='rounded-md bg-gray-50 p-4 md:p-6'>
