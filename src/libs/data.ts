@@ -193,6 +193,9 @@ export async function fetchPlaces(): Promise<Array<{
       select: {
         id: true,
         name: true
+      },
+      orderBy: {
+        name: 'asc'
       }
     })
 
