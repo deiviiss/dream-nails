@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import { BsCashStack } from 'react-icons/bs'
 import { FaDollarSign } from 'react-icons/fa'
@@ -22,9 +24,16 @@ export default function EditExpenseForm({
   categories: CategoryForm[]
   places: Array<{ id: number, name: string }>
 }): JSX.Element {
+  const router = useRouter()
   const updateExpenseWithId = updateExpense.bind(null, Number(expense.id))
   const initialState = { message: null, errors: {} }
   const [state, dispatch] = useFormState(updateExpenseWithId, initialState)
+
+  useEffect(() => {
+    if (state.message === 'Updated expense') {
+      router.back()
+    }
+  }, [state])
 
   return (
     <form action={dispatch}>
@@ -50,7 +59,7 @@ export default function EditExpenseForm({
           </div>
           <div id='name-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.name?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`name:${error}`}>
                 {error}
               </p>
             ))}
@@ -79,7 +88,7 @@ export default function EditExpenseForm({
           </div>
           <div id='amount-error' aria-live='polite' aria-atomic='true'>
             {state?.errors?.amount?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`amount:${error}`}>
                 {error}
               </p>
             ))}
@@ -131,7 +140,7 @@ export default function EditExpenseForm({
           </div>
           <div id='method-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.method?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`method:${error}`}>
                 {error}
               </p>
             ))}
@@ -164,7 +173,7 @@ export default function EditExpenseForm({
           </div>
           <div id='category-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.categoryId?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`category:${error}`}>
                 {error}
               </p>
             ))}
@@ -197,7 +206,7 @@ export default function EditExpenseForm({
           </div>
           <div id='place-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.placeId?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`place:${error}`}>
                 {error}
               </p>
             ))}
@@ -225,7 +234,7 @@ export default function EditExpenseForm({
           </div>
           <div id='expenseDate-error' aria-live='polite' aria-atomic='true'>
             {state.errors?.expenseDate?.map((error: string) => (
-              <p className='mt-2 text-sm text-red-500' key={error}>
+              <p className='mt-2 text-sm text-red-500' key={`expenseDate:${error}`}>
                 {error}
               </p>
             ))}
@@ -253,7 +262,7 @@ export default function EditExpenseForm({
 
         {/*  Error all fields */}
         <div id='message-error' aria-live='polite' aria-atomic='true'>
-          {state.message && (
+          {state.message !== 'Updated expense' && (
             <p className='mt-2 text-sm text-red-500'>{state.message}</p>
           )}
         </div>

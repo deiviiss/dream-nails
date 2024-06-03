@@ -210,14 +210,15 @@ export async function updateExpense(
         with_relation: formatWithRelation(formData.get('withRelation'))
       }
     })
+
+    revalidatePath('/monedex/expenses')
+
+    return { message: 'Updated expense' }
   } catch (error) {
     return {
       message: 'Database Error: Failed to Update expense.'
     }
   }
-
-  revalidatePath('/monedex/expenses')
-  redirect('/monedex/expenses')
 }
 
 export async function toggleReconciledExpense(id: number, reconciled: boolean): Promise<void> {
