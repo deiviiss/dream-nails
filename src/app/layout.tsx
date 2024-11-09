@@ -1,5 +1,5 @@
 import { Analytics } from '@vercel/analytics/react'
-import './ui/globals.css'
+import './globals.css'
 import type { Metadata } from 'next'
 
 import { Toaster } from 'react-hot-toast'
