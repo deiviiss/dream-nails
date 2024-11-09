@@ -83,12 +83,12 @@ const Navbar = (): JSX.Element => {
     >
       <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
         <Link href={'/'}>
-          <div className=' w-32 h-auto'>
+          <div className='w-20'>
             <Image
               src='/logo_dream-nails-white.png'
               alt='logo_dream-nails'
-              width={256}
-              height={144}
+              width={288}
+              height={307}
               className='w-full'
             ></Image>
           </div>
