@@ -7,11 +7,22 @@ interface SeedUser {
   role: 'admin' | 'user'
 }
 
+interface Image {
+  url: string
+}
+
 interface SeedData {
   users: SeedUser[]
+  images: Image[]
 }
 
 export const initialData: SeedData = {
+  images: [
+    { url: '/services.jpg' },
+    { url: '/services2.jpg' },
+    { url: '/services3.jpg' },
+    { url: '/services21.jpg' }
+  ],
   users: [
     {
       email: 'dreamnails@hotmail.com',

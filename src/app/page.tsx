@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Hero from '@/app/ui/Hero'
 import Navbar from '@/app/ui/Navbar'
+import { CarouselGaleryHome } from '@/components/dream-nails/CarrouselGaleryHome'
 
 const HomePage: NextPage = async () => {
   const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
@@ -15,7 +16,7 @@ const HomePage: NextPage = async () => {
         <Hero title={title} urlImg={urlImg}></Hero>
 
         {/* slogan */}
-        <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row text-center'>
+        <section className='flex flex-col gap-4 items-center mb-9 p-5 lg:flex-row text-center'>
           <div className='py-10 max-w-[800px] mx-auto'>
             <header className='mb-8'>
               <h1 className='text-3xl font-semibold text-black'>
@@ -41,7 +42,7 @@ const HomePage: NextPage = async () => {
         </section>
 
         {/* services */}
-        <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row'>
+        <section className='flex flex-col gap-4 items-center mb-8 p-5 lg:flex-row'>
           <div className='flex flex-col gap-4 items-center lg:flex-row max-w-[900px] mx-auto'>
             {/* image */}
             <div className='relative w-auto max-w-[700px] h-full border-2 border-secondary p-4'>
@@ -93,7 +94,7 @@ const HomePage: NextPage = async () => {
         </section>
 
         {/* location */}
-        <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row'>
+        <section className='flex flex-col gap-4 items-center mb-8 p-5 lg:flex-row'>
           <div className='flex flex-col gap-4 items-center lg:flex-row max-w-[900px] mx-auto'>
             {/* image */}
             <div className='relative w-auto max-w-[700px] h-full border-2 border-secondary p-4'>
@@ -148,6 +149,17 @@ const HomePage: NextPage = async () => {
                 </button>
               </footer>
             </div>
+          </div>
+        </section>
+
+        {/*  Galery */}
+        <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row'>
+          <div className='w-full max-w-[900px] mx-auto'>
+            <header className='mb-8'>
+              <h1 className='text-3xl font-semibold text-black'>Galería</h1>
+            </header>
+
+            <CarouselGaleryHome />
           </div>
         </section>
 

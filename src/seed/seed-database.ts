@@ -2,10 +2,17 @@ import { initialData } from './seed'
 import prisma from '../libs/prisma'
 
 const main = async () => {
+  // delete all data
+  await prisma.image.deleteMany()
   await prisma.user.deleteMany()
 
   // seed data
-  const { users } = initialData
+  const { users, images } = initialData
+
+  // images
+  await prisma.image.createMany({
+    data: images
+  })
 
   // users
   await prisma.user.createMany({
