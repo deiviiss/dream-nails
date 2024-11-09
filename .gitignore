@@ -4,6 +4,7 @@
 *.excalidraw
 
 # dependencies
+/postgres
 /node_modules
 /.pnp
 .pnp.js
@@ -37,3 +38,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# diff
+diff.txt
