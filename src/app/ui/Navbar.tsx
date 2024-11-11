@@ -1,10 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-
-import BookNowButton from '@/app/ui/BookNowButton'
 import DropDown from '@/app/ui/DropDown'
 
 const navigations = [
@@ -15,100 +12,56 @@ const navigations = [
 ]
 
 const Navbar = (): JSX.Element => {
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const [bgColor, setBgColor] = useState('bg-none')
+  const fixedScrollThreshold = 0.5 // 1% scroll threshold
 
-  const [currentScrollPos, setCurrentScrollPos] = useState(0)
-  const [prevScrollPos, setPrevScrollPos] = useState(0)
-  const [isVisible, setIsVisible] = useState(true)
-  const [background, setBackground] = useState('bg-transparent')
-  const [currentPath, setCurrentPath] = useState(
-    pathname + searchParams.toString()
-  )
-  const url = pathname + searchParams.toString()
+  const handleScroll = () => {
+    // calculate the vertical scroll percentage
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100
+    setBgColor(scrolled > fixedScrollThreshold ? 'bg-primary' : 'bg-none') // change the background color if the percentage is greater than the fixed value
+  }
 
   useEffect(() => {
-    const handleScroll = (): void => {
-      const isScrollingUp = currentScrollPos < prevScrollPos
-      const isScrollingDown = currentScrollPos > prevScrollPos
-
-      setCurrentScrollPos(window.scrollY)
-
-      if (isScrollingUp && currentScrollPos < 45) {
-        setBackground('bg-transparent')
-      }
-
-      if (currentScrollPos > 45 && currentScrollPos < 200) {
-        setPrevScrollPos(currentScrollPos)
-        setBackground('bg-primary-gradient')
-      }
-
-      if (currentScrollPos > 201 && isScrollingDown) {
-        if (currentPath !== url) {
-          setIsVisible(true)
-          setBackground('bg-transparent')
-          setCurrentPath(url)
-        }
-
-        if (currentPath === url) {
-          setPrevScrollPos(currentScrollPos)
-          setIsVisible(false)
-        }
-      }
-
-      if (isScrollingUp) {
-        setPrevScrollPos(currentScrollPos)
-        setIsVisible(true)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll) // add the event listener for the scroll
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', handleScroll) // delete the event listener when the component is unmounted
     }
-  }, [
-    prevScrollPos,
-    currentScrollPos,
-    pathname,
-    searchParams,
-    currentPath,
-    url
-  ])
+  }, [])
 
   return (
-    <nav
-      className={`fixed z-10 top-0 flex flex-col w-full gap-3 py-3 text-white tracking-wider font-bold ${isVisible ? background : 'hidden'
-        }`}
-    >
-      <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
-        <Link href={'/'}>
-          <div className='w-20'>
-            <Image
-              src='/logo_dream-nails-white.png'
-              alt='logo_dream-nails'
-              width={288}
-              height={307}
-              className='w-full'
-            ></Image>
-          </div>
-        </Link>
+    <>
+      <nav
+        className={`w-full fixed top-0 z-20 text-white ${bgColor} transition-colors duration-300 border-b border-secondary py-2`}
+      >
+        <div className='flex items-center justify-between max-w-[768px] container mx-auto px-2'>
+          <Link href={'/'}>
+            <div className='w-20'>
+              <Image
+                src='/logo_dream-nails-white.png'
+                alt='logo_dream-nails'
+                width={288}
+                height={307}
+                className='w-full'
+              ></Image>
+            </div>
+          </Link>
 
-        <ul className='hidden sm:flex'>
-          {navigations.map((item) => (
-            <li
-              key={item.id}
-              className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
-            >
-              <Link href={item.url}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
+          <ul className='hidden sm:flex'>
+            {navigations.map((item) => (
+              <li
+                key={item.id}
+                className='px-3 py-1 rounded border-b-2 border-transparent hover:bg-tertiary hover:border-secondary transition ease-in-out delay-150 duration-300 relative'
+              >
+                <Link href={item.url}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
 
-        <DropDown navigations={navigations}></DropDown>
-      </div>
-      <BookNowButton></BookNowButton>
-    </nav>
+          <DropDown navigations={navigations}></DropDown>
+        </div>
+      </nav>
+    </>
   )
 }
 

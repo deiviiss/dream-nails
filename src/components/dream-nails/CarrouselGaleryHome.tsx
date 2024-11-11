@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/carousel'
 
 export async function CarouselGaleryHome() {
-  const { images } = await getPaginationImages({ page: 1 })
+  const { images } = await getPaginationImages({ page: 1, take: 6 })
 
   return (
     <Carousel

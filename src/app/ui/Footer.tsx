@@ -10,7 +10,7 @@ const items = [
       {
         id: 1,
         title: 'Instagram',
-        url: 'https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg==',
+        url: 'https://instagram.com/dream.nails.campeche',
         target: '_blank'
       },
       {
@@ -27,8 +27,8 @@ const items = [
     enlaces: [
       {
         id: 1,
-        title: 'Promociones',
-        url: '/salon-page/salon-services',
+        title: 'Galeria',
+        url: '/salon-page/galery',
         target: undefined
       },
       {
@@ -67,7 +67,7 @@ const items = [
 
 export const Footer = (): JSX.Element => {
   return (
-    <footer className='flex flex-col gap-3 justify-center items-center w-full mt-3'>
+    <footer className='flex flex-col gap-3 justify-center items-center w-full mt-10'>
       <h1 className=' opacity-10 tracking-[8px] text-center text-4xl'>
         DREAM NAILS
       </h1>

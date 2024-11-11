@@ -1,9 +1,12 @@
 import { type NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { IoLogoWhatsapp } from 'react-icons/io5'
 import Hero from '@/app/ui/Hero'
 import Navbar from '@/app/ui/Navbar'
+import { ButtonContactWhatsApp } from '@/components/dream-nails'
 import { CarouselGaleryHome } from '@/components/dream-nails/CarrouselGaleryHome'
+import { Button } from '@/components/ui/button'
 
 const HomePage: NextPage = async () => {
   const title = 'LA MAGIA OCURRE CUANDO AMAS LO QUE HACES'
@@ -42,7 +45,7 @@ const HomePage: NextPage = async () => {
         </section>
 
         {/* services */}
-        <section className='flex flex-col gap-4 items-center mb-8 p-5 lg:flex-row'>
+        <section className='flex flex-col gap-4 items-center mb-8 p-5 lg:flex-row' id='services'>
           <div className='flex flex-col gap-4 items-center lg:flex-row max-w-[900px] mx-auto'>
             {/* image */}
             <div className='relative w-auto max-w-[700px] h-full border-2 border-secondary p-4'>
@@ -86,7 +89,7 @@ const HomePage: NextPage = async () => {
 
               <footer className='flex flex-col items-start justify-center'>
                 <button className='w-52 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
-                  <Link href={'/salon-services'}>VER TODOS LOS SERVICIOS</Link>
+                  <Link href={'/salon-page/prices'}>Ver todos</Link>
                 </button>
               </footer>
             </div>
@@ -153,7 +156,7 @@ const HomePage: NextPage = async () => {
         </section>
 
         {/*  Galery */}
-        <section className='flex flex-col gap-4 items-center mb-12 p-5 lg:flex-row'>
+        <section className='flex flex-col gap-4 items-center mb-12 p-5'>
           <div className='w-full max-w-[900px] mx-auto'>
             <header className='mb-8'>
               <h1 className='text-3xl font-semibold text-black'>Galería</h1>
@@ -161,6 +164,17 @@ const HomePage: NextPage = async () => {
 
             <CarouselGaleryHome />
           </div>
+
+          <Button
+            variant={'ghost'}
+            asChild
+            size={'lg'}
+            className='mt-4 border border-primary hover:bg-primary hover:text-white'
+          >
+            <Link href={'/salon-page/galery'}>
+              Ver todas
+            </Link>
+          </Button>
         </section>
 
         {/* instagram */}
@@ -178,15 +192,19 @@ const HomePage: NextPage = async () => {
                 <Link
                   target='_blank'
                   href={
-                    'https://instagram.com/dream.nails.vale?utm_source=qr&igshid=MzNlNGNkZWQ4Mg=='
+                    'https://www.instagram.com/dream.nails.campeche/'
                   }
                 >
-                  @dream.nails.vale
+                  @dream.nails.campeche
                 </Link>
               </button>
             </footer>
           </div>
         </section>
+
+        <ButtonContactWhatsApp name='Citas' className='fixed bottom-5 right-3 md:right-3 z-10 text-white hover:no-underline hover:text-gray-900 text-xl flex gap-1 p-2 border-secondary border bg-primary print:hidden animate-bounce'
+          icon={<IoLogoWhatsapp />}
+        />
       </main>
     </>
   )

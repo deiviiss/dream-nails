@@ -1,3 +1,5 @@
+import { IoChevronDownOutline } from 'react-icons/io5'
+
 const Hero = ({
   title,
   urlImg
@@ -15,10 +17,12 @@ const Hero = ({
         className='flex flex-col items-end justify-end w-auto h-screen bg-no-repeat bg-center bg-cover'
         style={{ backgroundImage: urlImg }}
       >
-        <header className='absolute bottom-20 w-full justify-center px-16'>
+        <header className='absolute bottom-20 w-full flex flex-col items-center justify-center px-16 gap-y-5'>
           <h1 className='text-white text-center font-semibold text-2xl'>
             {title}
           </h1>
+          <IoChevronDownOutline className='w-7 h-7 text-white animate-bounce' />
+
         </header>
       </div>
     </section>
