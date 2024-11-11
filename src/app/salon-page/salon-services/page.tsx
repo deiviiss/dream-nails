@@ -50,7 +50,7 @@ const ServicesPage: NextPage = () => {
           <h1 className='text-2xl font-bold'>Lista de servicios</h1>
         </header>
 
-        <div className='flex flex-col gap-6 px-2 w-full overflow-hidden'>
+        <div className='flex flex-col gap-6 px-2 w-full overflow-hidden  max-w-[820px]'>
           <div className='flex flex-col'>
             <h1 className='py-1 font-semibold'>{titleManos}</h1>
             {servicesManos?.map((service) => {
