@@ -89,7 +89,7 @@ const HomePage: NextPage = async () => {
 
               <footer className='flex flex-col items-start justify-center'>
                 <button className='w-52 h-16 mt-1 p-2 font-normal border border-primary rounded transition-transform duration-300 ease-in-out transform hover:border-white hover:bg-primary hover:text-white'>
-                  <Link href={'/salon-page/prices'}>Ver todos</Link>
+                  <Link href={'/salon-page/salon-services'}>Ver todos</Link>
                 </button>
               </footer>
             </div>

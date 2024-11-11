@@ -47,7 +47,7 @@ export function GaleryImages({ images }: ImageProps): JSX.Element {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-12 max-w-5xl">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {
           images.map((image, index) => {
