@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import NextAuth, { type NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
-import prisma from '@/libs/prisma'
+import prisma from '@/lib/prisma'
 
 export const authConfig: NextAuthConfig = {
   pages: {

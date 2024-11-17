@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 import { getPaginationImages } from '@/actions/dream-nails'
-import Hero from '@/app/ui/Hero'
 import { GaleryImages } from '@/components/dream-nails'
+import Hero from '@/components/dream-nails/Hero'
 
 const GalleryPage: NextPage = async () => {
   const title = 'NUESTRA GALERÍA'

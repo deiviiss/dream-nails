@@ -1,7 +1,7 @@
 import { type NextPage } from 'next'
 
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import Form from '@/app/ui/monedex/categories/create-form'
+import Breadcrumbs from '@/components/monedex/breadcrumbs'
+import Form from '@/components/monedex/categories/create-form'
 
 const Page: NextPage = async () => {
   return (

@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation'
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import Form from '@/app/ui/monedex/categories/edit-form'
+import Breadcrumbs from '@/components/monedex/breadcrumbs'
+import Form from '@/components/monedex/categories/edit-form'
 import {
   fetchCategoryById
-} from '@/libs/data'
+} from '@/lib/data'
 
 export default async function Page({
   params

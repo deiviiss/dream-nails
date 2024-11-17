@@ -1,7 +1,7 @@
 'use server'
 
-import prisma from '@/libs/prisma'
-import { validatePageNumber } from '@/libs/validatePageNumber'
+import prisma from '@/lib/prisma'
+import { validatePageNumber } from '@/lib/validatePageNumber'
 
 interface PaginationOptions {
   query?: string

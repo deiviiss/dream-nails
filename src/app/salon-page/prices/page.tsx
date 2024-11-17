@@ -2,9 +2,9 @@
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
 
-import Hero from '@/app/ui/Hero'
-import { ListServicesPrice } from '@/app/ui/ListPrice'
-import { ListServicesPriceAdicional } from '@/app/ui/ListPriceAdicional'
+import Hero from '@/components/dream-nails/Hero'
+import { ListServicesPrice } from '@/components/dream-nails/ListPrice'
+import { ListServicesPriceAdicional } from '@/components/dream-nails/ListPriceAdicional'
 import { useSalonService } from '@/context/SalonServicesContext'
 import { type GroupedServices } from '@/interfaces/Props'
 

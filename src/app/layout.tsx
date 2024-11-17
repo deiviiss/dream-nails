@@ -3,12 +3,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 import { Toaster } from 'react-hot-toast'
-import { arapey, josefin } from './ui/fonts'
 import { getUserSessionServer } from '@/actions'
 import Providers from '@/app/providers'
-import { Footer } from '@/app/ui/Footer'
-import LoginButton from '@/app/ui/LoginButton'
-import SignOutButton from '@/app/ui/SignOutButton'
+import { Footer } from '@/components/dream-nails/Footer'
+import LoginButton from '@/components/dream-nails/LoginButton'
+import SignOutButton from '@/components/dream-nails/SignOutButton'
+import { arapey, josefin } from '@/config/fonts'
 
 export const metadata: Metadata = {
   title: 'Dream Nails',

@@ -1,14 +1,14 @@
 import { type Metadata } from 'next'
 import { Suspense } from 'react'
 
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import { CreateExpense } from '@/app/ui/monedex/expenses/buttons'
-import ExpensesTable from '@/app/ui/monedex/expenses/table'
-import FilterMounth from '@/app/ui/monedex/filter-month'
-import Pagination from '@/app/ui/monedex/pagination'
-import Search from '@/app/ui/monedex/search'
-import TotalAllExpenses from '@/app/ui/monedex/total-general'
-import { fetchExpensesPages } from '@/libs/data'
+import Breadcrumbs from '@/components/monedex/breadcrumbs'
+import { CreateExpense } from '@/components/monedex/expenses/buttons'
+import ExpensesTable from '@/components/monedex/expenses/table'
+import FilterMounth from '@/components/monedex/filter-month'
+import Pagination from '@/components/monedex/pagination'
+import Search from '@/components/monedex/search'
+import TotalAllExpenses from '@/components/monedex/total-general'
+import { fetchExpensesPages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Gastos'

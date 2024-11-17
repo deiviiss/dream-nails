@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation'
 
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import Form from '@/app/ui/monedex/expenses/edit-form'
+import Breadcrumbs from '@/components/monedex/breadcrumbs'
+import Form from '@/components/monedex/expenses/edit-form'
 import {
   fetchExpenseById,
   fetchCategoriesToForm,
   fetchPlaces
-} from '@/libs/data'
+} from '@/lib/data'
 
 export default async function Page({
   params

@@ -2,7 +2,7 @@
 import { type NextPage } from 'next'
 import { useEffect } from 'react'
 
-import Hero from '@/app/ui/Hero'
+import Hero from '@/components/dream-nails/Hero'
 import { useSalonService } from '@/context/SalonServicesContext'
 import { type GroupedServices } from '@/interfaces/Props'
 

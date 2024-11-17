@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { IoLogoWhatsapp } from 'react-icons/io5'
-import Navbar from '@/app/ui/Navbar'
 import { ButtonContactWhatsApp } from '@/components/dream-nails'
+import Navbar from '@/components/dream-nails/Navbar'
 
 export const metadata: Metadata = {
   title: 'Salon Page'
