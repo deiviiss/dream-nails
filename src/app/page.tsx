@@ -2,10 +2,10 @@ import { type NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IoLogoWhatsapp } from 'react-icons/io5'
-import Hero from '@/app/ui/Hero'
-import Navbar from '@/app/ui/Navbar'
 import { ButtonContactWhatsApp } from '@/components/dream-nails'
 import { CarouselGaleryHome } from '@/components/dream-nails/CarrouselGaleryHome'
+import Hero from '@/components/dream-nails/Hero'
+import Navbar from '@/components/dream-nails/Navbar'
 import { Button } from '@/components/ui/button'
 
 const HomePage: NextPage = async () => {

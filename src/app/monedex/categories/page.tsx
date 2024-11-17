@@ -1,13 +1,13 @@
 import { type Metadata } from 'next'
 import { Suspense } from 'react'
 
-import Breadcrumbs from '@/app/ui/monedex/breadcrumbs'
-import { CreateCategory } from '@/app/ui/monedex/categories/buttons'
-import CategoriesTable from '@/app/ui/monedex/categories/table'
-import Pagination from '@/app/ui/monedex/pagination'
-import Search from '@/app/ui/monedex/search'
+import Breadcrumbs from '@/components/monedex/breadcrumbs'
+import { CreateCategory } from '@/components/monedex/categories/buttons'
+import CategoriesTable from '@/components/monedex/categories/table'
+import Pagination from '@/components/monedex/pagination'
+import Search from '@/components/monedex/search'
 
-import { fetchCategoriesPages } from '@/libs/data'
+import { fetchCategoriesPages } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Gastos'

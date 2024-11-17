@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getUserSessionServer } from '@/actions'
-import SideNav from '@/app/ui/monedex/sidenav'
+import SideNav from '@/components/monedex/sidenav'
 
 export const metadata: Metadata = {
   title: {

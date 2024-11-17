@@ -1,7 +1,7 @@
-import CategoriesTotalTable from '@/app/ui/monedex/categories/table-total'
-import FilterMonth from '@/app/ui/monedex/filter-month'
-import TotalCredit from '@/app/ui/monedex/total-credit'
-import TotalAllExpenses from '@/app/ui/monedex/total-general'
+import CategoriesTotalTable from '@/components/monedex/categories/table-total'
+import FilterMonth from '@/components/monedex/filter-month'
+import TotalCredit from '@/components/monedex/total-credit'
+import TotalAllExpenses from '@/components/monedex/total-general'
 
 export default async function HomePage({
   searchParams

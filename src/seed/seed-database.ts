@@ -1,5 +1,5 @@
 import { initialData } from './seed'
-import prisma from '../libs/prisma'
+import prisma from '../lib/prisma'
 
 const main = async () => {
   // delete all data

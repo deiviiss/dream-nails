@@ -1,7 +1,7 @@
 'use client'
 import { type NextPage } from 'next'
 
-import Hero from '@/app/ui/Hero'
+import Hero from '@/components/dream-nails/Hero'
 
 const ServicesPage: NextPage = () => {
   const title = 'SOBRE NOSOTROS'

@@ -1,4 +1,4 @@
-import CategorysDetailsTable from '@/app/ui/monedex/categories/table-details'
+import CategorysDetailsTable from '@/components/monedex/categories/table-details'
 
 export default async function CategoryExpensesPage({
   searchParams
