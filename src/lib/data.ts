@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore } from 'next/cache'
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { type CategoryForm } from '@/interfaces/Category'
 import {
@@ -13,15 +13,21 @@ const ITEMS_PER_PAGE = 20
 export async function fetchFilteredExpenses(
   query: string,
   currentPage: number,
-  month: number
+  month: number,
+  year?: number
 ): Promise<ExpenseWithCategoryAndUserAndPlace[]> {
-  noStore()
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
+  const currentMonth = month || new Date().getMonth() + 1
+  const currentYear = year || new Date().getFullYear()
+
+  const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+  const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
 
   try {
     const expenses = await prisma.expense.findMany({
       where: {
         expense_month: { equals: Number(month) },
+        expense_date: { gte: startDate, lt: endDate },
         AND: [
           {
             OR: [
@@ -55,22 +61,31 @@ export async function fetchFilteredExpenses(
         { expense_date: 'desc' },
         { created_at: 'desc' }
       ],
-      take: ITEMS_PER_PAGE, // Establece el límite aquí
-      skip: offset // Aplicas el offset para la paginación
+      take: ITEMS_PER_PAGE, // Set limit here
+      skip: offset // Apply offset for pagination
     })
 
+    revalidatePath('/monedex/expenses')
     return expenses
   } catch (error) {
+    console.log('error', error)
     throw new Error('Failed to fetch filtered expenses.')
   }
 }
 
 export async function fetchAmountExpenses(
   query: string,
-  month: number
+  month: number,
+  year?: number
 ): Promise<number> {
   noStore()
   try {
+    const currentYear = year || new Date().getFullYear()
+    const currentMonth = month || new Date().getMonth() + 1
+
+    const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+    const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+
     const expensesAmount = await prisma.expense.aggregate({
       where: {
         AND: [
@@ -81,7 +96,8 @@ export async function fetchAmountExpenses(
               { category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
-          { expense_month: { equals: Number(month) } }
+          { expense_month: { equals: Number(currentMonth) } },
+          { expense_date: { gte: startDate, lt: endDate } }
         ]
       },
       _sum: {
@@ -97,15 +113,22 @@ export async function fetchAmountExpenses(
 }
 
 export async function fetchCreditExpenses(
-  month: number
+  month: number,
+  year?: number
 ): Promise<number> {
   noStore()
   try {
+    const currentMonth = month || new Date().getMonth() + 1
+    const currentYear = year || new Date().getFullYear()
+
+    const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+    const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+
     const creditExpensesTotal = await prisma.expense.aggregate({
       where: {
-
         AND: [
           { expense_month: { equals: Number(month) } },
+          { expense_date: { gte: startDate, lt: endDate } },
           {
             OR: [
               { method: { contains: 'credit', mode: 'insensitive' } }
@@ -126,9 +149,15 @@ export async function fetchCreditExpenses(
   }
 }
 
-export async function fetchExpensesPages(query: string, month: number): Promise<number> {
+export async function fetchExpensesPages(query: string, month: number, year?: number): Promise<number> {
   noStore()
   try {
+    const currentMonth = month || new Date().getMonth() + 1
+    const currentYear = year || new Date().getFullYear()
+
+    const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+    const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+
     const count = await prisma.expense.count({
       where: {
         AND: [
@@ -139,7 +168,8 @@ export async function fetchExpensesPages(query: string, month: number): Promise<
               { category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
-          { expense_month: { equals: Number(month) } }
+          { expense_month: { equals: Number(currentMonth) } },
+          { expense_date: { gte: startDate, lt: endDate } }
         ]
       }
     })
@@ -227,15 +257,23 @@ export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
 }
 
 export async function fetchTotalAmountByCategory(
-  month: number
+  month: number,
+  year?: number
 ) {
   noStore()
 
   try {
+    const currentMonth = month || new Date().getMonth() + 1
+    const currentYear = year || new Date().getFullYear()
+
+    const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+    const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+
     // Firts we get the sums of expenses by category
     const groupedExpenses = await prisma.expense.groupBy({
       where: {
-        expense_month: { equals: Number(month) }
+        expense_month: { equals: Number(month) },
+        expense_date: { gte: startDate, lt: endDate }
       },
       by: [
         'category_id'
@@ -278,13 +316,20 @@ export async function fetchTotalAmountByCategory(
   }
 }
 
-export async function fetchExpenseByCategory(id: number, month: number) {
+export async function fetchExpenseByCategory(id: number, month: number, year?: number) {
   noStore()
   try {
+    const currentMonth = month || new Date().getMonth() + 1
+    const currentYear = year || new Date().getFullYear()
+
+    const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
+    const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+
     const expensesByCategory = await prisma.expense.findMany({
       where: {
         category_id: id,
-        expense_month: month
+        expense_month: month,
+        expense_date: { gte: startDate, lt: endDate }
       },
       select: {
         id: true,

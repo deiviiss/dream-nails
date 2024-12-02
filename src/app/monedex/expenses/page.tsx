@@ -21,15 +21,18 @@ export default async function ExpensesPage({
     query?: string
     month?: number
     page?: string
+    year?: number
   }
 }): Promise<JSX.Element> {
   const query = searchParams?.query || ''
   const currentMonth = new Date().getMonth() + 1
+  const currentYear = new Date().getFullYear()
   const month = searchParams?.month || Number(currentMonth)
+  const year = searchParams?.year || currentYear
 
   const currentPage = Number(searchParams?.page) || 1
 
-  const totalPages = await fetchExpensesPages(query, Number(month))
+  const totalPages = await fetchExpensesPages(query, Number(month), Number(year))
 
   return (
     <main>
@@ -47,10 +50,10 @@ export default async function ExpensesPage({
 
       <div className='flex flex-col gap-2'>
 
-        <TotalAllExpenses query={query} month={month} />
+        <TotalAllExpenses query={query} month={month} year={year} />
 
         <Suspense key={`${query}${currentPage}`} fallback='Loading'>
-          <ExpensesTable query={query} currentPage={currentPage} month={month} />
+          <ExpensesTable query={query} currentPage={currentPage} month={month} year={year} />
         </Suspense>
 
         <div className="mt-5 flex w-full justify-center">

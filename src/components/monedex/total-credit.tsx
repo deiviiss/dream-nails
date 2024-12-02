@@ -2,11 +2,13 @@ import { fetchCreditExpenses } from '@/lib/data'
 import { formatCurrency } from '@/lib/helpers'
 
 export default async function TotalCredit({
-  month
+  month,
+  year
 }: {
   month: number
+  year: number
 }): Promise<JSX.Element> {
-  const totalCredit = await fetchCreditExpenses(month)
+  const totalCredit = await fetchCreditExpenses(month, year)
 
   return (
     <div className='flex w-full py-2'>
