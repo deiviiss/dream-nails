@@ -1,7 +1,6 @@
 'use client'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { IoCalendarNumberOutline } from 'react-icons/io5'
 import { useDebouncedCallback } from 'use-debounce'
 
 const months = [
@@ -56,44 +55,55 @@ const months = [
 
 ]
 
+const years = Array.from({ length: 2 }, (_, i) => new Date().getFullYear() - i)
+
 export default function FilterMonth(): JSX.Element {
   const filterParams = useSearchParams()
   const pathname = usePathname()
   const { replace } = useRouter()
-  const [currentMonth, setCurrentMonth] = useState(new Date().toLocaleString('es', { month: 'numeric' }))
-  const params = new URLSearchParams(filterParams)
-  const paramsMonthName = params.get('month')
-  const existMonthName = !!paramsMonthName
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1)
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+  const params = new URLSearchParams(filterParams.toString())
 
-  const handleFilterMonth = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(filterParams)
-
+  const handleFilterMonth = useDebouncedCallback((month: string, year: string) => {
     params.set('page', '1')
-    params.set('month', term)
-    setCurrentMonth(term)
+    params.set('month', month)
+    params.set('year', year)
+    setCurrentMonth(Number(month))
+    setCurrentYear(Number(year))
     replace(`${pathname}?${params.toString()}`)
   }, 300)
 
   return (
-    <div className='relative flex flex-1 flex-shrink-0 max-w-[150px]'>
-      <label htmlFor='filterMounth' className='sr-only'>
-        Mes
-      </label>
-      <select
-        id='filterMonth'
-        className='peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm capitalize outline-2 placeholder:text-gray-500'
-        onChange={(e) => {
-          handleFilterMonth(e.target.value)
-        }}
-        defaultValue={existMonthName ? paramsMonthName : currentMonth}
-      >
-        {months.map((month) => (
-          <option key={month.id} value={month.id}>
-            {month.name}
-          </option>
-        ))}
-      </select>
-      <IoCalendarNumberOutline className='absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900' />
+    <div className='flex gap-2'>
+      <div className='relative flex flex-1 max-w-[150px]'>
+        <select
+          id='filterMonth'
+          className='block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm'
+          onChange={(e) => handleFilterMonth(e.target.value, currentYear.toString())}
+          defaultValue={currentMonth}
+        >
+          {months.map((month) => (
+            <option key={month.id} value={month.id}>
+              {month.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className='relative flex flex-1 max-w-[150px]'>
+        <select
+          id='filterYear'
+          className='block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm'
+          onChange={(e) => handleFilterMonth(currentMonth.toString(), e.target.value)}
+          defaultValue={currentYear}
+        >
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   )
 }

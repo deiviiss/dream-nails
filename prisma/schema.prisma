@@ -7,19 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  admin // Role for admin
+  user // Role for user
+}
+
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
-  password   String
-  role       String    @default("customer")
-  name       String    @default("Anonymous")
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String @default("customer")
+
   created_at DateTime  @default(now())
   updated_at DateTime?
-  expenses   Expense[]
+
+  expenses Expense[]
 
   @@map("users")
 }
 
+// SALON MODELS
 model SalonService {
   id          Int       @id @default(autoincrement())
   category    String
@@ -32,6 +40,17 @@ model SalonService {
   @@map("salon_services")
 }
 
+model Image {
+  id         Int       @id @default(autoincrement())
+  url        String
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@map("images")
+}
+
+// MONEDEX MODELS
+
 model Category {
   id          Int       @id @default(autoincrement())
   name        String
@@ -41,15 +60,6 @@ model Category {
   Expense     Expense[]
 
   @@map("categories")
-}
-
-model Image {
-  id         Int       @id @default(autoincrement())
-  url        String
-  created_at DateTime  @default(now())
-  updated_at DateTime?
-
-  @@map("images")
 }
 
 model Place {
@@ -85,3 +95,5 @@ model Expense {
 
   @@map("expenses")
 }
+
+// ECOMMERCE MODELS

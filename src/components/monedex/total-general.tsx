@@ -3,12 +3,14 @@ import { formatCurrency } from '@/lib/helpers'
 
 export default async function TotalAllExpenses({
   query,
-  month
+  month,
+  year
 }: {
   query: string
   month: number
+  year: number
 }): Promise<JSX.Element> {
-  const totalAmount = await fetchAmountExpenses(query, month)
+  const totalAmount = await fetchAmountExpenses(query, month, year)
 
   return (
     <div className='flex w-full py-2'>

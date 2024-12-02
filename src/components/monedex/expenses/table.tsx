@@ -5,13 +5,17 @@ import { formatDateToLocal, formatMethod, formatCurrency, formatWithRelation } f
 export default async function ExpensesTable({
   query,
   currentPage,
-  month
+  month,
+  year
 }: {
   query: string
   month: number
+  year?: number
   currentPage: number
 }): Promise<JSX.Element> {
-  const expenses = await fetchFilteredExpenses(query, currentPage, month)
+  const currentYear = year || new Date().getFullYear()
+
+  const expenses = await fetchFilteredExpenses(query, currentPage, month, currentYear)
 
   return (
     <div className='w-full'>

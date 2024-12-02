@@ -4,11 +4,13 @@ import { fetchTotalAmountByCategory } from '@/lib/data'
 import { formatCurrency } from '@/lib/helpers'
 
 export default async function CategoriesTotalTable({
-  month
+  month,
+  year
 }: {
   month: number
+  year: number
 }): Promise<JSX.Element> {
-  const expensesByCategory = await fetchTotalAmountByCategory(month)
+  const expensesByCategory = await fetchTotalAmountByCategory(month, year)
 
   return (
     <div className='flex flex-col items-center justify-between gap-1 py-2'>
