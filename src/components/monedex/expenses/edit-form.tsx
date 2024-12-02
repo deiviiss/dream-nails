@@ -131,7 +131,7 @@ export default function EditExpenseForm({
                 />
                 <label
                   htmlFor='cash'
-                  className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white dark:text-gray-300'
+                  className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
                 >
                   Efectivo <BsCashStack className='h-4 w-4' />
                 </label>
