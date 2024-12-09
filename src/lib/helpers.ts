@@ -31,6 +31,10 @@ export const formatMethod = (methodStr: string): string => {
   if (methodStr === 'cash') {
     return 'Efectivo'
   }
+
+  if (methodStr === 'debit') {
+    return 'Débito'
+  }
   return 'Por definir'
 }
 

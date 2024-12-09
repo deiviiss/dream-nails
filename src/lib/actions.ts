@@ -32,7 +32,7 @@ const FormExpenseSchema = z.object({
   amount: z.coerce.number().gt(0, {
     message: 'Por favor ingrese una cantidad mayor que $0.'
   }),
-  method: z.enum(['credit', 'cash'], {
+  method: z.enum(['credit', 'cash', 'debit'], {
     invalid_type_error: 'Seleccione un método de pago.'
   }),
   expenseDate: z.date({
@@ -186,7 +186,7 @@ export async function updateExpense(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Campos faltantes. No se pudo actualiazar el gasto.'
+      message: 'Campos faltantes. No se pudo actualizar el gasto.'
     }
   }
 
@@ -244,7 +244,7 @@ const FormCategorySchema = z.object({
     message: 'Por favor escriba un nombre.'
   }),
   description: z.string().min(1, {
-    message: 'Por favor escriba una descrición.'
+    message: 'Por favor escriba una descripción.'
   })
 })
 
@@ -272,7 +272,7 @@ export async function createCategory(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Campos faltantes. No se pudo crear la categoria.'
+      message: 'Campos faltantes. No se pudo crear la categoría.'
     }
   }
 
@@ -333,7 +333,7 @@ export async function updateCategory(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Campos faltantes. No se pudo actualiazar la categoria.'
+      message: 'Campos faltantes. No se pudo actualizar la categoría.'
     }
   }
 
@@ -377,8 +377,8 @@ export async function deleteCategory(
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       return {
-        errors: 'Categoria con gastos asociados. No se puede eliminar.',
-        message: 'Categoria con gastos asociados. No se puede eliminar.'
+        errors: 'Categoría con gastos asociados. No se puede eliminar.',
+        message: 'Categoría con gastos asociados. No se puede eliminar.'
       }
     }
     return {
