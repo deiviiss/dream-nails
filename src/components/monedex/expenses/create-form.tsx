@@ -91,23 +91,7 @@ export default function Form({
             Selecciona un método de pago
           </legend>
           <div className='rounded-md border border-gray-200 bg-white px-[14px] py-3'>
-            <div className='flex gap-4'>
-              <div className='flex items-center'>
-                <input
-                  id='credit'
-                  name='method'
-                  type='radio'
-                  value='credit'
-                  aria-describedby='method-error'
-                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
-                />
-                <label
-                  htmlFor='credit'
-                  className='ml-2 flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
-                >
-                  Crédito <FaRegCreditCard className='h-4 w-4' />
-                </label>
-              </div>
+            <div className='grid grid-cols-2 sm:grid-cols-3 gap-4'>
               <div className='flex items-center'>
                 <input
                   id='cash'
@@ -122,6 +106,38 @@ export default function Form({
                   className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
                 >
                   Efectivo <BsCashStack className='h-4 w-4' />
+                </label>
+              </div>
+              <div className='flex items-center'>
+                <input
+                  id='debit'
+                  name='method'
+                  type='radio'
+                  value='debit'
+                  aria-describedby='method-error'
+                  className='h-4 w-4 border-gray-300 bg-red-300 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
+                />
+                <label
+                  htmlFor='debit'
+                  className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
+                >
+                  Débito <FaRegCreditCard className='h-4 w-4' />
+                </label>
+              </div>
+              <div className='flex items-center'>
+                <input
+                  id='credit'
+                  name='method'
+                  type='radio'
+                  value='credit'
+                  aria-describedby='method-error'
+                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
+                />
+                <label
+                  htmlFor='credit'
+                  className='ml-2 flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
+                >
+                  Crédito <FaRegCreditCard className='h-4 w-4' />
                 </label>
               </div>
             </div>
