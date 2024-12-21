@@ -23,6 +23,7 @@ model User {
   updated_at DateTime?
 
   expenses Expense[]
+  Income   Income[]
 
   @@map("users")
 }
@@ -58,6 +59,7 @@ model Category {
   created_at  DateTime  @default(now())
   updated_at  DateTime?
   Expense     Expense[]
+  Income      Income[]
 
   @@map("categories")
 }
@@ -94,6 +96,24 @@ model Expense {
   updated_at DateTime?
 
   @@map("expenses")
+}
+
+model Income {
+  id          Int      @id @default(autoincrement())
+  name        String
+  amount      Float
+  method      String
+  income_date DateTime @default(now())
+
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  @@map("incomes")
 }
 
 // ECOMMERCE MODELS

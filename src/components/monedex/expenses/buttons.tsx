@@ -1,22 +1,42 @@
 'use client'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { FaPlus } from 'react-icons/fa6'
 import { IoCheckboxOutline } from 'react-icons/io5'
 import { TiPencil } from 'react-icons/ti'
+import { Button } from '@/components/ui/button'
 import { deleteExpense, toggleReconciledExpense } from '@/lib/actions'
 
-export function CreateExpense(): JSX.Element {
+export function CreateExpense(): JSX.Element | null {
+  const pathname = usePathname()
+
+  const pathParts = pathname.split('/')
+
+  const isHidden =
+    pathParts[1] === 'monedex' &&
+    pathParts[2] === 'expenses' &&
+    pathParts.length > 3
+
+  if (isHidden) {
+    return null
+  }
+
   return (
-    <Link
-      href='/monedex/expenses/create'
-      className='flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-medium text-white transition-colors hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+    <Button
+      asChild
+      className='rounded-lg bg-monedex-tertiary px-4 text-sm font-medium text-monedex-light transition-colors hover:bg-darkBlue-400'
     >
-      <span className='hidden md:block'>Crear gasto</span>{' '}
-      <FaPlus className='h-5 md:ml-4' />
-    </Link>
+      <Link
+        href='/monedex/expenses/create'
+        className='flex h-10 items-center'
+      >
+        <span className='hidden md:block'>Crear gasto</span>{' '}
+        <FaPlus className='h-5 md:ml-4' />
+      </Link>
+    </Button>
   )
 }
 

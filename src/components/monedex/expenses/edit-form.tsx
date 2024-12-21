@@ -10,7 +10,7 @@ import { FaRegCreditCard } from 'react-icons/fa6'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 
-import { Button } from '@/components/dream-nails/button'
+import { Button } from '@/components/ui/button'
 import { type CategoryForm } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expense'
 import { updateExpense } from '@/lib/actions'
@@ -101,7 +101,7 @@ export default function EditExpenseForm({
             Selecciona un método de pago
           </legend>
           <div className='rounded-md border border-gray-200 bg-white px-[14px] py-3'>
-            <div className='flex gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
               <div className='flex items-center'>
                 <input
                   id='cash'
@@ -110,11 +110,10 @@ export default function EditExpenseForm({
                   value='cash'
                   aria-describedby='method-error'
                   defaultChecked={expense.method === 'cash'}
-                  className='h-4 w-4 border-gray-300 bg-red-300 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
-                />
+                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600' />
                 <label
                   htmlFor='cash'
-                  className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
+                  className='flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
                 >
                   Efectivo <BsCashStack className='h-4 w-4' />
                 </label>
@@ -127,11 +126,10 @@ export default function EditExpenseForm({
                   value='debit'
                   aria-describedby='method-error'
                   defaultChecked={expense.method === 'debit'}
-                  className='h-4 w-4 border-gray-300 bg-red-300 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
-                />
+                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600' />
                 <label
                   htmlFor='debit'
-                  className='ml-2 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
+                  className='flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
                 >
                   Débito <FaRegCreditCard className='h-4 w-4' />
                 </label>
@@ -144,11 +142,10 @@ export default function EditExpenseForm({
                   value='credit'
                   aria-describedby='method-error'
                   defaultChecked={expense.method === 'credit'}
-                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600 focus:ring-2 focus:ring-gray-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-gray-600'
-                />
+                  className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600' />
                 <label
                   htmlFor='credit'
-                  className='ml-2 flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
+                  className='flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300'
                 >
                   Crédito <FaRegCreditCard className='h-4 w-4' />
                 </label>
@@ -167,7 +164,7 @@ export default function EditExpenseForm({
         {/* Category */}
         <div className='mb-4'>
           <label htmlFor='category' className='mb-2 block text-sm font-medium'>
-            Elige una categoria
+            Elige una categoría
           </label>
           <div className='relative'>
             <select
@@ -178,7 +175,7 @@ export default function EditExpenseForm({
               defaultValue={expense.category_id}
             >
               <option value='' disabled>
-                Selecciona una categoria
+                Selecciona una categoría
               </option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -287,13 +284,18 @@ export default function EditExpenseForm({
 
       {/* buttons */}
       <div className='mt-6 flex justify-end gap-4'>
-        <Link
-          href='/monedex'
-          className='flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200'
+        <Button
+          variant={'destructive'}
+          className='text-white'
+          asChild
         >
-          Cancelar
-        </Link>
-        <Button type='submit'>Editar gasto</Button>
+          <Link
+            href='/monedex'
+          >
+            Cancelar
+          </Link>
+        </Button>
+        <Button className='text-white bg-monedex-tertiary hover:bg-monedex-tertiary/90' type='submit'>Editar gasto</Button>
       </div>
     </form>
   )
