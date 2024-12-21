@@ -68,6 +68,7 @@ export async function fetchFilteredExpenses(
     revalidatePath('/monedex/expenses')
     return expenses
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log('error', error)
     throw new Error('Failed to fetch filtered expenses.')
   }

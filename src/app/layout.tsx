@@ -5,7 +5,6 @@ import type { Metadata } from 'next'
 import { Toaster } from 'react-hot-toast'
 import { getUserSessionServer } from '@/actions'
 import Providers from '@/app/providers'
-import { Footer } from '@/components/dream-nails/Footer'
 import LoginButton from '@/components/dream-nails/LoginButton'
 import SignOutButton from '@/components/dream-nails/SignOutButton'
 import { arapey, josefin } from '@/config/fonts'
@@ -28,7 +27,6 @@ export default async function RootLayout({
       <body className='text-base bg-body-gradient'>
         <Providers>
           {children}
-          <Footer />
           {user == null ? <LoginButton /> : <SignOutButton />}
         </Providers>
         <Toaster

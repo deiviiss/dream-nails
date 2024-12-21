@@ -19,7 +19,7 @@ const config: Config = {
       },
       backgroundColor: {
         primary: '#D18E8F',
-
+        secondary: '#8FC9B9',
         tertiary: '#AB5C72',
         cuartiary: '#FCC4C4',
         white: '#F3F3F3'
@@ -58,6 +58,18 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        monedex: {
+          primary: '#1a3a5f',
+          secondary: '#1E3A8A',
+          tertiary: '#2563EB',
+          accent: '#4fc3f7',
+          background: '#f5f5f5',
+          foreground: '#333333',
+          muted: '#9e9e9e',
+          success: '#4caf50',
+          danger: '#e57373',
+          light: '#F7FAFC'
+        },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

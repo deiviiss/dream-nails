@@ -11,7 +11,7 @@ export function CreateCategory(): JSX.Element {
   return (
     <Link
       href='/monedex/categories/create'
-      className='flex h-10 items-center rounded-lg bg-primary px-4 text-sm font-medium text-white transition-colors hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+      className='flex h-10 items-center rounded-lg bg-monedex-secondary px-4 text-sm font-medium text-white transition-colors hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-monedex-secondary'
     >
       <span className='hidden md:block'>Crear categoria</span>{' '}
       <FaPlus className='h-5 md:ml-4' />

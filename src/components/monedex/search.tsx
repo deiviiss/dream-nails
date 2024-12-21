@@ -13,7 +13,7 @@ export default function Search({
   const { replace } = useRouter()
 
   const handleSearch = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams.toString())
 
     params.set('page', '1')
 
@@ -35,7 +35,7 @@ export default function Search({
         }}
         defaultValue={searchParams.get('query')?.toString()}
       />
-      <FaSearchDollar className='absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900' />
+      <FaSearchDollar className='absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-darkBlue-600 peer-focus:text-gray-900' />
     </div>
   )
 }

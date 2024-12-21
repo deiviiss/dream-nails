@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { CreateExpense } from '@/components/monedex/expenses/buttons'
 import ExpensesTable from '@/components/monedex/expenses/table'
-import FilterMounth from '@/components/monedex/filter-month'
+import FilterMonth from '@/components/monedex/filter-month'
 import Pagination from '@/components/monedex/pagination'
 import Search from '@/components/monedex/search'
 import TotalAllExpenses from '@/components/monedex/total-general'
@@ -41,11 +41,13 @@ export default async function ExpensesPage({
       />
       <div className='my-3 flex items-center justify-between gap-2 md:mt-8'>
         <Search placeholder='Buscar gastos...' />
-        <CreateExpense />
+        <div className='hidden md:block'>
+          <CreateExpense />
+        </div>
       </div>
 
       <div className='flex flex-col gap-2'>
-        <FilterMounth />
+        <FilterMonth />
       </div>
 
       <div className='flex flex-col gap-2'>

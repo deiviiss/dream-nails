@@ -11,7 +11,7 @@ export default async function TotalCredit({
   const totalCredit = await fetchCreditExpenses(month, year)
 
   return (
-    <div className='flex w-full py-2'>
+    <div className='flex w-full py-2 text-white'>
       <h1>Crédito usado: {formatCurrency(totalCredit)}</h1>
     </div>
   )
