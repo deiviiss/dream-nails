@@ -27,7 +27,7 @@ export function CreateExpense(): JSX.Element | null {
   return (
     <Button
       asChild
-      className='rounded-lg bg-monedex-tertiary px-4 text-sm font-medium text-monedex-light transition-colors hover:bg-darkBlue-400'
+      className='rounded-lg bg-monedex-tertiary px-4 text-sm font-medium text-monedex-light transition-colors border border-monedex-tertiary hover:bg-monedex-secondary hover:border-monedex-light'
     >
       <Link
         href='/monedex/expenses/create'
