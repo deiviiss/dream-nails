@@ -13,7 +13,7 @@ export default function SideNav() {
           <AppLogo />
         </div>
       </Link>
-      <div className="flex grow flex-row justify-start space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+      <div className="grid grid-cols-3 gap-2 md:grid-cols-1 md:gap-y-2">
         <NavLinks />
       </div>
     </div>

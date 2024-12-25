@@ -1,4 +1,5 @@
 import { DeleteCategory, UpdateCategory } from '@/components/monedex/categories/buttons'
+import { Spinner } from '@/components/ui/spinner'
 import { fetchFilteredCategories } from '@/lib/data'
 
 export default async function CategoriesTable({
@@ -9,6 +10,12 @@ export default async function CategoriesTable({
   currentPage: number
 }): Promise<JSX.Element> {
   const categories = await fetchFilteredCategories(query, currentPage)
+
+  if (categories.length === 0) {
+    return (
+      <Spinner name='categorías' color='text-monedex-light' />
+    )
+  }
 
   return (
     <div className='w-full'>

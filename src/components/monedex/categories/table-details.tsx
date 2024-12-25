@@ -1,4 +1,5 @@
 import { DeleteExpense, UpdateExpense } from '@/components/monedex/expenses/buttons'
+import { Spinner } from '@/components/ui/spinner'
 import { fetchExpenseByCategory } from '@/lib/data'
 import { formatMethod, formatCurrency } from '@/lib/helpers'
 
@@ -10,6 +11,12 @@ export default async function CategorysDetailsTable({
   month: number
 }): Promise<JSX.Element> {
   const expensesByCategory = await fetchExpenseByCategory(Number(query), month)
+
+  if (expensesByCategory.length === 0) {
+    return (
+      <Spinner name='categorías' color='text-monedex-light' />
+    )
+  }
 
   return (
     <div className='flex flex-col items-center justify-between gap-1 py-2'>

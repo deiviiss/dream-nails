@@ -1,22 +1,22 @@
 import { type NextPage } from 'next'
-
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
-import Form from '@/components/monedex/categories/create-form'
+import { CategoryForm } from '@/components/monedex/categories/category-form'
 
 const Page: NextPage = async () => {
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Categorias', href: '/monedex/categories' },
+          { label: 'Categorías', href: '/monedex/categories' },
           {
-            label: 'Crear Categoria',
+            label: 'Crear Categoría',
             href: '/monedex/categories/create',
             active: true
           }
         ]}
       />
-      <Form />
+
+      <CategoryForm category={null} />
     </main>
   )
 }

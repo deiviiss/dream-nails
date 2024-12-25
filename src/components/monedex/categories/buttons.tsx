@@ -1,56 +1,104 @@
 'use client'
+
 import Link from 'next/link'
-import { useFormState } from 'react-dom'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { FaPlus } from 'react-icons/fa6'
 import { TiPencil } from 'react-icons/ti'
-
-import { deleteCategory } from '@/lib/actions'
+import { deleteCategoryById } from '@/actions/monedex/categories/delete-category-by-id'
+import { Button } from '@/components/ui/button'
 
 export function CreateCategory(): JSX.Element {
   return (
-    <Link
-      href='/monedex/categories/create'
-      className='flex h-10 items-center rounded-lg bg-monedex-secondary px-4 text-sm font-medium text-white transition-colors hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-monedex-secondary'
+    <Button
+      asChild
+      className='rounded-lg bg-monedex-tertiary px-4 text-sm font-medium text-monedex-light transition-colors border border-monedex-tertiary hover:bg-monedex-secondary hover:border-monedex-light'
     >
-      <span className='hidden md:block'>Crear categoria</span>{' '}
-      <FaPlus className='h-5 md:ml-4' />
-    </Link>
+      <Link
+        href='/monedex/categories/create'
+        className='flex h-10 items-center'
+      >
+        <span className='hidden md:block'>Crear categoría</span>{' '}
+        <FaPlus className='h-5 md:ml-4' />
+      </Link>
+    </Button>
   )
 }
 
 export function UpdateCategory({ id }: { id: number }): JSX.Element {
   return (
-    <Link
-      href={`/monedex/categories/${id}/edit`}
-      className='rounded-md border p-2 hover:bg-gray-100'
+    <Button
+      asChild
+      size={'icon'}
+      variant={'outline'}
+      className='bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 rounded-lg p-2 transition-colors'
     >
-      <TiPencil className='w-5' />
-    </Link>
+      <Link
+        href={`/monedex/categories/${id}`}
+      >
+        <TiPencil className='w-5' />
+      </Link>
+    </Button>
   )
 }
 
 export function DeleteCategory({ id }: { id: number }): JSX.Element {
-  const deleteCategoryWithId = deleteCategory.bind(null, id)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const initialState = { message: null, errors: null }
-  const [state, dispatch] = useFormState(deleteCategoryWithId, initialState)
+  const handleDelete = (categoryId: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    toast((t) => (
+      <div>
+        <p className='py-3'>¿Seguro que quieres borrar la categoría con id <strong>{categoryId}</strong>?</p>
+
+        <div className='flex items-center justify-end'>
+          <Button className="bg-red-800 hover:bg-red-700 text-white px-3 py-2 rounded-md mx-2"
+            onClick={async () => {
+              setIsSubmitting(true)
+              const { ok } = await deleteCategoryById(categoryId)
+
+              if (!ok) {
+                toast.error('No se puede borrar, categoría con gastos asociados.', {
+                  position: 'top-right',
+                  duration: 2000
+                })
+
+                toast.dismiss(t.id)
+
+                setIsSubmitting(false)
+
+                return
+              }
+
+              setIsSubmitting(false)
+
+              toast.success('Categoría borrada correctamente', {
+                position: 'top-right',
+                duration: 2000
+              })
+
+              toast.dismiss(t.id)
+            }}
+          >Borrar</Button>
+
+          <Button
+            className="bg-monedex-primary hover:bg-monedex-primary/90  text-monedex-light px-3 py-2 rounded-md mx-2"
+            onClick={() => { toast.dismiss(t.id) }}
+          >Cancelar</Button>
+        </div>
+      </div>
+    )
+    )
+  }
 
   return (
-    <>
-      <form action={dispatch}>
-        <button className='rounded-md border p-2 hover:bg-gray-100'>
-          <span className='sr-only'>Borrar</span>
-          <FaRegTrashAlt className='w-4' />
-        </button>
-      </form>
-      <div id='delete-error' aria-live='polite' aria-atomic='true'>
-        {state.errors &&
-          <p className='w-full mt-2 text-sm text-red-500'>
-            {state.message}
-          </p>
-        }
-      </div>
-    </>
+    <button
+      onClick={handleDelete(id)}
+      disabled={isSubmitting}
+      className='rounded-md border p-2 hover:bg-gray-100'
+    >
+      <span className='sr-only'>Borrar</span>
+      <FaRegTrashAlt className='w-4' />
+    </button>
   )
 }

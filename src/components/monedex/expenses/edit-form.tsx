@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
@@ -9,9 +8,9 @@ import { FaDollarSign } from 'react-icons/fa'
 import { FaRegCreditCard } from 'react-icons/fa6'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
-
-import { Button } from '@/components/ui/button'
-import { type CategoryForm } from '@/interfaces/Category'
+import { ButtonBack } from '@/components/monedex/button-back'
+import { ButtonSaved } from '@/components/monedex/button-saved'
+import { type Category } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expense'
 import { updateExpense } from '@/lib/actions'
 
@@ -21,7 +20,7 @@ export default function EditExpenseForm({
   places
 }: {
   expense: ExpenseForm
-  categories: CategoryForm[]
+  categories: Category[]
   places: Array<{ id: number, name: string }>
 }): JSX.Element {
   const router = useRouter()
@@ -172,7 +171,7 @@ export default function EditExpenseForm({
               name='categoryId'
               className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500'
               aria-describedby='category-error'
-              defaultValue={expense.category_id}
+              defaultValue={expense.expense_category_id}
             >
               <option value='' disabled>
                 Selecciona una categoría
@@ -283,20 +282,13 @@ export default function EditExpenseForm({
       </div>
 
       {/* buttons */}
-      <div className='mt-6 flex justify-end gap-4'>
-        <Button
-          variant={'destructive'}
-          className='text-white'
-          asChild
-        >
-          <Link
-            href='/monedex'
-          >
-            Cancelar
-          </Link>
-        </Button>
-        <Button className='text-white bg-monedex-tertiary hover:bg-monedex-tertiary/90' type='submit'>Editar gasto</Button>
-      </div>
+      <div className='mt-6 flex w-full justify-end gap-4' >
+        <ButtonBack variant='destructive' name='Cancelar' className='text-monedex-light' />
+        <ButtonSaved
+          className='text-monedex-light bg-monedex-tertiary hover:bg-monedex-tertiary/90'
+          name={expense?.id ? 'Editar gasto' : 'Crear gasto'}
+        />
+      </div >
     </form>
   )
 }

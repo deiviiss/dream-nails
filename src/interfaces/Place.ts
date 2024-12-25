@@ -1,4 +1,5 @@
-export interface PlaceForm {
+export interface Place {
   id: number
   name: string
+  description: string
 }

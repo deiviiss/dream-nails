@@ -1,4 +1,12 @@
-import { type User } from '@prisma/client'
+export interface User {
+  id: string
+  name: string
+  email: string
+  password: string
+  role: 'user' | 'admin'
+  created_at: Date
+  updated_at: Date
+}
 
 export type CreateUser = Omit<User, 'id' | 'created_at' | 'updated_at'>
 

@@ -50,9 +50,9 @@ export default async function ExpensesPage({
         <FilterMonth />
       </div>
 
-      <div className='flex flex-col gap-2'>
+      <TotalAllExpenses query={query} month={month} year={year} />
 
-        <TotalAllExpenses query={query} month={month} year={year} />
+      <div className='flex flex-col gap-2'>
 
         <Suspense key={`${query}${currentPage}`} fallback='Loading'>
           <ExpensesTable query={query} currentPage={currentPage} month={month} year={year} />

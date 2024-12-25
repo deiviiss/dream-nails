@@ -1,6 +1,6 @@
 import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import { notFound } from 'next/navigation'
-import { type CategoryForm } from '@/interfaces/Category'
+import { type Category } from '@/interfaces/Category'
 import {
   type ExpenseWithCategoryAndUserAndPlace,
   type ExpenseForm
@@ -33,13 +33,13 @@ export async function fetchFilteredExpenses(
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { category: { name: { contains: query, mode: 'insensitive' } } }
+              { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
         ]
       },
       include: {
-        category: {
+        expense_category: {
           select: {
             id: true,
             name: true
@@ -68,8 +68,6 @@ export async function fetchFilteredExpenses(
     revalidatePath('/monedex/expenses')
     return expenses
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('error', error)
     throw new Error('Failed to fetch filtered expenses.')
   }
 }
@@ -94,7 +92,7 @@ export async function fetchAmountExpenses(
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { category: { name: { contains: query, mode: 'insensitive' } } }
+              { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
           { expense_month: { equals: Number(currentMonth) } },
@@ -166,7 +164,7 @@ export async function fetchExpensesPages(query: string, month: number, year?: nu
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
               { method: { contains: query, mode: 'insensitive' } },
-              { category: { name: { contains: query, mode: 'insensitive' } } }
+              { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
           { expense_month: { equals: Number(currentMonth) } },
@@ -195,7 +193,7 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
         name: true,
         amount: true,
         expense_date: true,
-        category_id: true,
+        expense_category_id: true,
         place_id: true,
         method: true,
         with_relation: true,
@@ -238,18 +236,26 @@ export async function fetchPlaces(): Promise<Array<{
 
 // CATEGORIES
 
-export async function fetchCategoriesToForm(): Promise<CategoryForm[]> {
+export async function fetchCategoriesToForm(): Promise<Category[]> {
   noStore()
   try {
-    const categories = await prisma.category.findMany({
+    const categoriesDb = await prisma.expenseCategory.findMany({
       select: {
         id: true,
-        name: true
+        name: true,
+        description: true
       },
       orderBy: {
         name: 'asc'
       }
     })
+
+    const categories = categoriesDb.map((category) => ({
+      id: category.id,
+      name: category.name,
+      description: category.description || '',
+      categoryType: 'expense' as 'expense'
+    }))
 
     return categories
   } catch (error) {
@@ -277,7 +283,7 @@ export async function fetchTotalAmountByCategory(
         expense_date: { gte: startDate, lt: endDate }
       },
       by: [
-        'category_id'
+        'expense_category_id'
       ],
       _sum: {
         amount: true
@@ -294,9 +300,9 @@ export async function fetchTotalAmountByCategory(
     // Then, we obtain the categories for those sums
     const groupedExpensesWithCategoryName = await Promise.all(
       groupedExpenses.map(async (groupedExpense) => {
-        const category = await prisma.category.findUnique({
+        const category = await prisma.expenseCategory.findUnique({
           where: {
-            id: groupedExpense.category_id
+            id: groupedExpense.expense_category_id
           },
           select: {
             name: true
@@ -328,7 +334,7 @@ export async function fetchExpenseByCategory(id: number, month: number, year?: n
 
     const expensesByCategory = await prisma.expense.findMany({
       where: {
-        category_id: id,
+        expense_category_id: id,
         expense_month: month,
         expense_date: { gte: startDate, lt: endDate }
       },
@@ -357,7 +363,7 @@ export async function fetchExpenseByCategory(id: number, month: number, year?: n
 export async function fetchCategoriesPages(query: string): Promise<number> {
   noStore()
   try {
-    const count = await prisma.category.count({
+    const count = await prisma.expenseCategory.count({
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } }
@@ -381,7 +387,7 @@ export async function fetchFilteredCategories(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE
 
   try {
-    const expenses = await prisma.category.findMany({
+    const expenses = await prisma.expenseCategory.findMany({
       where: {
         OR: [
           { name: { contains: query, mode: 'insensitive' } }
@@ -404,14 +410,25 @@ export async function fetchFilteredCategories(
 export async function fetchCategoryById(id: number) {
   noStore()
   try {
-    const category = await prisma.category.findFirst({
+    const categoryDB = await prisma.expenseCategory.findFirst({
       where: {
         id
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true
       }
     })
 
-    if (category === null) {
+    if (categoryDB === null) {
       notFound()
+    }
+
+    const category = {
+      ...categoryDB,
+      categoryType: 'expense' as 'expense',
+      description: categoryDB.description || ''
     }
 
     return category
