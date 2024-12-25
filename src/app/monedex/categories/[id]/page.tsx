@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
-import Form from '@/components/monedex/categories/edit-form'
+import { CategoryForm } from '@/components/monedex/categories/category-form'
 import {
   fetchCategoryById
 } from '@/lib/data'
@@ -12,9 +12,7 @@ export default async function Page({
 }): Promise<JSX.Element> {
   const id = Number(params.id)
 
-  const [category] = await Promise.all([
-    fetchCategoryById(id)
-  ])
+  const category = await fetchCategoryById(id)
 
   if (category == null) {
     notFound()
@@ -24,15 +22,15 @@ export default async function Page({
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Categorias', href: '/monedex/categories' },
+          { label: 'Categorías', href: '/monedex/categories' },
           {
-            label: 'Editar Categoria',
+            label: 'Editar Categoría',
             href: `/monedex/categories/${id}/edit`,
             active: true
           }
         ]}
       />
-      <Form category={category} />
+      <CategoryForm category={category} />
     </main>
   )
 }

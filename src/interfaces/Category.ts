@@ -1,6 +1,8 @@
-export interface CategoryForm {
+export interface Category {
   id: number
   name: string
+  description: string
+  categoryType: 'expense' | 'income'
 }
 
 export interface StateCategory {

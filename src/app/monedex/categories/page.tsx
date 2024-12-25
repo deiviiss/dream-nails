@@ -10,7 +10,7 @@ import Search from '@/components/monedex/search'
 import { fetchCategoriesPages } from '@/lib/data'
 
 export const metadata: Metadata = {
-  title: 'Gastos'
+  title: 'Categorías de gastos'
 }
 
 export default async function ExpensesPage({
@@ -30,11 +30,13 @@ export default async function ExpensesPage({
   return (
     <main>
       <Breadcrumbs
-        breadcrumbs={[{ label: 'Categorias', href: '/monedex/categories', active: true }]}
+        breadcrumbs={[{ label: 'Categorías', href: '/monedex/categories', active: true }]}
       />
       <div className='my-3 flex items-center justify-between gap-2 md:mt-8'>
-        <Search placeholder='Buscar categoria...' />
-        <CreateCategory />
+        <Search placeholder='Buscar categoría...' />
+        <div className='hidden md:block'>
+          <CreateCategory />
+        </div>
       </div>
 
       <div className='flex flex-col gap-2'>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { IoLogoWhatsapp } from 'react-icons/io5'
 import { ButtonContactWhatsApp } from '@/components/dream-nails'
 import { CarouselGaleryHome } from '@/components/dream-nails/CarrouselGaleryHome'
+import { Footer } from '@/components/dream-nails/Footer'
 import Hero from '@/components/dream-nails/Hero'
 import Navbar from '@/components/dream-nails/Navbar'
 import { Button } from '@/components/ui/button'
@@ -205,6 +206,8 @@ const HomePage: NextPage = async () => {
         <ButtonContactWhatsApp name='Citas' className='fixed bottom-5 right-3 md:right-3 z-10 text-white hover:no-underline hover:text-gray-900 text-xl flex gap-1 p-2 border-secondary border bg-primary print:hidden animate-bounce'
           icon={<IoLogoWhatsapp />}
         />
+        <Footer />
+
       </main>
     </>
   )

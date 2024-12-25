@@ -1,21 +1,21 @@
 'use client'
 
-import Link from 'next/link'
 import { useFormState } from 'react-dom'
 import { BsCashStack } from 'react-icons/bs'
 import { FaDollarSign } from 'react-icons/fa'
 import { FaRegCreditCard } from 'react-icons/fa6'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
-import { Button } from '@/components/ui/button'
-import { type CategoryForm } from '@/interfaces/Category'
+import { ButtonBack } from '@/components/monedex/button-back'
+import { ButtonSaved } from '@/components/monedex/button-saved'
+import { type Category } from '@/interfaces/Category'
 import { createExpense } from '@/lib/actions'
 
 export default function Form({
   categories,
   places
 }: {
-  categories: CategoryForm[]
+  categories: Category[]
   places: Array<{ id: number, name: string }>
 }) {
   const initialState = { message: null, errors: {} }
@@ -25,7 +25,7 @@ export default function Form({
 
   return (
     <form action={dispatch}>
-      <div className='rounded-md bg-gray-50 p-4 md:p-6'>
+      <div className='rounded-md bg-gray-50 p-4 md:p-6 max-w-2xl w-full mx-auto'>
         {/* Name */}
         <div className='mb-4'>
           <label htmlFor='name' className='mb-2 block text-sm font-medium'>
@@ -269,23 +269,18 @@ export default function Form({
             <p className='mt-2 text-sm text-red-500'>{state.message}</p>
           )}
         </div>
+        {/* buttons */}
+        <div className='mt-6 flex w-full justify-end text-left gap-4' >
+          <ButtonBack variant='destructive' name='Cancelar' className='text-monedex-light' />
+
+          <ButtonSaved
+            className='text-monedex-light bg-monedex-tertiary hover:bg-monedex-tertiary/90'
+            name='Agregar gasto'
+          />
+
+        </div >
       </div >
 
-      {/* buttons */}
-      <div className='mt-6 flex justify-end gap-4' >
-        <Button
-          variant={'destructive'}
-          className='text-white'
-          asChild
-        >
-          <Link
-            href='/monedex'
-          >
-            Cancelar
-          </Link>
-        </Button>
-        <Button className='text-white bg-monedex-tertiary hover:bg-monedex-tertiary/90' type='submit'>Crear gasto</Button>
-      </div >
     </form >
   )
 }

@@ -14,7 +14,7 @@ export interface StateExpense {
 }
 
 export interface ExpenseWithCategory extends Expense {
-  category: {
+  expense_category: {
     id: number
     name: string
   }
@@ -35,8 +35,13 @@ export interface ExpenseForm {
   name: string
   amount: number
   expense_date: Date
-  category_id: number
+  expense_category_id: number
   place_id: number
   method: string
   is_reconciled: boolean
+}
+
+export interface ExpenseCategory {
+  id: number
+  name: string
 }

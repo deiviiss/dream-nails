@@ -1,7 +1,7 @@
 'use client'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { FaPlus } from 'react-icons/fa6'
@@ -11,19 +11,6 @@ import { Button } from '@/components/ui/button'
 import { deleteExpense, toggleReconciledExpense } from '@/lib/actions'
 
 export function CreateExpense(): JSX.Element | null {
-  const pathname = usePathname()
-
-  const pathParts = pathname.split('/')
-
-  const isHidden =
-    pathParts[1] === 'monedex' &&
-    pathParts[2] === 'expenses' &&
-    pathParts.length > 3
-
-  if (isHidden) {
-    return null
-  }
-
   return (
     <Button
       asChild
@@ -70,33 +57,41 @@ export function ReconciledExpense({ id, reconciled }: { id: number, reconciled: 
 }
 
 export function DeleteExpense({ id }: { id: number }): JSX.Element {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const handleDelete = (expenseId: number) => (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     toast((t) => (
       <div>
-        <p className='text-white py-3'>¿Seguro que quieres borrar el gasto con id: <strong>{expenseId}</strong>?</p>
+        <p className='py-3'>¿Seguro que quieres borrar el gasto con id: <strong>{expenseId}</strong>?</p>
 
         <div className='flex items-center justify-between'>
           <button className="bg-red-800 hover:bg-red-700 text-white px-3 py-2 rounded-md mx-2"
-            onClick={() => {
-              deleteExpense(expenseId)
+            onClick={async () => {
+              setIsSubmitting(true)
+              await deleteExpense(expenseId)
+              setIsSubmitting(false)
+
+              toast.success('Ingreso borrado correctamente', {
+                position: 'top-right',
+                duration: 2000
+              })
               toast.dismiss(t.id)
             }}
           >Borrar</button>
 
-          <button className="bg-[#AB5C72] hover:opacity-70  text-white px-3 py-2 rounded-md mx-2"
+          <button className="bg-monedex-primary hover:bg-monedex-primary/90  text-monedex-light px-3 py-2 rounded-md mx-2"
             onClick={() => { toast.dismiss(t.id) }}
           >Cancelar</button>
         </div>
       </div>
-    ), {
-      style: {
-        background: '#D18E8F'
-      }
-    })
+    ))
   }
 
   return (
-    <button onClick={handleDelete(id)} className='rounded-md border p-2 hover:bg-gray-100'>
+    <button
+      onClick={handleDelete(id)}
+      disabled={isSubmitting}
+      className='rounded-md border p-2 hover:bg-gray-100'>
       <span className='sr-only'>Borrar</span>
       <FaRegTrashAlt className='w-4' />
     </button>

@@ -1,11 +1,11 @@
 'use server'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
 import { getUserSessionServer } from '@/actions'
-import { type StateResponseCategory, type StateCategory } from '@/interfaces/Category'
+import { type StateCategory } from '@/interfaces/Category'
 import { type StateExpense } from '@/interfaces/Expense'
 import {
   type DatabaseErrorResponse,
@@ -120,7 +120,7 @@ export async function createExpense(
       data: {
         name,
         amount,
-        category_id: Number(categoryId),
+        expense_category_id: Number(categoryId),
         place_id: Number(placeId),
         expense_date: expenseDate,
         method,
@@ -202,7 +202,7 @@ export async function updateExpense(
       data: {
         name,
         amount,
-        category_id: Number(categoryId),
+        expense_category_id: Number(categoryId),
         place_id: Number(placeId),
         expense_date: expenseDate,
         expense_month: expenseMonth,
@@ -245,6 +245,10 @@ const FormCategorySchema = z.object({
   }),
   description: z.string().min(1, {
     message: 'Por favor escriba una descripción.'
+  }),
+  categoryType: z.enum(['expense', 'income'], {
+    invalid_type_error: 'Seleccione un tipo de categoría.',
+    message: 'Por favor seleccione una categoría.'
   })
 })
 
@@ -265,7 +269,8 @@ export async function createCategory(
 ) {
   const validatedFields = CreateCategorySchema.safeParse({
     name: formData.get('name'),
-    description: formData.get('description')
+    description: formData.get('description'),
+    categoryType: formData.get('categoryType')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -296,7 +301,7 @@ export async function createCategory(
     validatedFields.data
 
   try {
-    await prisma.category.create({
+    await prisma.expenseCategory.create({
       data: {
         name,
         description
@@ -317,13 +322,6 @@ export async function updateCategory(
   prevStateCategory: StateCategory,
   formData: FormData
 ): Promise<UpdateCategoryResponse> {
-  // let categoryDateValue: FormDataEntryValue | null | Date =
-  //   formData.get('expenseDate')
-
-  // if (expenseDateValue !== null && expenseDateValue !== '') {
-  //   expenseDateValue = new Date(expenseDateValue.toString())
-  // }
-
   const validatedFields = UpdateCategory.safeParse({
     name: formData.get('name'),
     description: formData.get('description')
@@ -342,7 +340,7 @@ export async function updateCategory(
     validatedFields.data
 
   try {
-    await prisma.category.update({
+    await prisma.expenseCategory.update({
       where: {
         id
       },
@@ -359,30 +357,4 @@ export async function updateCategory(
 
   revalidatePath('/monedex/categories')
   redirect('/monedex/categories')
-}
-
-export async function deleteCategory(
-  id: number
-): Promise<StateResponseCategory> {
-  try {
-    await prisma.category.delete({
-      where: {
-        id
-      }
-    })
-
-    revalidatePath('/monedex/categories')
-
-    return { message: 'Deleted category.' }
-  } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      return {
-        errors: 'Categoría con gastos asociados. No se puede eliminar.',
-        message: 'Categoría con gastos asociados. No se puede eliminar.'
-      }
-    }
-    return {
-      message: 'Database Error: Failed to Delete category.'
-    }
-  }
 }

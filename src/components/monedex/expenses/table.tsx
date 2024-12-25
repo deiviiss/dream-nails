@@ -1,4 +1,5 @@
 import { DeleteExpense, ReconciledExpense, UpdateExpense } from './buttons'
+import { Spinner } from '@/components/ui/spinner'
 import { fetchFilteredExpenses } from '@/lib/data'
 import { formatDateToLocal, formatMethod, formatCurrency, formatWithRelation } from '@/lib/helpers'
 
@@ -17,9 +18,15 @@ export default async function ExpensesTable({
 
   const expenses = await fetchFilteredExpenses(query, currentPage, month, currentYear)
 
+  if (expenses.length === 0) {
+    return (
+      <Spinner name='gastos' color='text-monedex-light' />
+    )
+  }
+
   return (
     <div className='w-full'>
-      <div className='mt-3 flow-root'>
+      <div className='flow-root'>
         <div className='overflow-x-auto'>
           <div className='inline-block min-w-full align-middle'>
             <div className='overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0'>
@@ -56,8 +63,8 @@ export default async function ExpensesTable({
                       </div>
 
                       <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Cateoría</p>
-                        <p className='font-medium'>{expense.category.name}</p>
+                        <p className='text-xs'>Categoría</p>
+                        <p className='font-medium'>{expense.expense_category.name}</p>
                       </div>
 
                       <div className='flex w-1/2 flex-col'>
@@ -121,7 +128,7 @@ export default async function ExpensesTable({
                         {expense.method}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm'>
-                        {expense.category.name}
+                        {expense.expense_category.name}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
                         {formatDateToLocal(

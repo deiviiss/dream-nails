@@ -23,7 +23,7 @@ model User {
   updated_at DateTime?
 
   expenses Expense[]
-  Income   Income[]
+  incomes  Income[]
 
   @@map("users")
 }
@@ -52,16 +52,26 @@ model Image {
 
 // MONEDEX MODELS
 
-model Category {
+model ExpenseCategory {
   id          Int       @id @default(autoincrement())
   name        String
   description String?
   created_at  DateTime  @default(now())
   updated_at  DateTime?
-  Expense     Expense[]
-  Income      Income[]
+  expenses    Expense[]
 
-  @@map("categories")
+  @@map("expense_categories")
+}
+
+model IncomeCategory {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime?
+  incomes     Income[]
+
+  @@map("income_categories")
 }
 
 model Place {
@@ -85,12 +95,12 @@ model Expense {
   with_relation Boolean  @default(false)
   is_reconciled Boolean  @default(false)
 
-  place_id    Int
-  place       Place    @relation(fields: [place_id], references: [id])
-  category_id Int
-  category    Category @relation(fields: [category_id], references: [id])
-  user_id     Int
-  user        User     @relation(fields: [user_id], references: [id])
+  place_id            Int
+  place               Place           @relation(fields: [place_id], references: [id])
+  expense_category_id Int
+  expense_category    ExpenseCategory @relation(fields: [expense_category_id], references: [id])
+  user_id             Int
+  user                User            @relation(fields: [user_id], references: [id])
 
   created_at DateTime  @default(now())
   updated_at DateTime?
@@ -99,16 +109,17 @@ model Expense {
 }
 
 model Income {
-  id          Int      @id @default(autoincrement())
-  name        String
-  amount      Float
-  method      String
-  income_date DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String
+  amount       Float
+  method       String
+  income_date  DateTime @default(now())
+  income_month Int      @default(12)
 
-  category_id Int
-  category    Category @relation(fields: [category_id], references: [id])
-  user_id     Int
-  user        User     @relation(fields: [user_id], references: [id])
+  income_category_id Int
+  income_category    IncomeCategory @relation(fields: [income_category_id], references: [id])
+  user_id            Int
+  user               User           @relation(fields: [user_id], references: [id])
 
   created_at DateTime  @default(now())
   updated_at DateTime?

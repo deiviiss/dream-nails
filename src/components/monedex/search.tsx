@@ -18,7 +18,7 @@ export default function Search({
     params.set('page', '1')
 
     term.length > 0 ? params.set('query', term) : params.delete('query')
-    // remplaza la ruta con una ruta que obtiene del input que fue convertida en query
+    // Replaces the path with a path obtained from the input that was converted to query
     replace(`${pathname}?${params.toString()}`)
   }, 300)
 

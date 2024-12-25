@@ -2,7 +2,8 @@
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BiCategory } from 'react-icons/bi'
+import { BiCategory, BiLocationPlus } from 'react-icons/bi'
+import { FaMoneyBillWaveAlt } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { TbCurrencyDollar } from 'react-icons/tb'
 
@@ -11,7 +12,9 @@ import { TbCurrencyDollar } from 'react-icons/tb'
 const links = [
   { name: 'Inicio', href: '/monedex/dashboard', icon: IoHomeOutline },
   { name: 'Gastos', href: '/monedex/expenses', icon: TbCurrencyDollar },
-  { name: 'Categorias', href: '/monedex/categories', icon: BiCategory }
+  { name: 'Ingresos', href: '/monedex/incomes', icon: FaMoneyBillWaveAlt },
+  { name: 'Categorías', href: '/monedex/categories', icon: BiCategory },
+  { name: 'Lugares', href: '/monedex/places', icon: BiLocationPlus }
 ]
 
 export default function NavLinks() {
@@ -25,7 +28,7 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-monedex-foreground p-3 text-sm font-medium hover:bg-monedex-secondary text-monedex-light md:flex-none md:justify-start md:p-2 md:px-3',
+              'flex w-full h-[48px] grow items-center justify-center gap-2 rounded-md bg-monedex-foreground p-3 text-sm font-medium hover:bg-monedex-secondary text-monedex-light md:flex-none md:justify-start md:p-2 md:px-3',
               {
                 'bg-monedex-secondary': pathname === link.href
               }

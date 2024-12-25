@@ -13,7 +13,7 @@ export default async function TotalAllExpenses({
   const totalAmount = await fetchAmountExpenses(query, month, year)
 
   return (
-    <div className='flex w-full py-2 text-white'>
+    <div className='flex w-full py-5 text-monedex-light'>
       <h1>Total gastado: {formatCurrency(totalAmount)}</h1>
     </div>
   )

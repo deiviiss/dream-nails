@@ -1,12 +1,19 @@
 import { type NextPage } from 'next'
 
+import { redirect } from 'next/navigation'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import Form from '@/components/monedex/expenses/create-form'
 import { fetchCategoriesToForm, fetchPlaces } from '@/lib/data'
 
 const Page: NextPage = async () => {
-  const categories = await fetchCategoriesToForm()
-  const places = await fetchPlaces()
+  const [categories, places] = await Promise.all([
+    fetchCategoriesToForm(),
+    fetchPlaces()
+  ])
+
+  if (!categories && !places) {
+    redirect('/monedex/expenses')
+  }
 
   return (
     <main>

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { TbListDetails } from 'react-icons/tb'
+import { Spinner } from '@/components/ui/spinner'
 import { fetchTotalAmountByCategory } from '@/lib/data'
 import { formatCurrency } from '@/lib/helpers'
 
@@ -12,12 +13,18 @@ export default async function CategoriesTotalTable({
 }): Promise<JSX.Element> {
   const expensesByCategory = await fetchTotalAmountByCategory(month, year)
 
+  if (expensesByCategory.length === 0) {
+    return (
+      <Spinner name='categorías' color='text-monedex-light' />
+    )
+  }
+
   return (
     <div className='flex flex-col items-center justify-between gap-1 py-2'>
 
       {expensesByCategory.map((expense) => (
         <div
-          key={expense.category_id}
+          key={expense.expense_category_id}
           className='mb-2 w-full rounded-md bg-white p-4'
         >
           {/* title card */}
@@ -25,7 +32,7 @@ export default async function CategoriesTotalTable({
             <h1>{expense.category?.name}</h1>
 
             {/*  buttons details */}
-            <Link href={`/monedex/categories/expenses?query=${expense.category_id}&month=${month}`}>
+            <Link href={`/monedex/categories/expenses?query=${expense.expense_category_id}&month=${month}`}>
               <TbListDetails />
             </Link>
 
