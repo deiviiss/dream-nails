@@ -7,7 +7,7 @@ import {
 } from '@/interfaces/Expense'
 import prisma from '@/lib/prisma'
 
-const ITEMS_PER_PAGE = 20
+const ITEMS_PER_PAGE = 10
 
 // EXPENSES
 export async function fetchFilteredExpenses(
