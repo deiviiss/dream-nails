@@ -3,12 +3,12 @@ import { fetchIncomeCategoriesToForm } from '@/actions/monedex/incomes/fetch-inc
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { IncomeForm } from '@/components/monedex/incomes/income-form'
 
-export default async function IncomePage() {
+export default async function CreateIncomePage() {
   const categories = await fetchIncomeCategoriesToForm()
 
   // fetch categories
 
-  if (!categories) {
+  if (categories.length === 0) {
     redirect('/monedex/incomes')
   }
 

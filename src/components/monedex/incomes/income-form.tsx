@@ -47,7 +47,7 @@ const incomeSchema = z.object({
       message: 'Por favor ingrese una cantidad mayor que $0.'
     }),
   method: z
-    .enum(['cash', 'transfer'], {
+    .enum(['cash', 'debit'], {
       required_error: 'El método de ingreso es requerido.'
     }),
   incomeDate: z
@@ -95,7 +95,7 @@ export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
     id: income?.id ? Number(income.id) : undefined,
     name: income?.name,
     amount: income?.amount,
-    method: income?.method as 'cash' | 'transfer',
+    method: income?.method as 'cash' | 'debit',
     incomeDate: income?.incomeDate ? new Date(income.incomeDate) : undefined,
     incomeCategoryId: income?.incomeCategory.id
   }
@@ -226,7 +226,7 @@ export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
                       </FormItem>
                       <FormItem className="flex items-center space-x-1 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="transfer" />
+                          <RadioGroupItem value="debit" />
                         </FormControl>
                         <FormLabel className="text-xs">
                           <div className='flex gap-x-1 rounded-md'>

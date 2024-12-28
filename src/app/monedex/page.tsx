@@ -25,7 +25,6 @@ export default async function HomePage({
 
         <TotalCredit month={month} year={year} />
       </div>
-
       <div className='flex flex-col gap-2'>
         <FilterMonth />
       </div>

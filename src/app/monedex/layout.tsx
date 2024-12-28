@@ -27,11 +27,13 @@ export default async function RootLayout({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row md:overflow-hidden bg-monedex-primary  text-monedex-primary h-full">
+      <main className="flex flex-col md:flex-row md:overflow-hidden bg-monedex-primary  text-monedex-primary h-full">
+
         <div className="w-full flex-none md:w-64">
           <SideNav />
         </div>
-        <div className="w-full px-3 pb-4 md:overflow-y-auto md:p-12">
+
+        <div className="w-full max-w-7xl mx-auto px-3 pb-4 md:overflow-y-auto md:p-12">
           {children}
         </div>
 
@@ -41,10 +43,12 @@ export default async function RootLayout({
           />
 
           <FloatingMenuButton />
+
         </div>
 
-      </div>
+      </main>
       <Footer />
+
     </>
   )
 }
