@@ -32,7 +32,7 @@ const FormExpenseSchema = z.object({
   amount: z.coerce.number().gt(0, {
     message: 'Por favor ingrese una cantidad mayor que $0.'
   }),
-  method: z.enum(['credit', 'cash', 'debit'], {
+  method: z.enum(['cash', 'debit'], {
     invalid_type_error: 'Seleccione un método de pago.'
   }),
   expenseDate: z.date({
@@ -116,6 +116,22 @@ export async function createExpense(
     validatedFields.data
 
   try {
+    const wallet = await prisma.wallet.findFirst({
+      where: {
+        type: method
+      },
+      select: {
+        id: true,
+        balance: true
+      }
+    })
+
+    if (!wallet) {
+      return {
+        message: 'Billetera no encontrada, cree una billetera primero.'
+      }
+    }
+
     await prisma.expense.create({
       data: {
         name,
@@ -124,9 +140,22 @@ export async function createExpense(
         place_id: Number(placeId),
         expense_date: expenseDate,
         method,
+        wallet_id: wallet.id,
         expense_month: expenseMonth,
         user_id: user.id,
         with_relation: formatWithRelation(formData.get('withRelation'))
+      }
+    })
+
+    // update wallet balance
+    await prisma.wallet.update({
+      where: {
+        id: wallet.id
+      },
+      data: {
+        balance: {
+          increment: amount
+        }
       }
     })
   } catch (error) {
@@ -142,7 +171,47 @@ export async function createExpense(
 export async function deleteExpense(
   id: number
 ): Promise<DeleteExpenseResponse> {
+  const messages = {
+    success: 'Expense deleted successfully',
+    error: 'Error deleting expense'
+  }
+
   try {
+    const user = await getUserSessionServer()
+
+    if (!user) {
+      return {
+        message: messages.error
+      }
+    }
+
+    // update wallet balance
+    const expense = await prisma.expense.findFirst({
+      where: {
+        id
+      },
+      select: {
+        wallet_id: true,
+        amount: true
+      }
+    })
+
+    if (!expense) {
+      return {
+        message: messages.error
+      }
+    }
+
+    await prisma.wallet.update({
+      where: { id: expense.wallet_id },
+      data: {
+        balance: {
+          decrement: expense.amount
+        }
+      }
+    })
+
+    // delete expense
     await prisma.expense.delete({
       where: {
         id
@@ -195,6 +264,77 @@ export async function updateExpense(
     validatedFields.data
 
   try {
+    const oldExpense = await prisma.expense.findFirst({
+      where: { id },
+      select: {
+        amount: true,
+        wallet_id: true,
+        method: true
+      }
+    })
+
+    if (!oldExpense) {
+      return { message: 'Gasto no encontrado.' }
+    }
+
+    // Get the new wallet according to the new method
+    const newWallet = await prisma.wallet.findFirst({
+      where: {
+        type: method
+      },
+      select: {
+        id: true
+      }
+    })
+
+    if (!newWallet) {
+      return {
+        message: 'Billetera no encontrada, cree una billetera primero.'
+      }
+    }
+
+    // If the method has changed, we need to update the balance of the old wallet
+    if (oldExpense.method !== method) { // method has changed
+      // Update the old wallet balance
+      await prisma.wallet.update({
+        where: { id: oldExpense.wallet_id },
+        data: { balance: { decrement: oldExpense.amount } }
+      })
+
+      // Update the new wallet balance
+      await prisma.wallet.update({
+        where: { id: newWallet.id },
+        data: { balance: { increment: amount } }
+      })
+
+      await prisma.expense.update({
+        where: { id },
+        data: {
+          name,
+          amount,
+          expense_category_id: Number(categoryId),
+          place_id: Number(placeId),
+          expense_date: expenseDate,
+          expense_month: expenseMonth,
+          method,
+          wallet_id: newWallet.id // Relation to the new wallet
+        }
+      })
+
+      revalidatePath('/monedex/expenses')
+
+      return { message: 'Updated expense' }
+    }
+
+    // If the method has not changed, we need to update the balance of the wallet
+    const newBalance = amount - oldExpense.amount // Wallet balance updated
+
+    // Update the balance of the old wallet
+    await prisma.wallet.update({
+      where: { id: oldExpense.wallet_id },
+      data: { balance: { increment: newBalance } }
+    })
+
     await prisma.expense.update({
       where: {
         id
@@ -210,7 +350,6 @@ export async function updateExpense(
         with_relation: formatWithRelation(formData.get('withRelation'))
       }
     })
-
     revalidatePath('/monedex/expenses')
 
     return { message: 'Updated expense' }

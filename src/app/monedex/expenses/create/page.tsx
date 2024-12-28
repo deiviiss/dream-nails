@@ -11,7 +11,7 @@ const Page: NextPage = async () => {
     fetchPlaces()
   ])
 
-  if (!categories && !places) {
+  if (categories.length === 0 || places.length === 0) {
     redirect('/monedex/expenses')
   }
 

@@ -9,7 +9,7 @@ interface Params {
   }
 }
 
-export default async function IncomePage({ params }: Params) {
+export default async function PlacePage({ params }: Params) {
   const id = params.id
 
   const { place } = await getPlaceById(id)

@@ -25,7 +25,7 @@ const incomeSchema = z.object({
       message: 'Por favor ingrese una cantidad mayor que $0.'
     }),
   method: z
-    .enum(['cash', 'transfer'], {
+    .enum(['debit', 'cash'], {
       required_error: 'El método de ingreso es requerido.'
     }),
   incomeDate: z
@@ -88,19 +88,101 @@ export const createUpdateIncome = async (formData: FormData) => {
   const { amount, incomeCategoryId, incomeDate, method, name, id } = incomeParsed.data
 
   try {
+    const wallet = await prisma.wallet.findFirst({
+      where: {
+        type: method
+      },
+      select: {
+        id: true,
+        balance: true
+      }
+    })
+
+    if (!wallet) {
+      return {
+        ok: false,
+        message: 'Wallet not found'
+      }
+    }
+
     // Update income
     if (id) {
-      const income = await prisma.income.update({
+      const oldIncome = await prisma.income.findFirst({
+        where: { id },
+        select: {
+          amount: true,
+          wallet_id: true,
+          method: true
+        }
+      })
+
+      if (!oldIncome) {
+        return { message: 'Ingreso no encontrado.' }
+      }
+      // Get the new wallet according to the new method
+      const newWallet = await prisma.wallet.findFirst({
         where: {
-          id
+          type: method
         },
+        select: {
+          id: true
+        }
+      })
+
+      if (!newWallet) {
+        return {
+          message: 'Billetera no encontrada, cree una billetera primero.'
+        }
+      }
+
+      // If the method has changed, we need to update the balance of the old wallet
+      if (oldIncome.method !== method) { // method has changed
+        // Update the old wallet balance
+        await prisma.wallet.update({
+          where: { id: oldIncome.wallet_id },
+          data: { balance: { decrement: oldIncome.amount } }
+        })
+
+        // Update the new wallet balance
+        await prisma.wallet.update({
+          where: { id: newWallet.id },
+          data: { balance: { increment: amount } }
+        })
+
+        await prisma.income.update({
+          where: { id },
+          data: {
+            name,
+            amount,
+            income_category_id: Number(incomeCategoryId),
+            income_date: incomeDate,
+            method,
+            wallet_id: newWallet.id // Relation to the new wallet
+          }
+        })
+
+        revalidatePath(`/monedex/incomes/${id}`)
+
+        return { message: 'Updated income' }
+      }
+
+      // If the method has not changed, we need to update the balance of the wallet
+      const newBalance = amount - oldIncome.amount // Wallet balance updated
+
+      // Update the balance of the old wallet
+      await prisma.wallet.update({
+        where: { id: oldIncome.wallet_id },
+        data: { balance: { increment: newBalance } }
+      })
+
+      await prisma.income.update({
+        where: { id },
         data: {
           name,
           amount,
-          method,
+          income_category_id: Number(incomeCategoryId),
           income_date: incomeDate,
-          income_category_id: incomeCategoryId,
-          user_id: user.id
+          method
         }
       })
 
@@ -108,8 +190,7 @@ export const createUpdateIncome = async (formData: FormData) => {
 
       return {
         ok: true,
-        message: messages.incomeUpdateSuccess,
-        income
+        message: messages.incomeUpdateSuccess
       }
     }
 
@@ -119,9 +200,22 @@ export const createUpdateIncome = async (formData: FormData) => {
         name,
         amount,
         method,
+        wallet_id: wallet.id,
         income_date: incomeDate,
         income_category_id: incomeCategoryId,
         user_id: user.id
+      }
+    })
+
+    // update wallet balance
+    await prisma.wallet.update({
+      where: {
+        id: wallet.id
+      },
+      data: {
+        balance: {
+          increment: amount
+        }
       }
     })
 

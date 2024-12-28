@@ -127,6 +127,7 @@ export default function Form({
                   name='method'
                   type='radio'
                   value='credit'
+                  disabled
                   aria-describedby='method-error'
                   className='h-4 w-4 border-gray-300 bg-gray-100 text-gray-600' />
                 <label

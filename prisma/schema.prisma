@@ -24,6 +24,7 @@ model User {
 
   expenses Expense[]
   incomes  Income[]
+  wallet   Wallet[]
 
   @@map("users")
 }
@@ -99,8 +100,12 @@ model Expense {
   place               Place           @relation(fields: [place_id], references: [id])
   expense_category_id Int
   expense_category    ExpenseCategory @relation(fields: [expense_category_id], references: [id])
-  user_id             Int
-  user                User            @relation(fields: [user_id], references: [id])
+
+  wallet_id Int
+  wallet    Wallet @relation(fields: [wallet_id], references: [id])
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
 
   created_at DateTime  @default(now())
   updated_at DateTime?
@@ -118,8 +123,12 @@ model Income {
 
   income_category_id Int
   income_category    IncomeCategory @relation(fields: [income_category_id], references: [id])
-  user_id            Int
-  user               User           @relation(fields: [user_id], references: [id])
+
+  wallet_id Int
+  wallet    Wallet @relation(fields: [wallet_id], references: [id])
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
 
   created_at DateTime  @default(now())
   updated_at DateTime?
@@ -127,4 +136,21 @@ model Income {
   @@map("incomes")
 }
 
-// ECOMMERCE MODELS
+enum WalletType {
+  debit
+  cash
+}
+
+model Wallet {
+  id         Int        @id @default(autoincrement())
+  user_id    Int
+  name       String
+  balance    Float      @default(0)
+  type       WalletType @default(debit)
+  created_at DateTime   @default(now())
+  updated_at DateTime?
+
+  user     User      @relation(fields: [user_id], references: [id])
+  expenses Expense[]
+  incomes  Income[]
+}
