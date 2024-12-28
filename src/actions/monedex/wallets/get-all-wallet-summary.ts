@@ -1,5 +1,6 @@
 'use server'
 
+import { unstable_noStore } from 'next/cache'
 import { getUserSessionServer } from '@/actions'
 import prisma from '@/lib/prisma'
 
@@ -17,6 +18,7 @@ export const getAllWalletsSummary = async ({
   month,
   year
 }: WalletSummaryParams) => {
+  unstable_noStore()
   const user = await getUserSessionServer()
 
   if (!user) {
