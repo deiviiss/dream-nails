@@ -55,7 +55,7 @@ const months = [
 
 ]
 
-const years = Array.from({ length: 2 }, (_, i) => new Date().getFullYear() - i)
+const years = Array.from({ length: 3 }, (_, i) => new Date().getFullYear() - i)
 
 export default function FilterMonth(): JSX.Element {
   const filterParams = useSearchParams()
