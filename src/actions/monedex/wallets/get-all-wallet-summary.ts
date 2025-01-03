@@ -28,11 +28,12 @@ export const getAllWalletsSummary = async ({
     }
   }
 
-  const currentMonth = month || new Date().getMonth() + 1
-  const currentYear = year || new Date().getFullYear()
+  // const currentMonth = month || new Date().getMonth() + 1
+  // const currentYear = year || new Date().getFullYear()
 
-  const startDate = new Date(currentYear, currentMonth - 1, 1)
-  const endDate = new Date(currentYear, currentMonth, 0)
+  // const startDate = new Date(currentYear, currentMonth - 1, 1)
+  // const endDate = new Date(currentYear, currentMonth, 0)
+  const startDate = new Date('2024-12-01')
 
   try {
     const walletSummaryDb = await prisma.wallet.findMany({
@@ -44,8 +45,7 @@ export const getAllWalletsSummary = async ({
         incomes: {
           where: {
             income_date: {
-              gte: startDate,
-              lte: endDate
+              gte: startDate
             }
           },
           select: {
@@ -55,8 +55,7 @@ export const getAllWalletsSummary = async ({
         expenses: {
           where: {
             expense_date: {
-              gte: startDate,
-              lte: endDate
+              gte: startDate
             }
           },
           select: {

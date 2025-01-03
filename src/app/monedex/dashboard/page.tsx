@@ -46,8 +46,8 @@ export default async function DashboardPage({
       <>
         {/* Desktop view */}
         <div className="hidden md:grid md:grid-cols-2 gap-4">
+          <MetricCard title="Total" balance={globalSummary.totalBalance} totalIncome={globalSummary.totalIncome} totalExpenses={globalSummary.totalExpenses} change={{ value: globalSummary.change.value, label: globalSummary.change.label }} type="total" />
           {
-
             walletsSummary.map((wallet) => (
               <div key={wallet.id}>
                 <MetricCard title={wallet.name} balance={wallet.balance} totalIncome={wallet.totalIncome} totalExpenses={wallet.totalExpenses} change={wallet.change} type={wallet.type} />
