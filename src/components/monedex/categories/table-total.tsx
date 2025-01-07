@@ -15,7 +15,7 @@ export default async function CategoriesTotalTable({
 
   if (expensesByCategory.length === 0) {
     return (
-      <Spinner name='categorías' color='text-monedex-light' />
+      <Spinner name='gastos por categoría' color='text-monedex-light' />
     )
   }
 

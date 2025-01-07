@@ -270,7 +270,7 @@ export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
                           </div>
                         </SelectValue>
                       </SelectTrigger>
-                      <SelectContent className='absolute z-10 w-full bg-white rounded-md border border-gray-200 shadow-lg'>
+                      <SelectContent className='absolute z-10 w-full min-w-max bg-white rounded-md border border-gray-200 shadow-lg'>
                         <SelectGroup>
                           {categories.map((category) => (
                             <SelectItem
