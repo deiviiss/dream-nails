@@ -20,8 +20,8 @@ export async function fetchFilteredExpenses(
   const currentMonth = month || new Date().getMonth() + 1
   const currentYear = year || new Date().getFullYear()
 
-  const startDate = new Date(currentYear, currentMonth - 1, 1) // First day of the month
-  const endDate = new Date(currentYear, currentMonth, 0) // Last day of the month
+  const startDate = new Date(Date.UTC(currentYear, currentMonth - 1, 1)) // First day of the month
+  const endDate = new Date(Date.UTC(currentYear, currentMonth, 0, 23, 59, 59)) // Last day of the month
 
   try {
     const expenses = await prisma.expense.findMany({
@@ -267,8 +267,6 @@ export async function fetchTotalAmountByCategory(
   month: number,
   year?: number
 ) {
-  noStore()
-
   try {
     const currentMonth = month || new Date().getMonth() + 1
     const currentYear = year || new Date().getFullYear()

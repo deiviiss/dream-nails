@@ -72,10 +72,15 @@ export async function createExpense(
 
   let currentMonth = new Date().getMonth() + 1
 
-  if (expenseDateValue !== null && expenseDateValue !== ''
-  ) {
+  // if (expenseDateValue !== null && expenseDateValue !== ''
+  // ) {
+  //   expenseDateValue = new Date(expenseDateValue.toString())
+  //   currentMonth = expenseDateValue.getMonth() + 1
+  // }
+
+  if (expenseDateValue !== null && expenseDateValue !== '') {
     expenseDateValue = new Date(expenseDateValue.toString())
-    currentMonth = expenseDateValue.getMonth() + 1
+    currentMonth = expenseDateValue.getUTCMonth() + 1 // 🔥 Make sure to use UTC
   }
 
   const validatedFields = CreateExpenseSchema.safeParse({

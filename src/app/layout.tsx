@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 import type { Metadata } from 'next'
 
@@ -33,7 +32,6 @@ export default async function RootLayout({
           position="top-right"
           reverseOrder={true}
         />
-        <Analytics />
       </body>
     </html>
   )
