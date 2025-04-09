@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
+     "postinstall": "if [ -n \"$DATABASE_URL\" ]; then prisma db push; fi",
     "clean:hard": "rm -rf node_modules .next",
     "clean:soft": "rm -rf .next",
     "seed": "ts-node src/seed/seed-database"
