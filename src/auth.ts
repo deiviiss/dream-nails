@@ -17,7 +17,8 @@ export const authConfig: NextAuthConfig = {
       return token
     },
     session({ session, token }) {
-      //! fix type any
+      // TODO: fix type any
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
       session.user = token.data as any
       return session
     }
@@ -43,11 +44,13 @@ export const authConfig: NextAuthConfig = {
             password: true
           }
         })
+
         if (!user) return null
 
         const userPassword: string = user.password || ''
 
         if (!bcrypt.compareSync(password, userPassword)) return null
+
         const { password: _, ...userWithoutPassword } = user
 
         return userWithoutPassword

@@ -1,16 +1,15 @@
 import CategorysDetailsTable from '@/components/monedex/categories/table-details'
 
-export default async function CategoryExpensesPage({
-  searchParams
-}: {
-  searchParams?: {
-    query?: string
-    month?: number
-  }
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function CategoryExpensesPage(props: {
+  searchParams: SearchParams
 }): Promise<JSX.Element> {
-  const query = searchParams?.query || ''
+  const searchParams = await props.searchParams
+
+  const query = String(searchParams.query) || ''
   const currentMonth = new Date().getMonth() + 1
-  const month = Number(searchParams?.month) || Number(currentMonth)
+  const month = Number(searchParams.month) || Number(currentMonth)
 
   return (
     <main>

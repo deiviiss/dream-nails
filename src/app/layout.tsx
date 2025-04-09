@@ -1,12 +1,8 @@
-import './globals.css'
 import type { Metadata } from 'next'
-
 import { Toaster } from 'react-hot-toast'
-import { getUserSessionServer } from '@/actions'
 import Providers from '@/app/providers'
-import LoginButton from '@/components/dream-nails/LoginButton'
-import SignOutButton from '@/components/dream-nails/SignOutButton'
 import { arapey, josefin } from '@/config/fonts'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Dream Nails',
@@ -19,14 +15,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }): Promise<JSX.Element> {
-  const user = await getUserSessionServer()
-
   return (
     <html lang='es-Mx' className={`${josefin.variable} ${arapey.variable}`}>
-      <body className='text-base bg-body-gradient'>
+      <body>
         <Providers>
           {children}
-          {user == null ? <LoginButton /> : <SignOutButton />}
         </Providers>
         <Toaster
           position="top-right"

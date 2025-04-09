@@ -3,16 +3,15 @@ import { getPlaceById } from '@/actions/monedex/places/get-place-by-id'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { PlaceForm } from '@/components/monedex/places/place-form'
 
-interface Params {
-  params: {
-    id: number
-  }
-}
+type Params = Promise<{ id: string }>
 
-export default async function PlacePage({ params }: Params) {
+export default async function PlacePage(props: {
+  params: Params
+}) {
+  const params = await props.params
   const id = params.id
 
-  const { place } = await getPlaceById(id)
+  const { place } = await getPlaceById(Number(id))
 
   if (!place) {
     redirect('/monedex/places')

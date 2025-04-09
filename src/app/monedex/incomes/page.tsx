@@ -12,21 +12,17 @@ export const metadata: Metadata = {
   title: 'Ingresos'
 }
 
-export default async function IncomesPage({
-  searchParams
-}: {
-  searchParams?: {
-    query?: string
-    month?: number
-    page?: string
-    year?: number
-  }
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function IncomesPage(props: {
+  searchParams: SearchParams
 }): Promise<JSX.Element> {
-  const query = searchParams?.query || ''
+  const searchParams = await props.searchParams
+  const query = String(searchParams.query) || ''
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
-  const month = searchParams?.month || Number(currentMonth)
-  const year = searchParams?.year || currentYear
+  const month = Number(searchParams.month || currentMonth)
+  const year = Number(searchParams.year || currentYear)
 
   const currentPage = Number(searchParams?.page) || 1
 

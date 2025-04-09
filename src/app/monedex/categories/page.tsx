@@ -13,15 +13,14 @@ export const metadata: Metadata = {
   title: 'Categorías de gastos'
 }
 
-export default async function ExpensesPage({
-  searchParams
-}: {
-  searchParams?: {
-    query?: string
-    page?: string
-  }
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function ExpensesPage(props: {
+  searchParams: SearchParams
 }): Promise<JSX.Element> {
-  const query = searchParams?.query || ''
+  const searchParams = await props.searchParams
+
+  const query = String(searchParams.query) || ''
 
   const currentPage = Number(searchParams?.page) || 1
 

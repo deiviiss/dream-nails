@@ -8,11 +8,12 @@ import {
   fetchPlaces
 } from '@/lib/data'
 
-export default async function Page({
-  params
-}: {
-  params: { id: number }
+type Params = Promise<{ id: string }>
+
+export default async function Page(props: {
+  params: Params
 }): Promise<JSX.Element> {
+  const params = await props.params
   const id = Number(params.id)
 
   const [expense, categories, places] = await Promise.all([

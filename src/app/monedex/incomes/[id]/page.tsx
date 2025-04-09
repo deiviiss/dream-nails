@@ -4,14 +4,13 @@ import { fetchIncomeCategoriesToForm } from '@/actions/monedex/incomes/fetch-inc
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { IncomeForm } from '@/components/monedex/incomes/income-form'
 
-interface Params {
-  params: {
-    id: number
-  }
-}
+type Params = Promise<{ id: string }>
 
-export default async function IncomePage({ params }: Params) {
-  const id = params.id
+export default async function IncomePage(props: {
+  params: Params
+}): Promise<JSX.Element> {
+  const params = await props.params
+  const id = Number(params.id)
 
   const [{ income }, categories] = await Promise.all([
     fetchIncomeById(id),

@@ -12,20 +12,16 @@ import FilterMonth from '@/components/monedex/filter-month'
 import { MetricCard } from '@/components/monedex/wallets/MetricCard'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 
-export default async function DashboardPage({
-  searchParams
-}: {
-  searchParams?: {
-    query?: string
-    month?: number
-    page?: string
-    year?: number
-  }
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function DashboardPage(props: {
+  searchParams: SearchParams
 }): Promise<JSX.Element> {
+  const searchParams = await props.searchParams
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
-  const month = searchParams?.month || Number(currentMonth)
-  const year = searchParams?.year || currentYear
+  const month = Number(searchParams.month) || Number(currentMonth)
+  const year = Number(searchParams.year) || currentYear
 
   const { walletsSummary, globalSummary } = await getAllWalletsSummary({ month, year })
 

@@ -1,13 +1,12 @@
 import { getWalletById } from '@/actions/monedex/wallets/get-wallet-by-id'
 
-interface ParamsProps {
-  params: {
-    id: number
-  }
-}
+type Params = Promise<{ id: string }>
 
-export default async function WalletPage({ params }: ParamsProps) {
-  const id = params.id
+export default async function WalletPage(props: {
+  params: Params
+}) {
+  const params = await props.params
+  const id = Number(params.id)
 
   const { wallet } = await getWalletById(id)
 

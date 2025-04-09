@@ -11,15 +11,13 @@ export const metadata: Metadata = {
   title: 'Ingresos'
 }
 
-export default async function PlacesPage({
-  searchParams
-}: {
-  searchParams?: {
-    query?: string
-    page?: string
-  }
+type SearchParams = Promise<Record<string, string | string[] | undefined>>
+
+export default async function PlacesPage(props: {
+  searchParams: SearchParams
 }): Promise<JSX.Element> {
-  const query = searchParams?.query || ''
+  const searchParams = await props.searchParams
+  const query = String(searchParams.query) || ''
 
   const currentPage = Number(searchParams?.page) || 1
 

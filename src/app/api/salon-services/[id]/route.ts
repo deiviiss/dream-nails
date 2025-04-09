@@ -1,11 +1,15 @@
 import { NextResponse } from 'next/server'
-import { type Params } from '@/interfaces/Props'
 import prisma from '@/lib/prisma'
+
+type Params = Promise<{ id: string }>
 
 export async function GET(
   request: Request,
-  { id }: Params
+  segmentData: { params: Params }
 ): Promise<NextResponse> {
+  const params = await segmentData.params
+  const id = params.id
+
   try {
     const salonService = await prisma.salonService.findFirst({
       where: {
@@ -55,8 +59,11 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  { id }: Params
+  segmentData: { params: Params }
 ): Promise<NextResponse> {
+  const params = await segmentData.params
+  const id = params.id
+
   const userFound = await prisma.salonService.findFirst({
     where: {
       id: Number(id)
@@ -88,8 +95,11 @@ export async function DELETE(
 
 export async function PUT(
   request: Request,
-  { id }: Params
+  segmentData: { params: Params }
 ): Promise<NextResponse> {
+  const params = await segmentData.params
+  const id = params.id
+
   try {
     const salonServiceFound = await prisma.salonService.findFirst({
       where: {
