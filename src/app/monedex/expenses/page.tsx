@@ -20,7 +20,7 @@ export default async function ExpensesPage(props: {
   searchParams: SearchParams
 }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
-  const query = String(searchParams.query) || ''
+  const query = String(searchParams.query || '')
   const currentMonth = new Date().getMonth() + 1
   const currentYear = new Date().getFullYear()
   const month = Number(searchParams.month || currentMonth)

@@ -1,4 +1,4 @@
-import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
+import { unstable_noStore as noStore } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { type Category } from '@/interfaces/Category'
 import {
@@ -65,7 +65,6 @@ export async function fetchFilteredExpenses(
       skip: offset // Apply offset for pagination
     })
 
-    revalidatePath('/monedex/expenses')
     return expenses
   } catch (error) {
     throw new Error('Failed to fetch filtered expenses.')

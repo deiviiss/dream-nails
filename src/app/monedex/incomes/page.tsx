@@ -1,5 +1,4 @@
 import { type Metadata } from 'next'
-import { Suspense } from 'react'
 import { fetchTotalIcomesPages } from '@/actions/monedex/incomes/fetch-total-incomes-pages'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import FilterMonth from '@/components/monedex/filter-month'
@@ -45,9 +44,8 @@ export default async function IncomesPage(props: {
       </div>
 
       <div className='flex flex-col gap-2 pt-5'>
-        <Suspense key={`${query}${currentPage}`} fallback='Loading'>
-          <IncomesTable query={query} currentPage={currentPage} month={month} year={year} />
-        </Suspense>
+
+        <IncomesTable query={query} currentPage={currentPage} month={month} year={year} />
 
         <div className="mt-5 flex w-full justify-center">
           <Pagination totalPages={totalPages} />

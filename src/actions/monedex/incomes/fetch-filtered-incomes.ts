@@ -1,6 +1,5 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 
 const ITEMS_PER_PAGE = 10
@@ -55,7 +54,6 @@ export async function fetchFilteredIncomes(
       skip: offset // Apply offset for pagination
     })
 
-    revalidatePath('/monedex/incomes')
     return incomes
   } catch (error) {
     throw new Error('Failed to fetch filtered expenses.')
