@@ -7,7 +7,7 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>
 
 export default async function HomePage(props: { searchParams: SearchParams }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
-  const query = String(searchParams.query) || ''
+  const query = String(searchParams.query || '')
   const currentMonth = new Date().getMonth() + 1
   const month = Number(searchParams.month || currentMonth)
   const year = Number(searchParams.year || new Date().getFullYear())

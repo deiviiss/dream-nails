@@ -28,7 +28,6 @@ export async function getFilteredPlaces(
       skip: offset // Apply offset for pagination
     })
 
-    revalidatePath('/monedex/places')
     return places
   } catch (error) {
     throw new Error('Failed to fetch filtered expenses.')

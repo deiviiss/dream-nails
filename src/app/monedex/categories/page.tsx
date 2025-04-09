@@ -20,7 +20,7 @@ export default async function ExpensesPage(props: {
 }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
 
-  const query = String(searchParams.query) || ''
+  const query = String(searchParams.query || '')
 
   const currentPage = Number(searchParams?.page) || 1
 

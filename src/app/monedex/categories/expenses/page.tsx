@@ -7,7 +7,7 @@ export default async function CategoryExpensesPage(props: {
 }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
 
-  const query = String(searchParams.query) || ''
+  const query = String(searchParams.query || '')
   const currentMonth = new Date().getMonth() + 1
   const month = Number(searchParams.month) || Number(currentMonth)
 

@@ -17,7 +17,7 @@ export default async function PlacesPage(props: {
   searchParams: SearchParams
 }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
-  const query = String(searchParams.query) || ''
+  const query = String(searchParams.query || '')
 
   const currentPage = Number(searchParams?.page) || 1
 
