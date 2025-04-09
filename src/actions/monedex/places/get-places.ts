@@ -1,6 +1,5 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 
 const ITEMS_PER_PAGE = 10
