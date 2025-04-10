@@ -41,6 +41,7 @@ export const authConfig: NextAuthConfig = {
           select: {
             name: true,
             email: true,
+            role: true,
             password: true
           }
         })

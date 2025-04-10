@@ -25,6 +25,7 @@ model User {
   expenses Expense[]
   incomes  Income[]
   wallet   Wallet[]
+  Thought  Thought[]
 
   @@map("users")
 }
@@ -153,4 +154,30 @@ model Wallet {
   user     User      @relation(fields: [user_id], references: [id])
   expenses Expense[]
   incomes  Income[]
+}
+
+// APPEMOTIONS MODELS
+model Thought {
+  id        Int      @id @default(autoincrement()) @map("thought_id")
+  thought   String
+  createdAt DateTime @default(now()) @map("create_at")
+
+  emotionId Int     @map("emotion_id")
+  emotion   Emotion @relation(fields: [emotionId], references: [id])
+
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("thoughts")
+}
+
+model Emotion {
+  id          Int      @id @default(autoincrement()) @map("emotion_id")
+  name        String   @default("no-emotion")
+  description String   @default("Por definir")
+  createdAt   DateTime @default(now()) @map("create_at")
+
+  thoughts Thought[]
+
+  @@map("emotions")
 }

@@ -17,7 +17,7 @@ export default async function IncomesTable({
   const currentYear = year || new Date().getFullYear()
 
   const incomes = await fetchFilteredIncomes(query, currentPage, month, currentYear)
-  console.log('incomes', incomes)
+
   if (incomes.length === 0) {
     return (
       <Spinner name='ingresos' color='text-monedex-light' />

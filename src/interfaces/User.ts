@@ -1,11 +1,11 @@
 export interface User {
-  id: string
+  id: number
   name: string
   email: string
   password: string
-  role: 'user' | 'admin'
+  role: string
   created_at: Date
-  updated_at: Date
+  updated_at: Date | null
 }
 
 export type CreateUser = Omit<User, 'id' | 'created_at' | 'updated_at'>
