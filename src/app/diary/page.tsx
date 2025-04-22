@@ -7,9 +7,10 @@ type SearchParams = Promise<Record<string, string | string[] | undefined>>
 
 export default async function HomePage(props: { searchParams: SearchParams }): Promise<JSX.Element> {
   const searchParams = await props.searchParams
+  console.log('__________HomePage _________')
   console.log('searchParams', searchParams)
   const thoughts = await fetchFilteredThoughts()
-  console.log('thoughts', thoughts)
+  console.log('thoughts', thoughts.length)
 
   return (
     <main className='w-full mx-auto flex flex-col gap-4'>

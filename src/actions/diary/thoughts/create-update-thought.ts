@@ -36,7 +36,7 @@ export const createUpdateThought = async (formData: FormData) => {
   }
 
   const parsed = thoughtSchema.safeParse(dataToValidate)
-  console.log('parsed', parsed)
+
   if (!parsed.success) {
     return {
       ok: false,
@@ -44,7 +44,7 @@ export const createUpdateThought = async (formData: FormData) => {
     }
   }
 
-  const { id, thought, emotionId } = parsed.data
+  const { id, thought, emotionId, createdAt } = parsed.data
 
   const session = await getUserSessionServer()
   const user = await prisma.user.findFirst({
@@ -62,11 +62,12 @@ export const createUpdateThought = async (formData: FormData) => {
         where: { id },
         data: {
           thought,
-          emotionId
+          emotionId,
+          createdAt: createdAt ? new Date(createdAt) : new Date()
         }
       })
 
-      revalidatePath('/thoughts')
+      revalidatePath('/diary/thoughts')
       return {
         ok: true,
         message: 'Pensamiento actualizado correctamente'
@@ -78,11 +79,11 @@ export const createUpdateThought = async (formData: FormData) => {
       data: {
         thought,
         emotionId,
-        userId: user.id
+        userId: user.id,
+        createdAt: createdAt ? new Date(createdAt) : new Date()
       }
     })
 
-    revalidatePath('/thoughts')
     return {
       ok: true,
       message: 'Pensamiento creado correctamente'

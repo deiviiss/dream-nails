@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { fetchFilteredEmotions } from '@/actions/diary/emotions/fetch-filtered-emotions'
+import { fetchAllEmotions } from '@/actions/diary/emotions/fetch-all-emotions'
 import { fetchThoughtById } from '@/actions/diary/thoughts/fetch-thought-by-id'
 import { ThoughtForm } from '@/components/diary/thought-form'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
@@ -14,7 +14,7 @@ export default async function ThoughtPage(props: {
 
   const [{ thought }, { emotions }] = await Promise.all([
     fetchThoughtById(id),
-    fetchFilteredEmotions()
+    fetchAllEmotions()
   ])
 
   if (!thought || !emotions) {

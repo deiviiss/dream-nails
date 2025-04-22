@@ -1,8 +1,10 @@
 'use client'
+
 import { clsx } from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { BiCategory, BiLocationPlus } from 'react-icons/bi'
+import { BsJournalText } from 'react-icons/bs'
 import { FaMoneyBillWaveAlt } from 'react-icons/fa'
 import { IoHomeOutline } from 'react-icons/io5'
 import { TbCurrencyDollar } from 'react-icons/tb'
@@ -14,7 +16,8 @@ const links = [
   { name: 'Gastos', href: '/monedex/expenses', icon: TbCurrencyDollar },
   { name: 'Ingresos', href: '/monedex/incomes', icon: FaMoneyBillWaveAlt },
   { name: 'Categorías', href: '/monedex/categories', icon: BiCategory },
-  { name: 'Lugares', href: '/monedex/places', icon: BiLocationPlus }
+  { name: 'Lugares', href: '/monedex/places', icon: BiLocationPlus },
+  { name: 'Diario', href: '/diary', icon: BsJournalText }
 ]
 
 export default function NavLinks() {

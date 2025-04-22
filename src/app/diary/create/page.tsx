@@ -1,9 +1,9 @@
-import { fetchFilteredEmotions } from '@/actions/diary/emotions/fetch-filtered-emotions'
+import { fetchAllEmotions } from '@/actions/diary/emotions/fetch-all-emotions'
 import { ThoughtForm } from '@/components/diary/thought-form'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 
 export default async function CreateThoughtPage() {
-  const { emotions } = await fetchFilteredEmotions()
+  const { emotions } = await fetchAllEmotions()
 
   if (emotions.length === 0) {
     return (

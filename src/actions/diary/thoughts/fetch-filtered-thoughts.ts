@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma'
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 100
 
 export async function fetchFilteredThoughts(
   query: string = '',

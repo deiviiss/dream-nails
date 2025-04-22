@@ -17,8 +17,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { createUpdateThought } from '@/actions/diary/thoughts/create-update-thought'
 import { ButtonBack } from '@/components/monedex/button-back'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { type Thought, type Emotion } from '@/interfaces/thought.interface'
 import { cn } from '@/lib/utils'
 
@@ -55,6 +55,7 @@ interface ThoughtFormProps {
   emotions: Emotion[]
 }
 
+// TODO: Move to a separate file
 const noticeFailSaved = () => {
   toast.error('No se pudo guardar el pensamiento, intente nuevamente', {
     position: 'top-right',
@@ -62,6 +63,7 @@ const noticeFailSaved = () => {
   })
 }
 
+// TODO: Move to a separate file
 const noticeSuccessSaved = () => {
   toast.success('Pensamiento guardado correctamente', {
     position: 'top-right',
@@ -77,7 +79,7 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
     id: thought?.id ? Number(thought.id) : undefined,
     thought: thought?.thought,
     emotionId: thought?.emotionId,
-    createdAt: thought?.createdAt ? new Date(thought.createdAt) : undefined
+    createdAt: thought?.createdAt ? new Date(thought.createdAt) : new Date()
   }
 
   const form = useForm<z.infer<typeof thoughtSchema>>({
@@ -86,7 +88,7 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
   })
 
   const onSubmit = async (values: z.infer<typeof thoughtSchema>) => {
-    setIsSubmitting(true)
+    setIsSubmitting(false)
 
     const formData = new FormData()
 
@@ -132,14 +134,14 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
                   <FormLabel>Contenido del pensamiento</FormLabel>
                   <FormControl>
                     <div className='relative'>
-                      <Input
+                      <Textarea
                         className='pl-10 text-sm'
                         placeholder='Escribe aquí tu pensamiento'
                         {...field}
                         value={field.value ?? ''}
                         disabled={isSubmitting}
                       />
-                      <MdOutlineComment className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500' />
+                      <MdOutlineComment className='pointer-events-none absolute left-3 top-5 h-[18px] w-[18px] -translate-y-1/2 text-gray-500' />
                     </div>
                   </FormControl>
                   <FormMessage />
@@ -161,9 +163,9 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
                       disabled={isSubmitting}
                     >
                       <SelectTrigger className='relative rounded-md'>
+                        <FaRegSmile className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500' />
                         <SelectValue>
                           <div className='flex gap-x-1'>
-                            <FaRegSmile className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500' />
                             <span className='pl-8'>
                               {emotions.find((emotion) => emotion.id === field.value)?.name ?? 'Selecciona una emoción'}
                             </span>
