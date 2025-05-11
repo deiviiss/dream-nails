@@ -39,6 +39,7 @@ export const authConfig: NextAuthConfig = {
             email: email.toLowerCase()
           },
           select: {
+            id: true,
             name: true,
             email: true,
             role: true,
@@ -52,9 +53,12 @@ export const authConfig: NextAuthConfig = {
 
         if (!bcrypt.compareSync(password, userPassword)) return null
 
-        const { password: _, ...userWithoutPassword } = user
-
-        return userWithoutPassword
+        return {
+          id: user.id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role
+        }
       }
     })
   ]

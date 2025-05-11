@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getUserSessionServer } from '@/actions'
 import { CreateThought } from '@/components/diary/thought-buttons'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: {
@@ -21,7 +22,7 @@ export default async function EmotionsLayout({
   if (!user) {
     redirect('/')
   }
-  console.log('user', user.role)
+
   if (user?.role !== 'admin') {
     redirect('/')
   }
@@ -31,13 +32,17 @@ export default async function EmotionsLayout({
       <main className="flex flex-col bg-monedex-primary  text-monedex-primary h-full w-full mx-auto">
 
         <div className="text-white w-full flex-none">
-          <nav className="flex items-center justify-between max-w-7xl mx-auto px-3 md:px-16 py-4">
-            <h1 className="text-2xl font-bold">Diario Personal</h1>
-            <Link href="/monedex" className="text-white hover:text-gray-300">
-              Monedex
-            </Link>
-            <div className="hidden md:flex items-center space-x-4">
-              <CreateThought />
+          <nav className="flex items-center justify-between max-w-7xl mx-auto px-3 md:px-12 py-4">
+            <h1 className="text-2xl font-bold">Personal Diary</h1>
+            <div className='flex items-center space-x-4'>
+              <Button asChild>
+                <Link href="/monedex" className="text-white hover:text-gray-300">
+                  Monedex
+                </Link>
+              </Button>
+              <div className="hidden md:flex items-center space-x-4">
+                <CreateThought />
+              </div>
             </div>
           </nav>
         </div>
