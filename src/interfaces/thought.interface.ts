@@ -1,5 +1,11 @@
 import { type User } from './User'
 
+export interface EmotionSummary {
+  name: string
+  value: number
+  color: string
+}
+
 export interface Emotion {
   id: number
   name: string
