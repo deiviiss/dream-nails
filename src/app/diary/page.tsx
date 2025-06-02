@@ -11,8 +11,8 @@ export default async function DiaryPage(props: { searchParams: SearchParams }): 
   const month = searchParams.month ? Number(searchParams.month) : new Date().getMonth() + 1
   const year = searchParams.year ? Number(searchParams.year) : new Date().getFullYear()
 
-  const thoughts = await fetchFilteredThoughtsByMonth({ currentPage, month, year })
-  const emotionSummary = await fetchEmotionSummaryByMonth({ month, year })
+  const thoughts = await fetchFilteredThoughtsByMonth({ currentPage, month, year }) || []
+  const emotionSummary = await fetchEmotionSummaryByMonth({ month, year }) || []
 
   return (
     <div className="container flex flex-col gap-6 pt-0 pb-10 py-0">

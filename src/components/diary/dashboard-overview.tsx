@@ -12,12 +12,16 @@ interface DashboardOverviewProps {
 }
 
 export function DashboardOverview({ thoughts, emotionSummary }: DashboardOverviewProps) {
-  const mostFrequentEmotion = emotionSummary.reduce((prev, current) =>
-    current.value > prev.value ? current : prev
-  )
+  const defaultEmotion = { name: 'ninguna', value: 0 }
 
-  const totalEmotions = emotionSummary.length
-  const totalThoughts = thoughts.length
+  const mostFrequentEmotion = emotionSummary.length
+    ? emotionSummary.reduce((prev, current) =>
+      current.value > prev.value ? current : prev
+    )
+    : defaultEmotion
+
+  const totalEmotions = emotionSummary?.length || 0
+  const totalThoughts = thoughts?.length || 0
   const totalEmotionsPercentage = totalThoughts > 0
     ? Math.round((mostFrequentEmotion.value / totalThoughts) * 100)
     : 0

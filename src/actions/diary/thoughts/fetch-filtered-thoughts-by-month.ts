@@ -47,6 +47,10 @@ export async function fetchFilteredThoughtsByMonth({
       }
     })
 
+    if (!thoughts) {
+      return []
+    }
+
     return thoughts
   } catch (error) {
     throw new Error('No se pudieron obtener los pensamientos filtrados.')
