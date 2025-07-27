@@ -20,7 +20,7 @@ export function ContactSection() {
     },
     {
       icon: <MapPin className="h-5 w-5 text-[#d47983]" />,
-      text: 'And Nuevo León Mz 48 Lt 25 Fidel Velázquez,  Campeche CP 24088'
+      text: 'Andador Nuevo León Mz 48 Lt 25 Fidel Velázquez,  Campeche CP 24088'
     }
   ]
 
