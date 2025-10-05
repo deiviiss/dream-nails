@@ -46,10 +46,10 @@ const FormExpenseSchema = z.object({
   }),
   placeId: z.string({
     invalid_type_error: 'Por favor seleccione un lugar.'
-  })
+  }).optional()
 })
 
-const CreateExpenseSchema = FormExpenseSchema.omit({ id: true })
+const CreateExpenseSchema = FormExpenseSchema.omit({ id: true, placeId: true })
 const UpdateExpense = FormExpenseSchema.omit({ id: true })
 
 export type CreateExpenseResponse =
@@ -89,12 +89,12 @@ export async function createExpense(
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
-    categoryId: formData.get('categoryId'),
-    placeId: formData.get('placeId')
+    categoryId: formData.get('categoryId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Campos faltantes. No se pudo crear el gasto.'
@@ -117,7 +117,7 @@ export async function createExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth, placeId } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
     validatedFields.data
 
   try {
@@ -142,7 +142,7 @@ export async function createExpense(
         name,
         amount,
         expense_category_id: Number(categoryId),
-        place_id: Number(placeId),
+        place_id: 1,
         expense_date: expenseDate,
         method,
         wallet_id: wallet.id,
@@ -252,8 +252,7 @@ export async function updateExpense(
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
-    categoryId: formData.get('categoryId'),
-    placeId: formData.get('placeId')
+    categoryId: formData.get('categoryId')
   })
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -265,7 +264,7 @@ export async function updateExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth, placeId } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
     validatedFields.data
 
   try {
@@ -318,7 +317,7 @@ export async function updateExpense(
           name,
           amount,
           expense_category_id: Number(categoryId),
-          place_id: Number(placeId),
+          place_id: 1,
           expense_date: expenseDate,
           expense_month: expenseMonth,
           method,
@@ -348,7 +347,7 @@ export async function updateExpense(
         name,
         amount,
         expense_category_id: Number(categoryId),
-        place_id: Number(placeId),
+        place_id: 1,
         expense_date: expenseDate,
         expense_month: expenseMonth,
         method,
