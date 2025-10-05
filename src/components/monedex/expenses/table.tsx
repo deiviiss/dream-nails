@@ -1,7 +1,6 @@
-import { DeleteExpense, ReconciledExpense, UpdateExpense } from './buttons'
-import { Spinner } from '@/components/ui/spinner'
+import SelectableExpenseCards from '@/components/monedex/selectable-expense-cards'
 import { fetchFilteredExpenses } from '@/lib/data'
-import { formatDateToLocal, formatMethod, formatCurrency, formatWithRelation } from '@/lib/helpers'
+import { formatDateToLocal } from '@/lib/helpers'
 
 export default async function ExpensesTable({
   query,
@@ -20,7 +19,9 @@ export default async function ExpensesTable({
 
   if (expenses.length === 0) {
     return (
-      <Spinner name='gastos' color='text-monedex-light' />
+      <div className="flex h-32 w-full items-center justify-center">
+        <p className="text-gray-500">No se encontraron gastos</p>
+      </div>
     )
   }
 
@@ -31,66 +32,7 @@ export default async function ExpensesTable({
           <div className='inline-block min-w-full align-middle'>
             <div className='overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0'>
               <div className='md:hidden'>
-                {expenses?.map((expense) => (
-                  <div
-                    key={expense.id}
-                    className='mb-2 w-full rounded-md bg-white p-4'
-                  >
-                    {/* title card */}
-                    <div className='flex items-center justify-between border-b pb-4'>
-                      <div>
-                        <h1>{expense.name}</h1>
-                        <h2 className='text-sm text-gray-500'>
-                          {formatCurrency(expense.amount)}
-                        </h2>
-                      </div>
-
-                      {/*  buttons delete - update - reconciled */}
-                      <div className='flex justify-end gap-2'>
-                        <ReconciledExpense id={expense.id} reconciled={expense.is_reconciled} />
-                        <UpdateExpense id={expense.id} />
-                        <DeleteExpense id={expense.id} />
-                      </div>
-                    </div>
-                    {/* body card */}
-                    <div className='grid grid-cols-2 col-span-2 gap-2 border-b py-5'>
-
-                      <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Fecha</p>
-                        <p className='font-medium'>
-                          {expense.expense_date.toISOString().split('T')[0]}
-                        </p>
-                      </div>
-
-                      <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Categoría</p>
-                        <p className='font-medium'>{expense.expense_category.name}</p>
-                      </div>
-
-                      <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Método</p>
-                        <p className='font-medium'>
-                          {formatMethod(expense.method)}
-                        </p>
-                      </div>
-
-                      <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Con relación</p>
-                        <p className='font-medium'>
-                          {formatWithRelation(expense.with_relation)}
-                        </p>
-                      </div>
-
-                      <div className='flex w-1/2 flex-col'>
-                        <p className='text-xs'>Lugar</p>
-                        <p className='font-medium'>{expense.place.name}</p>
-                      </div>
-                    </div>
-
-                    <div className='py-2'>Creado por {expense.user.name}</div>
-
-                  </div>
-                ))}
+                <SelectableExpenseCards expenses={expenses} />
               </div>
               <table className='hidden min-w-full rounded-md text-gray-900 md:table'>
                 <thead className='rounded-md bg-gray-50 text-left text-sm font-normal'>
@@ -140,7 +82,7 @@ export default async function ExpensesTable({
                         <div className='flex justify-end gap-2'>
                           {/* <UpdateCustomer id={customer.id} />
                         <DeleteCustomer id={customer.id} /> */}
-                        </div>
+                        </div>b
                       </td>
                     </tr>
                   ))}
