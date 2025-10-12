@@ -8,8 +8,9 @@ import { cn } from '@/lib/utils'
 interface MetricCardProps {
   title: string
   balance: number
-  totalIncome: number
-  totalExpenses: number
+  physicalAmount?: number
+  difference: number
+  differencePercentage: number
   change: {
     value: number
     label: string
@@ -29,9 +30,9 @@ const iconColors = {
   total: 'bg-red-100 text-red-500'
 }
 
-export function MetricCard({ title, balance, totalIncome, totalExpenses, change, type }: MetricCardProps) {
+export function MetricCard({ title, balance, change, type, physicalAmount, difference, differencePercentage }: MetricCardProps) {
   const Icon = icons[type]
-  const isPositive = change.value > 0
+  const isPositive = differencePercentage > 0
 
   return (
     <Card className="border rounded-xl max-w-xl">
@@ -47,8 +48,8 @@ export function MetricCard({ title, balance, totalIncome, totalExpenses, change,
               <p className="text-2xl font-semibold">${balance.toFixed(2)}</p>
             </div>
 
-            <p className="text-sm text-muted-foreground">Total Ingresos: ${totalIncome.toFixed(2)}</p>
-            <p className="text-sm text-muted-foreground">Total Gastos: ${totalExpenses.toFixed(2)}</p>
+            <p className="text-sm text-muted-foreground">Físico: ${physicalAmount?.toFixed(2) ?? '0.00'}</p>
+            <p className="text-sm text-muted-foreground">Diferencia: ${difference?.toFixed(2) ?? '0.00'}</p>
 
             <div className="flex items-center gap-1 text-sm">
               <div
@@ -60,9 +61,8 @@ export function MetricCard({ title, balance, totalIncome, totalExpenses, change,
                 <span className="text-xs">
                   {isPositive ? '↗' : '↘'}
                 </span>
-                <span>{Math.abs(change.value).toFixed(2)}%</span>
+                <span>{differencePercentage?.toFixed(2) ?? '0.00'}%</span>
               </div>
-              <span className="text-muted-foreground">{change.label}</span>
             </div>
           </div>
         </div>

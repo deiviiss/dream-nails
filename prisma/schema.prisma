@@ -147,6 +147,7 @@ model Wallet {
   user_id    Int
   name       String
   balance    Float      @default(0)
+  physical   Float?     @default(0)
   type       WalletType @default(debit)
   created_at DateTime   @default(now())
   updated_at DateTime?
