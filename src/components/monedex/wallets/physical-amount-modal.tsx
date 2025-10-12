@@ -1,5 +1,6 @@
 'use client'
 
+import { evaluate } from 'mathjs'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { IoWalletOutline } from 'react-icons/io5'
@@ -38,6 +39,7 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
   const [walletsLocal, setWalletsLocal] = useState<PhysicalAmountModalProps['wallets']>([])
   const [selectedWalletId, setSelectedWalletId] = useState<string>('')
   const [physicalAmount, setPhysicalAmount] = useState<string>('')
+  const [amountError, setAmountError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
   // Fetch wallets when modal opens
@@ -53,6 +55,37 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
     } catch (error) {
       toast.error('Error loading wallets')
     }
+  }
+
+  const evaluateExpression = (expression: string) => {
+    if (!expression.trim()) {
+      setAmountError(null)
+      return
+    }
+
+    try {
+      const result = evaluate(expression)
+
+      if (typeof result !== 'number' || isNaN(result) || !isFinite(result)) {
+        setAmountError('Expresión inválida')
+        return
+      }
+
+      const formattedResult = Number(result).toFixed(2)
+      setPhysicalAmount(formattedResult)
+      setAmountError(null)
+    } catch (error) {
+      setAmountError('Expresión matemática incorrecta')
+    }
+  }
+
+  const handleAmountBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    evaluateExpression(e.target.value)
+  }
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhysicalAmount(e.target.value)
+    setAmountError(null)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,7 +118,7 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
         setSelectedWalletId('')
         setPhysicalAmount('')
         // Optionally refresh the page or update parent component
-        window.location.reload()
+        // window.location.reload()
       } else {
         toast.error(response.message || 'Error updating physical amount')
       }
@@ -102,6 +135,7 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
       // Reset form when closing
       setSelectedWalletId('')
       setPhysicalAmount('')
+      setAmountError(null)
     }
   }
 
@@ -110,7 +144,7 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
       <DialogTrigger asChild>
         <Button variant="outline" className="gap-2">
           <IoWalletOutline className="w-4 h-4" />
-          Update Physical Amount
+          <span className='hidden sm:block'>Update Physical Amount</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -153,13 +187,15 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
               <div className="col-span-4">
                 <Input
                   id="physicalAmount"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder="0.00"
+                  type="text"
+                  placeholder="Ingresa la cantidad o expresión (ej: 23+2/5)"
                   value={physicalAmount}
-                  onChange={(e) => { setPhysicalAmount(e.target.value) }}
+                  onChange={handleAmountChange}
+                  onBlur={handleAmountBlur}
                 />
+                {amountError && (
+                  <p className="text-sm text-red-500 mt-1">{amountError}</p>
+                )}
               </div>
             </div>
           </div>

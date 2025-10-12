@@ -35,7 +35,7 @@ export function MetricCard({ title, balance, change, type, physicalAmount, diffe
   const isPositive = differencePercentage > 0
 
   return (
-    <Card className="border rounded-xl max-w-xl">
+    <Card className="border rounded-xl max-w-xl w-full mx-auto">
       <CardContent className="p-4 min-h-[152px]">
         <div className="flex items-start gap-4">
           <div className={cn('p-2 rounded-lg', iconColors[type])}>
