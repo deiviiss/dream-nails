@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { getUserSessionServer } from '@/actions'
 import { type UpdateWalletPhysical } from '@/interfaces/wallet-physical.interface'
 import prisma from '@/lib/prisma'
@@ -50,6 +51,8 @@ export const updateWalletPhysical = async (data: UpdateWalletPhysical) => {
       where: { id: data.walletId },
       data: { physical: data.physicalAmount }
     })
+
+    revalidatePath('/monedex/wallets')
 
     return {
       ok: true,
