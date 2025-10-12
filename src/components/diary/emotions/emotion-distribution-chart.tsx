@@ -26,12 +26,13 @@ export function EmotionDistributionChart({ emotionSummary }: EmotionDistribution
           data={emotionSummary}
           cx="50%"
           cy="50%"
-          innerRadius={80}
-          outerRadius={120}
-          paddingAngle={2}
+          className='text-xs'
+          innerRadius={20}
+          outerRadius={80}
+          paddingAngle={1}
           dataKey="value"
           label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-          labelLine={false}
+          labelLine={true}
         >
           {emotionSummary.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />

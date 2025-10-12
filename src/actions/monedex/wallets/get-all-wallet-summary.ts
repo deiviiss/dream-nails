@@ -41,6 +41,7 @@ export const getAllWalletsSummary = async ({
         id: true,
         name: true,
         balance: true,
+        physical: true,
         type: true,
         incomes: {
           where: {
@@ -74,6 +75,8 @@ export const getAllWalletsSummary = async ({
 
     let totalIncomeGlobal = 0
     let totalExpensesGlobal = 0
+    let totalPhysicalGlobal = 0
+    let totalBalanceGlobal = 0
 
     const walletsSummary = walletSummaryDb.map(wallet => {
       // calculate total income and expenses
@@ -85,15 +88,22 @@ export const getAllWalletsSummary = async ({
 
       // Calculate change in balance
       const balance = totalIncome - totalExpenses
+      totalBalanceGlobal += balance
       const changeValue = totalExpenses > 0 ? ((totalIncome - totalExpenses) / totalExpenses) * 100 : 0
       const changeLabel = 'Balance financiero'
+      const physical = wallet.physical ?? 0
+      totalPhysicalGlobal += physical
+      const difference = (wallet.physical ?? 0) - balance
+
+      const differencePercentage = balance !== 0 ? (difference / balance) * 100 : 0
 
       return {
         id: wallet.id,
         name: wallet.name,
         balance,
-        totalIncome,
-        totalExpenses,
+        differencePercentage,
+        physical,
+        difference,
         type: wallet.type,
         change: {
           value: changeValue,
@@ -102,6 +112,9 @@ export const getAllWalletsSummary = async ({
       }
     })
 
+    const globalDifference = totalPhysicalGlobal - totalBalanceGlobal
+    const globalDifferencePercentage =
+      totalBalanceGlobal !== 0 ? (globalDifference / totalBalanceGlobal) * 100 : 0
     const globalChangeValue = totalExpensesGlobal > 0
       ? ((totalIncomeGlobal - totalExpensesGlobal) / totalExpensesGlobal) * 100
       : 0
@@ -110,6 +123,9 @@ export const getAllWalletsSummary = async ({
       totalIncome: totalIncomeGlobal,
       totalExpenses: totalExpensesGlobal,
       totalBalance: totalIncomeGlobal - totalExpensesGlobal,
+      difference: globalDifference,
+      differencePercentage: globalDifferencePercentage,
+      physical: totalPhysicalGlobal,
       change: {
         value: globalChangeValue,
         label: globalChangeLabel

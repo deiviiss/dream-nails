@@ -79,7 +79,7 @@ export function DashboardOverview({ thoughts, emotionSummary }: DashboardOvervie
               <CardTitle>Emotion Distribution</CardTitle>
               <CardDescription>Breakdown of your emotions during the selected period</CardDescription>
             </CardHeader>
-            <CardContent className="h-[400px]">
+            <CardContent className="h-[400px] px-1">
               {/* <EmotionDistributionChart emotionSummary={emotionSummary} /> */}
               {emotionSummary.length === 0
                 ? (<p className="text-muted-foreground">No emotion data for this period</p>)
