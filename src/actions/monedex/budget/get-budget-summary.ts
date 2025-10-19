@@ -136,7 +136,8 @@ export const getBudgetSummary = async ({
         budgetAmount: category.amount,
         paidAmount,
         difference,
-        differencePercentage
+        differencePercentage,
+        expenseCategoryId: category.expense_category_id
       }
     })
 

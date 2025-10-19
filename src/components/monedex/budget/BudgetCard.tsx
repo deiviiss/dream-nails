@@ -18,6 +18,7 @@ interface BudgetCardProps {
   paidAmount: number
   difference: number
   differencePercentage: number
+  expenseCategoryId: number
 }
 
 export function BudgetCard({
@@ -26,14 +27,16 @@ export function BudgetCard({
   budgetAmount,
   paidAmount,
   difference,
-  differencePercentage
+  differencePercentage,
+  expenseCategoryId
 }: BudgetCardProps) {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [editData, setEditData] = useState({
     name,
-    budgetAmount: budgetAmount.toString()
+    budgetAmount: budgetAmount.toString(),
+    expenseCategoryId
   })
 
   const isOverBudget = difference < 0
@@ -43,7 +46,8 @@ export function BudgetCard({
     setIsEditing(true)
     setEditData({
       name,
-      budgetAmount: budgetAmount.toString()
+      budgetAmount: budgetAmount.toString(),
+      expenseCategoryId
     })
   }
 
@@ -51,7 +55,8 @@ export function BudgetCard({
     setIsEditing(false)
     setEditData({
       name,
-      budgetAmount: budgetAmount.toString()
+      budgetAmount: budgetAmount.toString(),
+      expenseCategoryId
     })
   }
 
@@ -67,7 +72,8 @@ export function BudgetCard({
       const result = await createUpdateBudgetCategory({
         id,
         name: editData.name.trim(),
-        amount: parseFloat(editData.budgetAmount)
+        amount: parseFloat(editData.budgetAmount),
+        expense_category_id: editData.expenseCategoryId
       })
 
       if (result.ok) {
