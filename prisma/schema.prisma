@@ -55,12 +55,13 @@ model Image {
 // MONEDEX MODELS
 
 model ExpenseCategory {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime?
-  expenses    Expense[]
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String?
+  created_at     DateTime         @default(now())
+  updated_at     DateTime?
+  expenses       Expense[]
+  BudgetCategory BudgetCategory[]
 
   @@map("expense_categories")
 }
@@ -71,6 +72,10 @@ model BudgetCategory {
   amount    Float // Presupuesto asignado
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  expense_category_id Int
+  expense_category    ExpenseCategory @relation(fields: [expense_category_id], references: [id])
+  Expense             Expense[]
 
   @@map("budget_categories")
 }
@@ -118,8 +123,10 @@ model Expense {
   user_id Int
   user    User @relation(fields: [user_id], references: [id])
 
-  created_at DateTime  @default(now())
-  updated_at DateTime?
+  created_at       DateTime        @default(now())
+  updated_at       DateTime?
+  BudgetCategory   BudgetCategory? @relation(fields: [budgetCategoryId], references: [id])
+  budgetCategoryId Int?
 
   @@map("expenses")
 }

@@ -14,13 +14,15 @@ const messages = {
 const budgetCategorySchema = z.object({
   id: z.number().optional(),
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
-  amount: z.number().min(0, 'Amount must be positive')
+  amount: z.number().min(0, 'Amount must be positive'),
+  expense_category_id: z.number().min(1, 'Expense category is required')
 })
 
 interface BudgetCategoryFormData {
   id?: number
   name: string
   amount: number
+  expense_category_id: number
 }
 
 export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) => {
@@ -54,11 +56,12 @@ export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) =
         }
       }
 
-      const updatedCategory = await prisma.budgetCategory.update({
+      const updatedCategory = await (prisma.budgetCategory).update({
         where: { id: validatedData.id },
         data: {
           name: validatedData.name,
-          amount: validatedData.amount
+          amount: validatedData.amount,
+          expense_category_id: validatedData.expense_category_id
         }
       })
 
@@ -71,10 +74,11 @@ export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) =
       }
     } else {
       // Create new category
-      const newCategory = await prisma.budgetCategory.create({
+      const newCategory = await (prisma.budgetCategory).create({
         data: {
           name: validatedData.name,
-          amount: validatedData.amount
+          amount: validatedData.amount,
+          expense_category_id: validatedData.expense_category_id
         }
       })
 

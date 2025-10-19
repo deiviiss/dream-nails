@@ -31,17 +31,33 @@ export const getBudgetSummary = async ({
   const startDateBalance = new Date('2024-12-01')
   const currentYear = year || new Date().getFullYear()
 
+  // Get expenses for the specified month to calculate paid amounts
+  const startDateExpensesBadge = new Date(currentYear, month - 1, 1)
+  const endDateExpensesBadge = new Date(currentYear, month, 0, 23, 59, 59)
+
   try {
-    // Get all budget categories for the user
-    const budgetCategories = await prisma.budgetCategory.findMany({
+    // Get all expenses for the month grouped by expense_category_id
+    const expensesByCategory = await prisma.expense.groupBy({
+      by: ['expense_category_id'],
+      where: {
+        expense_date: {
+          gte: startDateExpensesBadge,
+          lte: endDateExpensesBadge
+        }
+      },
+      _sum: {
+        amount: true
+      }
+    })
+
+    // Get all budget categories with their expense category relationships
+    const budgetCategories = await (prisma.budgetCategory).findMany({
       where: {
         // Note: We need to add user_id to BudgetCategory model for multi-user support
         // For now, we'll get all categories
       },
-      select: {
-        id: true,
-        name: true,
-        amount: true
+      include: {
+        expense_category: true
       }
     })
 
@@ -58,24 +74,6 @@ export const getBudgetSummary = async ({
         }
       }
     }
-
-    // Get expenses for the specified month to calculate paid amounts
-    const startDateExpensesBadge = new Date(currentYear, month - 1, 1)
-    const endDateExpensesBadge = new Date(currentYear, month, 0, 23, 59, 59)
-
-    // Get expenses of the month (for know how much was paid)
-    const expenses = await prisma.expense.findMany({
-      where: {
-        expense_date: {
-          gte: startDateExpensesBadge,
-          lte: endDateExpensesBadge
-        }
-      },
-      select: {
-        amount: true,
-        expense_category_id: true
-      }
-    })
 
     const walletSummaryDb = await prisma.wallet.findMany({
       select: {
@@ -121,11 +119,13 @@ export const getBudgetSummary = async ({
     const balanceTotal = totalIncomeGlobal - totalExpensesGlobal
 
     // Calculate budget vs actual for each category
-    const budgetCategoriesWithCalculations = budgetCategories.map(category => {
-      // Filter expenses for that category
-      const paidAmount = expenses
-        .filter(e => e.expense_category_id === category.id)
-        .reduce((sum, e) => sum + e.amount, 0)
+    const budgetCategoriesWithCalculations = budgetCategories.map((category: any) => {
+      // Find the total expenses for this budget category's expense category
+      const categoryExpenses = expensesByCategory.find(
+        (expenseGroup: any) => expenseGroup.expense_category_id === category.expense_category_id
+      )
+
+      const paidAmount = categoryExpenses ? (categoryExpenses._sum.amount || 0) : 0
 
       const difference = category.amount - paidAmount
       const differencePercentage = category.amount > 0 ? (difference / category.amount) * 100 : 0
