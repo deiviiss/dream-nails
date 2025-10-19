@@ -94,7 +94,6 @@ export async function createExpense(
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten().fieldErrors)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Campos faltantes. No se pudo crear el gasto.'

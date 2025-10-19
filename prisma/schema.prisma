@@ -65,6 +65,16 @@ model ExpenseCategory {
   @@map("expense_categories")
 }
 
+model BudgetCategory {
+  id        Int      @id @default(autoincrement())
+  name      String // Ej: Despensa, Combustible
+  amount    Float // Presupuesto asignado
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("budget_categories")
+}
+
 model IncomeCategory {
   id          Int       @id @default(autoincrement())
   name        String

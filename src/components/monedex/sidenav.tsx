@@ -4,18 +4,22 @@ import NavLinks from '@/components/monedex/nav-links'
 
 export default function SideNav() {
   return (
-    <div className="flex h-full flex-col px-3 py-4 md:px-2">
+    <>
       <Link
-        className="mb-2 flex h-20 items-end justify-start rounded-md bg-monedex-foreground p-4 md:h-40"
+        className="flex h-20 items-center justify-start  bg-monedex-foreground/80 px-4 md:h-20 md:mb-8 hover:bg-monedex-foreground transition-colors"
         href="/monedex"
       >
-        <div className=" text-monedex-light">
+        <div className="text-monedex-light">
           <AppLogo />
         </div>
       </Link>
-      <div className="grid grid-cols-3 gap-2 md:grid-cols-1 md:gap-y-2">
-        <NavLinks />
+
+      <div className="flex h-full flex-col px-3 py-3 md:px-3">
+
+        <div className="grid grid-cols-5 gap-1 md:grid-cols-1 md:gap-3">
+          <NavLinks />
+        </div>
       </div>
-    </div>
+    </>
   )
 }
