@@ -40,9 +40,9 @@ export default function NavLinks() {
             href={link.href}
             className={clsx(
               'flex w-full h-[52px] grow items-center justify-center gap-3 rounded-lg p-3 text-sm md:text-base font-medium transition-all duration-200 md:flex-none md:justify-start md:px-4',
-              'text-monedex-light/80 hover:text-monedex-light hover:bg-monedex-foreground/80',
+              'text-monedex-light/80 hover:text-monedex-light ',
               {
-                'bg-monedex-secondary text-monedex-light shadow-sm': isActive
+                'bg-monedex-foreground/80 text-monedex-light shadow-sm': isActive
               }
             )}
           >

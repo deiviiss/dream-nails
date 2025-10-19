@@ -6,7 +6,7 @@ export default function SideNav() {
   return (
     <>
       <Link
-        className="flex h-20 items-center justify-start  bg-monedex-foreground/80 px-4 md:h-20 md:mb-8 hover:bg-monedex-foreground transition-colors"
+        className="flex h-20 md:h-28 items-center justify-start  bg-monedex-foreground/80 px-4 md:mb-3 hover:bg-monedex-foreground transition-colors"
         href="/monedex"
       >
         <div className="text-monedex-light">

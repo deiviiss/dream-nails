@@ -100,6 +100,7 @@ export default async function BudgetPage(props: {
               {budgetCategories.map((category) => (
                 <BudgetCard
                   key={category.id}
+                  id={category.id}
                   name={category.name}
                   budgetAmount={category.budgetAmount}
                   paidAmount={category.paidAmount}
