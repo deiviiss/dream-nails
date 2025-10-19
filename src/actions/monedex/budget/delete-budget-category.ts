@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { getUserSessionServer } from '@/actions'
 import prisma from '@/lib/prisma'
 
@@ -39,6 +40,8 @@ export const deleteBudgetCategory = async (id: number) => {
     await prisma.budgetCategory.delete({
       where: { id }
     })
+
+    revalidatePath('/monedex/budget')
 
     return {
       ok: true,

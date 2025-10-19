@@ -2,6 +2,8 @@
 
 import { Plus } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { BudgetModal } from '@/components/monedex/budget/BudgetModal'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -13,6 +15,7 @@ import {
 const menuItems = [
   { label: 'Crear gasto', path: '/monedex/expenses/create' },
   { label: 'Crear ingreso', path: '/monedex/incomes/create' },
+  { label: 'Crear presupuesto', path: '/monedex/budget', action: 'modal' },
   { label: 'Crear categoría', path: '/monedex/categories/create' },
   { label: 'Crear lugar', path: '/monedex/places/create' }
 ]
@@ -20,6 +23,7 @@ const menuItems = [
 export function FloatingMenuButton() {
   const router = useRouter()
   const pathname = usePathname()
+  const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false)
 
   const models = ['expenses', 'incomes', 'places', 'categories']
 
@@ -34,8 +38,12 @@ export function FloatingMenuButton() {
     return null
   }
 
-  const handleItemClick = (path: string) => {
-    router.push(path)
+  const handleItemClick = (path: string, action?: string) => {
+    if (action === 'modal') {
+      setIsBudgetModalOpen(true)
+    } else {
+      router.push(path)
+    }
   }
 
   return (
@@ -54,12 +62,18 @@ export function FloatingMenuButton() {
         {menuItems.map((item) => (
           <DropdownMenuItem
             key={item.path}
-            onSelect={() => { handleItemClick(item.path) }}
+            onSelect={() => { handleItemClick(item.path, item.action) }}
           >
             {item.label}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
+
+      {/* Budget Modal */}
+      <BudgetModal
+        open={isBudgetModalOpen}
+        onOpenChange={setIsBudgetModalOpen}
+      />
     </DropdownMenu>
   )
 }

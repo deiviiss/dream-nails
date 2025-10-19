@@ -34,13 +34,15 @@ export default async function DashboardPage(props: {
         breadcrumbs={[{ label: 'Wallets', href: '/monedex/wallets', active: true }]}
       />
 
-      <div className='flex flex-col gap-2 text-monedex-secondary'>
-        <FilterMonth />
-      </div>
+      <div className='flex justify-between'>
+        <div className='flex flex-col gap-2 w-full text-monedex-secondary'>
+          <FilterMonth />
+        </div>
 
-      {/* Physical Amount Modal Trigger */}
-      <div className="flex justify-end">
-        <PhysicalAmountModal wallets={wallets} />
+        {/* Physical Amount Modal Trigger */}
+        <div>
+          <PhysicalAmountModal wallets={wallets} />
+        </div>
       </div>
 
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4 ">

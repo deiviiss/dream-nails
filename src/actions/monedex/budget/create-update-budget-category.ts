@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { getUserSessionServer } from '@/actions'
 import prisma from '@/lib/prisma'
@@ -61,6 +62,8 @@ export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) =
         }
       })
 
+      revalidatePath('/monedex/budget')
+
       return {
         ok: true,
         message: messages.success,
@@ -74,6 +77,8 @@ export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) =
           amount: validatedData.amount
         }
       })
+
+      revalidatePath('/monedex/budget')
 
       return {
         ok: true,

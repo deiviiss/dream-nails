@@ -142,7 +142,7 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
+        <Button variant="outline" size={'sm'} className="gap-2">
           <IoWalletOutline className="w-4 h-4" />
           <span className='hidden sm:block'>Update Physical Amount</span>
         </Button>
