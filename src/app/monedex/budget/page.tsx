@@ -106,6 +106,7 @@ export default async function BudgetPage(props: {
                   paidAmount={category.paidAmount}
                   difference={category.difference}
                   differencePercentage={category.differencePercentage}
+                  expenseCategoryId={category.expenseCategoryId}
                 />
               ))}
             </div>)}
