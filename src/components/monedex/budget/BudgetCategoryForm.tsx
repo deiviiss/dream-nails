@@ -1,13 +1,15 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { createUpdateBudgetCategory } from '@/actions/monedex/budget/create-update-budget-category'
+import { getExpenseCategories } from '@/actions/monedex/budget/get-expense-categories'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 interface BudgetCategoryFormProps {
   onSuccess?: () => void
@@ -16,15 +18,32 @@ interface BudgetCategoryFormProps {
 export function BudgetCategoryForm({ onSuccess }: BudgetCategoryFormProps) {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [expenseCategories, setExpenseCategories] = useState<Array<{ id: number, name: string, description: string | null }>>([])
   const [formData, setFormData] = useState({
     name: '',
-    amount: ''
+    amount: '',
+    expense_category_id: ''
   })
+
+  // Load expense categories on component mount
+  useEffect(() => {
+    const loadExpenseCategories = async () => {
+      try {
+        const result = await getExpenseCategories()
+        if (result.ok && result.expenseCategories) {
+          setExpenseCategories(result.expenseCategories)
+        }
+      } catch (error) {
+        console.error('Error loading expense categories:', error)
+      }
+    }
+    loadExpenseCategories()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.name.trim() || !formData.amount) {
+    if (!formData.name.trim() || !formData.amount || !formData.expense_category_id) {
       toast.error('Por favor complete todos los campos')
       return
     }
@@ -34,12 +53,13 @@ export function BudgetCategoryForm({ onSuccess }: BudgetCategoryFormProps) {
     try {
       const result = await createUpdateBudgetCategory({
         name: formData.name.trim(),
-        amount: parseFloat(formData.amount)
+        amount: parseFloat(formData.amount),
+        expense_category_id: parseInt(formData.expense_category_id)
       })
 
       if (result.ok) {
         toast.success('Categoría de presupuesto creada correctamente')
-        setFormData({ name: '', amount: '' })
+        setFormData({ name: '', amount: '', expense_category_id: '' })
         router.refresh() // Refresh the page data
         onSuccess?.()
       } else {
@@ -77,6 +97,26 @@ export function BudgetCategoryForm({ onSuccess }: BudgetCategoryFormProps) {
               disabled={isSubmitting}
               className="mt-1"
             />
+          </div>
+
+          <div>
+            <Label htmlFor="expense_category">Categoría de gasto</Label>
+            <Select
+              value={formData.expense_category_id}
+              onValueChange={(value) => { handleChange('expense_category_id', value) }}
+              disabled={isSubmitting}
+            >
+              <SelectTrigger className="mt-1">
+                <SelectValue placeholder="Selecciona una categoría de gasto" />
+              </SelectTrigger>
+              <SelectContent>
+                {expenseCategories.map((category) => (
+                  <SelectItem key={category.id} value={category.id.toString()}>
+                    {category.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div>
