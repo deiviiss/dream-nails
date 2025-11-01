@@ -89,7 +89,7 @@ export default async function BudgetPage(props: {
         <div className='flex justify-between'>
           <h2 className="text-lg font-semibold text-monedex-light">Categorías de Presupuesto</h2>
 
-          <h2 className="text-lg text-monedex-background">
+          <h2 className="text-lg font-semibold text-monedex-light">
             {budgetCategories.length}
           </h2>
 
