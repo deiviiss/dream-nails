@@ -1,6 +1,5 @@
 import { getAllWalletsSummary } from '@/actions/monedex/wallets/get-all-wallet-summary'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
-import FilterMonth from '@/components/monedex/filter-month'
 import { MetricCard } from '@/components/monedex/wallets/MetricCard'
 import { PhysicalAmountModal } from '@/components/monedex/wallets/physical-amount-modal'
 type SearchParams = Promise<Record<string, string | string[] | undefined>>
@@ -30,14 +29,14 @@ export default async function DashboardPage(props: {
 
   return (
     <section className="container mx-auto space-y-6">
-      <Breadcrumbs
-        breadcrumbs={[{ label: 'Wallets', href: '/monedex/wallets', active: true }]}
-      />
+      <div className='flex justify-between items-center'>
+        <Breadcrumbs
+          breadcrumbs={[{ label: 'Wallets', href: '/monedex/wallets', active: true }]}
+        />
 
-      <div className='flex justify-between'>
-        <div className='flex flex-col gap-2 w-full text-monedex-secondary'>
-          <FilterMonth />
-        </div>
+        {/* <div className='flex flex-col gap-2 w-full text-monedex-secondary'>
+          <FilterMonth /> */}
+        {/* </div> */}
 
         {/* Physical Amount Modal Trigger */}
         <div>
