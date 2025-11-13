@@ -129,6 +129,8 @@ export function BudgetCard({
               <Input
                 value={editData.name}
                 onChange={(e) => { handleInputChange('name', e.target.value) }}
+                onClick={(e) => { e.stopPropagation() }}
+                onFocus={(e) => { e.stopPropagation() }}
                 disabled={isSubmitting}
                 className="text-base font-semibold text-monedex-secondary"
                 placeholder="Nombre de la categoría"
@@ -145,7 +147,7 @@ export function BudgetCard({
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={handleSaveEdit}
+                    onClick={(e) => { e.stopPropagation(); handleSaveEdit() }}
                     disabled={isSubmitting}
                     className="h-8 w-8 p-0 text-green-600 hover:text-green-700 hover:bg-green-50"
                   >
@@ -154,7 +156,7 @@ export function BudgetCard({
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={handleCancelEdit}
+                    onClick={(e) => { e.stopPropagation(); handleCancelEdit() }}
                     disabled={isSubmitting}
                     className="h-8 w-8 p-0 text-gray-600 hover:text-gray-700 hover:bg-gray-50"
                   >
@@ -166,7 +168,7 @@ export function BudgetCard({
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={handleEdit}
+                    onClick={(e) => { e.stopPropagation(); handleEdit() }}
                     disabled={isSubmitting}
                     className="h-8 w-8 p-0 text-blue-600 hover:text-blue-700 hover:bg-blue-50"
                   >
@@ -175,7 +177,7 @@ export function BudgetCard({
                   <Button
                     size="sm"
                     variant="ghost"
-                    onClick={handleDelete}
+                    onClick={(e) => { e.stopPropagation(); handleDelete() }}
                     disabled={isSubmitting}
                     className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
                   >
@@ -196,6 +198,8 @@ export function BudgetCard({
                 min="0"
                 value={editData.budgetAmount}
                 onChange={(e) => { handleInputChange('budgetAmount', e.target.value) }}
+                onClick={(e) => { e.stopPropagation() }}
+                onFocus={(e) => { e.stopPropagation() }}
                 disabled={isSubmitting}
                 className="w-24 text-sm font-medium text-right"
                 placeholder="0.00"

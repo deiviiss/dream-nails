@@ -1,7 +1,9 @@
 import { RiMoneyDollarCircleLine, RiWalletLine, RiTimeLine } from 'react-icons/ri'
 import { getBudgetSummary } from '@/actions/monedex/budget/get-budget-summary'
+import { getUnbudgetedExpenses } from '@/actions/monedex/budget/get-unbudgeted-expenses'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
-import { BudgetCard } from '@/components/monedex/budget/BudgetCard'
+import SelectableBudgetCards from '@/components/monedex/budget/SelectableBudgetCards'
+import { UnbudgetedExpensesSection } from '@/components/monedex/budget/UnbudgetedExpensesSection'
 import FilterMonth from '@/components/monedex/filter-month'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -17,6 +19,7 @@ export default async function BudgetPage(props: {
   const year = Number(searchParams.year) || currentYear
 
   const { budgetCategories, globalSummary } = await getBudgetSummary({ month, year })
+  const { unbudgetedExpenses, totalUnbudgeted } = await getUnbudgetedExpenses({ month, year })
 
   if (!budgetCategories || !globalSummary) {
     return <div>Error loading budget data</div>
@@ -103,21 +106,16 @@ export default async function BudgetPage(props: {
               </CardContent>
             </Card>)
           : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {budgetCategories.map((category) => (
-                <BudgetCard
-                  key={category.id}
-                  id={category.id}
-                  name={category.name}
-                  budgetAmount={category.budgetAmount}
-                  paidAmount={category.paidAmount}
-                  difference={category.difference}
-                  differencePercentage={category.differencePercentage}
-                  expenseCategoryId={category.expenseCategoryId}
-                />
-              ))}
+            <div>
+              <SelectableBudgetCards categories={budgetCategories} field="budgetAmount" />
             </div>)}
       </div>
+
+      {/* Unbudgeted Expenses */}
+      <UnbudgetedExpensesSection
+        categories={unbudgetedExpenses || []}
+        total={totalUnbudgeted || 0}
+      />
     </section>
   )
 }
