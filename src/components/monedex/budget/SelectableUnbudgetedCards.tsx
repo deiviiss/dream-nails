@@ -77,7 +77,7 @@ export default function SelectableUnbudgetedCards({ categories }: { categories: 
                         ))}
                       </div>
                       {/* Gradient overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 h-7 pointer-events-none bg-gradient-to-t from-white to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 h-7 pointer-events-none bg-gradient-to-t from-white to-transparent rounded-xl" />
                     </div>
                   </CardContent>
                 </Card>

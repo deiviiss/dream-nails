@@ -19,6 +19,7 @@ const primaryLinks = [
 ]
 
 const secondaryLinks = [
+  { name: 'Gastos sin Presupuesto', href: '/monedex/unbudgeted-expenses', icon: TbCurrencyDollar },
   { name: 'Categorías', href: '/monedex/categories', icon: BiCategory },
   { name: 'Lugares', href: '/monedex/places', icon: BiLocationPlus },
   { name: 'Diario', href: '/diary', icon: BsJournalText }

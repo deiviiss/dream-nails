@@ -1,9 +1,7 @@
 import { RiMoneyDollarCircleLine, RiWalletLine, RiTimeLine } from 'react-icons/ri'
 import { getBudgetSummary } from '@/actions/monedex/budget/get-budget-summary'
-import { getUnbudgetedExpenses } from '@/actions/monedex/budget/get-unbudgeted-expenses'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import SelectableBudgetCards from '@/components/monedex/budget/SelectableBudgetCards'
-import { UnbudgetedExpensesSection } from '@/components/monedex/budget/UnbudgetedExpensesSection'
 import FilterMonth from '@/components/monedex/filter-month'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -19,7 +17,6 @@ export default async function BudgetPage(props: {
   const year = Number(searchParams.year) || currentYear
 
   const { budgetCategories, globalSummary } = await getBudgetSummary({ month, year })
-  const { unbudgetedExpenses, totalUnbudgeted } = await getUnbudgetedExpenses({ month, year })
 
   if (!budgetCategories || !globalSummary) {
     return <div>Error loading budget data</div>
@@ -110,12 +107,6 @@ export default async function BudgetPage(props: {
               <SelectableBudgetCards categories={budgetCategories} field="budgetAmount" />
             </div>)}
       </div>
-
-      {/* Unbudgeted Expenses */}
-      <UnbudgetedExpensesSection
-        categories={unbudgetedExpenses || []}
-        total={totalUnbudgeted || 0}
-      />
     </section>
   )
 }
