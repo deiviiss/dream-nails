@@ -1,11 +1,11 @@
 import { type Metadata } from 'next'
+import { TbCurrencyDollar } from 'react-icons/tb'
 import { getUnbudgetedExpenses } from '@/actions/monedex/budget/get-unbudgeted-expenses'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { UnbudgetedExpensesSection } from '@/components/monedex/budget/UnbudgetedExpensesSection'
 import FilterMonth from '@/components/monedex/filter-month'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/helpers'
-import { TbCurrencyDollar } from 'react-icons/tb'
 
 export const metadata: Metadata = {
   title: 'Gastos sin Presupuesto'
