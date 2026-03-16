@@ -140,6 +140,7 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
                   <FormControl>
                     <div className='relative'>
                       <Textarea
+                        {...field}
                         className='pl-10 text-sm'
                         placeholder='Escribe aquí tu pensamiento'
                         ref={(el) => {
