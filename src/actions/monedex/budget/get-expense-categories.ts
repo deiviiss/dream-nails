@@ -38,6 +38,7 @@ export const getExpenseCategories = async () => {
       expenseCategories
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error getting expense categories:', error)
     return {
       ok: false,

@@ -1,7 +1,5 @@
 'use client'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calculator } from '@/components/ui/calculator'
 import { useState } from 'react'
 import { useFormState } from 'react-dom'
 import { BsCashStack } from 'react-icons/bs'
@@ -11,6 +9,8 @@ import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
+import { Calculator } from '@/components/ui/calculator'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { type Category } from '@/interfaces/Category'
 import { createExpense } from '@/lib/actions'
 
@@ -26,7 +26,6 @@ export default function Form({
 
   const [amountValue, setAmountValue] = useState('')
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
-
 
   return (
     <form action={dispatch}>
@@ -80,12 +79,12 @@ export default function Form({
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                  <Calculator 
+                  <Calculator
                     initialValue={amountValue}
                     onResult={(val) => {
                       setAmountValue(val.toString())
                       setIsCalculatorOpen(false)
-                    }} 
+                    }}
                   />
                 </PopoverContent>
               </Popover>

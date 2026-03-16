@@ -60,6 +60,7 @@ export const updateWalletPhysical = async (data: UpdateWalletPhysical) => {
       wallet: updatedWallet
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error updating wallet physical amount:', error)
     return {
       ok: false,

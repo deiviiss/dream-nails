@@ -17,12 +17,12 @@ import { createUpdateIncome } from '@/actions/monedex/incomes/create-update-inco
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
 import { Button } from '@/components/ui/button'
+import { Calculator } from '@/components/ui/calculator'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calculator } from '@/components/ui/calculator'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { type Income, type IncomeCategory } from '@/interfaces/income.interface'
@@ -196,13 +196,13 @@ export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
                           />
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
-                          <Calculator 
+                          <Calculator
                             initialValue={field.value?.toString() ?? ''}
                             onResult={(val) => {
                               form.setValue('amount', val)
                               form.trigger('amount')
                               setIsCalculatorAmountOpen(false)
-                            }} 
+                            }}
                           />
                         </PopoverContent>
                       </Popover>

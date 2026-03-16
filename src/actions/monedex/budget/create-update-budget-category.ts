@@ -91,6 +91,7 @@ export const createUpdateBudgetCategory = async (data: BudgetCategoryFormData) =
       }
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error saving budget category:', error)
 
     if (error instanceof z.ZodError) {

@@ -160,6 +160,7 @@ export const getBudgetSummary = async ({
       globalSummary
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error getting budget summary:', error)
     return {
       ok: false,

@@ -1,7 +1,5 @@
 'use client'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calculator } from '@/components/ui/calculator'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
@@ -12,6 +10,8 @@ import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
+import { Calculator } from '@/components/ui/calculator'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { type Category } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expense'
 import { updateExpense } from '@/lib/actions'
@@ -38,7 +38,6 @@ export default function EditExpenseForm({
       router.back()
     }
   }, [state])
-
 
   return (
     <form action={dispatch}>
@@ -92,12 +91,12 @@ export default function EditExpenseForm({
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                  <Calculator 
+                  <Calculator
                     initialValue={amountValue}
                     onResult={(val) => {
                       setAmountValue(val.toString())
                       setIsCalculatorOpen(false)
-                    }} 
+                    }}
                   />
                 </PopoverContent>
               </Popover>

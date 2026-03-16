@@ -1,9 +1,9 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { evaluate } from 'mathjs'
-import { Button } from '@/components/ui/button'
 import { Delete } from 'lucide-react'
+import { evaluate } from 'mathjs'
+import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 
 interface CalculatorProps {
   onResult: (value: number) => void
@@ -54,7 +54,7 @@ export function Calculator({ onResult, initialValue }: CalculatorProps) {
     try {
       const sanitizedExpression = expression.replace(/×/g, '*').replace(/÷/g, '/')
       const result = evaluate(sanitizedExpression)
-      if (typeof result === 'number' && isNaN(result) === false && isFinite(result)) {
+      if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
         const resultString = Number(result.toFixed(2)).toString()
         setExpression(resultString)
         onResult(Number(resultString))
@@ -84,26 +84,26 @@ export function Calculator({ onResult, initialValue }: CalculatorProps) {
         <Button variant='outline' className={actionBtnClass} onClick={handleBackspace}>
           <Delete className='w-5 h-5' />
         </Button>
-        <Button variant='outline' className={actionBtnClass} onClick={() => handlePress('÷')}>÷</Button>
-        <Button variant='outline' className={actionBtnClass} onClick={() => handlePress('×')}>×</Button>
+        <Button variant='outline' className={actionBtnClass} onClick={() => { handlePress('÷') }}>÷</Button>
+        <Button variant='outline' className={actionBtnClass} onClick={() => { handlePress('×') }}>×</Button>
 
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('7')}>7</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('8')}>8</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('9')}>9</Button>
-        <Button variant='outline' className={actionBtnClass} onClick={() => handlePress('-')}>-</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('7') }}>7</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('8') }}>8</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('9') }}>9</Button>
+        <Button variant='outline' className={actionBtnClass} onClick={() => { handlePress('-') }}>-</Button>
 
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('4')}>4</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('5')}>5</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('6')}>6</Button>
-        <Button variant='outline' className={actionBtnClass} onClick={() => handlePress('+')}>+</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('4') }}>4</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('5') }}>5</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('6') }}>6</Button>
+        <Button variant='outline' className={actionBtnClass} onClick={() => { handlePress('+') }}>+</Button>
 
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('1')}>1</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('2')}>2</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('3')}>3</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('1') }}>1</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('2') }}>2</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('3') }}>3</Button>
         <Button variant='default' className={`${accentBtnClass} row-span-2 h-full`} onClick={handleEqual}>=</Button>
 
-        <Button variant='outline' className={`${btnClass} col-span-2`} onClick={() => handlePress('0')}>0</Button>
-        <Button variant='outline' className={btnClass} onClick={() => handlePress('.')}>.</Button>
+        <Button variant='outline' className={`${btnClass} col-span-2`} onClick={() => { handlePress('0') }}>0</Button>
+        <Button variant='outline' className={btnClass} onClick={() => { handlePress('.') }}>.</Button>
       </div>
     </div>
   )

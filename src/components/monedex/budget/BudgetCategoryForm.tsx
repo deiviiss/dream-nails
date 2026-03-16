@@ -34,6 +34,7 @@ export function BudgetCategoryForm({ onSuccess }: BudgetCategoryFormProps) {
           setExpenseCategories(result.expenseCategories)
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error loading expense categories:', error)
       }
     }

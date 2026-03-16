@@ -1,12 +1,11 @@
 'use client'
 
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calculator } from '@/components/ui/calculator'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { IoWalletOutline } from 'react-icons/io5'
 import { updateWalletPhysical } from '@/actions/monedex/wallets/update-wallet-physical'
 import { Button } from '@/components/ui/button'
+import { Calculator } from '@/components/ui/calculator'
 import {
   Dialog,
   DialogContent,
@@ -18,6 +17,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -57,7 +57,6 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
       toast.error('Error loading wallets')
     }
   }
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -167,12 +166,12 @@ export function PhysicalAmountModal({ wallets }: PhysicalAmountModalProps) {
                     />
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <Calculator 
+                    <Calculator
                       initialValue={physicalAmount}
                       onResult={(val) => {
                         setPhysicalAmount(val.toString())
                         setIsCalculatorOpen(false)
-                      }} 
+                      }}
                     />
                   </PopoverContent>
                 </Popover>
