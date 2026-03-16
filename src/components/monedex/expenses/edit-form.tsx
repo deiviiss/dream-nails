@@ -1,6 +1,5 @@
 'use client'
 
-import { evaluate } from 'mathjs'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
@@ -11,6 +10,8 @@ import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
+import { Calculator } from '@/components/ui/calculator'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { type Category } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expense'
 import { updateExpense } from '@/lib/actions'
@@ -30,44 +31,13 @@ export default function EditExpenseForm({
   const [state, dispatch] = useFormState(updateExpenseWithId, initialState)
 
   const [amountValue, setAmountValue] = useState(expense.amount.toString())
-  const [amountError, setAmountError] = useState<string | null>(null)
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
 
   useEffect(() => {
     if (state.message === 'Updated expense') {
       router.back()
     }
   }, [state])
-
-  const evaluateExpression = (expression: string) => {
-    if (!expression.trim()) {
-      setAmountError(null)
-      return
-    }
-
-    try {
-      const result = evaluate(expression)
-
-      if (typeof result !== 'number' || isNaN(result) || !isFinite(result)) {
-        setAmountError('Expresión inválida')
-        return
-      }
-
-      const formattedResult = Number(result).toFixed(2)
-      setAmountValue(formattedResult)
-      setAmountError(null)
-    } catch (error) {
-      setAmountError('Expresión matemática incorrecta')
-    }
-  }
-
-  const handleAmountBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    evaluateExpression(e.target.value)
-  }
-
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountValue(e.target.value)
-    setAmountError(null)
-  }
 
   return (
     <form action={dispatch}>
@@ -107,22 +77,33 @@ export default function EditExpenseForm({
           </label>
           <div className='relative mt-2 rounded-md'>
             <div className='relative'>
-              <input
-                id='amount'
-                name='amount'
-                type='text'
-                placeholder='Ingresa la cantidad o expresión (ej: 23+2/5)'
-                className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500'
-                aria-describedby='amount-error'
-                value={amountValue}
-                onChange={handleAmountChange}
-                onBlur={handleAmountBlur}
-              />
-              <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900' />
+              <Popover open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
+                <PopoverTrigger asChild>
+                  <input
+                    id='amount'
+                    name='amount'
+                    type='text'
+                    readOnly
+                    placeholder='Ingresa la cantidad'
+                    className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 cursor-pointer bg-white'
+                    aria-describedby='amount-error'
+                    value={amountValue}
+                  />
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calculator
+                    initialValue={amountValue}
+                    onResult={(val) => {
+                      setAmountValue(val.toString())
+                      setIsCalculatorOpen(false)
+                    }}
+                  />
+                </PopoverContent>
+              </Popover>
+              <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 z-10' />
             </div>
           </div>
           <div id='amount-error' aria-live='polite' aria-atomic='true'>
-            {amountError && <p className="mt-2 text-sm text-red-500">{amountError}</p>}
             {state?.errors?.amount?.map((error: string) => (
               <p className='mt-2 text-sm text-red-500' key={`amount:${error}`}>
                 {error}

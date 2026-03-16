@@ -48,6 +48,7 @@ export const deleteBudgetCategory = async (id: number) => {
       message: messages.success
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error deleting budget category:', error)
     return {
       ok: false,

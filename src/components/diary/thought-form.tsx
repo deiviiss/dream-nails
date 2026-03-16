@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { FaRegSmile } from 'react-icons/fa'
@@ -73,6 +73,7 @@ const noticeSuccessSaved = () => {
 
 export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
   const router = useRouter()
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const defaultValuesForm = {
@@ -86,6 +87,10 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
     resolver: zodResolver(thoughtSchema),
     defaultValues: { ...defaultValuesForm }
   })
+
+  useEffect(() => {
+    textareaRef.current?.focus()
+  }, [])
 
   const onSubmit = async (values: z.infer<typeof thoughtSchema>) => {
     setIsSubmitting(false)
@@ -137,7 +142,10 @@ export const ThoughtForm = ({ thought, emotions }: ThoughtFormProps) => {
                       <Textarea
                         className='pl-10 text-sm'
                         placeholder='Escribe aquí tu pensamiento'
-                        {...field}
+                        ref={(el) => {
+                          field.ref(el)
+                          textareaRef.current = el
+                        }}
                         value={field.value ?? ''}
                         disabled={isSubmitting}
                       />

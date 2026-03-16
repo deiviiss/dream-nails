@@ -42,6 +42,7 @@ export const getBudgetCategories = async () => {
       budgetCategories
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error getting budget categories:', error)
     return {
       ok: false,

@@ -17,6 +17,7 @@ import { createUpdateIncome } from '@/actions/monedex/incomes/create-update-inco
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
 import { Button } from '@/components/ui/button'
+import { Calculator } from '@/components/ui/calculator'
 import { Calendar } from '@/components/ui/calendar'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -90,6 +91,7 @@ const noticeSuccessSaved = () => {
 export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCalculatorAmountOpen, setIsCalculatorAmountOpen] = useState(false)
 
   const defaultValuesForm = {
     id: income?.id ? Number(income.id) : undefined,
@@ -181,16 +183,30 @@ export const IncomeForm = ({ income, categories }: IncomeFormProps) => {
                   </FormLabel>
                   <FormControl>
                     <div className='relative rounded-md'>
-                      <Input
-                        className='pl-10 text-sm bg-monedex-light'
-                        placeholder='Ingresa la cantidad'
-                        step='0.01'
-                        {...field}
-                        value={field.value}
-                        type='number'
-                        disabled={isSubmitting}
-                      />
-                      <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900' />
+                      <Popover open={isCalculatorAmountOpen} onOpenChange={setIsCalculatorAmountOpen}>
+                        <PopoverTrigger asChild>
+                          <Input
+                            className='pl-10 text-sm bg-monedex-light cursor-pointer'
+                            placeholder='Ingresa la cantidad'
+                            {...field}
+                            value={field.value ?? ''}
+                            type='text'
+                            readOnly
+                            disabled={isSubmitting}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calculator
+                            initialValue={field.value?.toString() ?? ''}
+                            onResult={(val) => {
+                              form.setValue('amount', val)
+                              form.trigger('amount')
+                              setIsCalculatorAmountOpen(false)
+                            }}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 z-10' />
                     </div>
                   </FormControl>
                   <FormMessage />
