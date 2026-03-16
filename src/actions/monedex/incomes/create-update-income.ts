@@ -156,6 +156,7 @@ export const createUpdateIncome = async (formData: FormData) => {
             amount,
             income_category_id: Number(incomeCategoryId),
             income_date: incomeDate,
+            income_month: incomeDate.getMonth() + 1,
             method,
             wallet_id: newWallet.id // Relation to the new wallet
           }
@@ -182,6 +183,7 @@ export const createUpdateIncome = async (formData: FormData) => {
           amount,
           income_category_id: Number(incomeCategoryId),
           income_date: incomeDate,
+          income_month: incomeDate.getMonth() + 1,
           method
         }
       })

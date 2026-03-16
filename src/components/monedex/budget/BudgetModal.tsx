@@ -40,8 +40,8 @@ export function BudgetModal({ open, onOpenChange }: BudgetModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] text-start">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader className='text-start'>
           <DialogTitle>Crear nueva categoría de presupuesto</DialogTitle>
           <DialogDescription>
             Agregue una nueva categoría para organizar sus presupuestos mensuales.
