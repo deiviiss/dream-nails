@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { TbListDetails } from 'react-icons/tb'
+import SelectableCategoryCards from './selectable-category-cards'
 import { Spinner } from '@/components/ui/spinner'
 import { fetchTotalAmountByCategory } from '@/lib/data'
 import { formatCurrency } from '@/lib/helpers'
@@ -20,41 +21,48 @@ export default async function CategoriesTotalTable({
   }
 
   return (
-    <div className='flex flex-col items-center justify-between gap-1 py-2'>
+    <div className='w-full py-2'>
+      {/* Mobile view with selection functionality */}
+      <div className='md:hidden'>
+        <SelectableCategoryCards expensesByCategory={expensesByCategory} month={month} />
+      </div>
 
-      {expensesByCategory.map((expense) => (
-        <div
-          key={expense.expense_category_id}
-          className='mb-2 w-full rounded-md bg-white p-4'
-        >
-          {/* title card */}
-          <div className='flex items-center justify-between border-b pb-4'>
-            <h1>{expense.category?.name}</h1>
+      {/* Desktop view with static cards (no selection) */}
+      <div className='hidden md:flex md:flex-col md:gap-3'>
+        {expensesByCategory.map((expense) => (
+          <div
+            key={expense.expense_category_id}
+            className='group relative overflow-hidden rounded-xl bg-white p-5 border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300'
+          >
+            <div className="absolute top-0 left-0 h-full w-1 bg-gray-100 group-hover:bg-blue-400 transition-colors" />
 
-            {/*  buttons details */}
-            <Link href={`/monedex/categories/expenses?query=${expense.expense_category_id}&month=${month}`}>
-              <TbListDetails />
-            </Link>
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-base font-medium text-gray-900 group-hover:text-blue-700 transition-colors">
+                  {expense.category?.name}
+                </h3>
+                <div className="mt-2 flex items-center gap-6">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-semibold capitalize tracking-wider text-gray-400">Total</span>
+                    <span className="text-base font-semibold text-gray-900">{formatCurrency(expense._sum.amount ?? 0)}</span>
+                  </div>
+                  <div className="flex flex-col border-l border-gray-100 pl-6">
+                    <span className="text-[10px] font-bold capitalize tracking-wider text-gray-400">Transacciones</span>
+                    <span className="text-base font-semibold text-gray-900">{expense._count ?? 0}</span>
+                  </div>
+                </div>
+              </div>
 
-          </div>
-          {/* body card */}
-          <div className='flex w-full items-center border-b py-5'>
-            <div className='flex w-1/2 flex-col'>
-              <p className='text-xs'>Total</p>
-              <p className='font-medium'>
-                {formatCurrency(expense._sum.amount ?? 0)}
-              </p>
+              <Link
+                href={`/monedex/categories/expenses?query=${expense.expense_category_id}&month=${month}`}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-all"
+              >
+                <TbListDetails className="h-5 w-5" />
+                2              </Link>
             </div>
-            <div className='flex w-1/2 flex-col'>
-              <p className='text-xs'>Transacciones</p>
-              <p className="font-medium">
-                {expense._count ?? 0}
-              </p>
-            </div>
           </div>
-        </div>
-      ))
-      }
+        ))}
+      </div>
     </div>
   )
 }
