@@ -6,7 +6,7 @@ import { DeleteExpense, ReconciledExpense, UpdateExpense } from '@/components/mo
 import { type ExpenseWithCategoryAndUserAndPlace } from '@/interfaces/Expense'
 import { formatCurrency, formatMethod, formatWithRelation } from '@/lib/helpers'
 
-export default function SelectableExpenseCards({ expenses }: { expenses: ExpenseWithCategoryAndUserAndPlace[] }) {
+export default function SelectableExpenseCards({ expenses, isAdmin }: { expenses: ExpenseWithCategoryAndUserAndPlace[], isAdmin?: boolean }) {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
 
   const toggleSelection = (id: number) => {
@@ -71,7 +71,7 @@ export default function SelectableExpenseCards({ expenses }: { expenses: Expense
               <div className="flex justify-end gap-2" onClick={(e) => { e.stopPropagation() }}>
                 <ReconciledExpense id={expense.id} reconciled={expense.is_reconciled} />
                 <UpdateExpense id={expense.id} />
-                <DeleteExpense id={expense.id} />
+                {isAdmin && <DeleteExpense id={expense.id} />}
               </div>
             </div>
 

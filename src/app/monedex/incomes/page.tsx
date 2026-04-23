@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import { getUserSessionServer } from '@/actions'
 import { fetchTotalIcomesPages } from '@/actions/monedex/incomes/fetch-total-incomes-pages'
 import { getIncomeByCategory } from '@/actions/monedex/incomes/get-income-by-category'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
@@ -27,6 +28,9 @@ export default async function IncomesPage(props: {
 
   const currentPage = Number(searchParams?.page) || 1
 
+  const user = await getUserSessionServer()
+  const isAdmin = user?.role === 'admin'
+
   const totalPages = await fetchTotalIcomesPages(query, Number(month), Number(year))
   const { incomeByCategory, totalIncome } = await getIncomeByCategory(Number(month), Number(year))
 
@@ -51,7 +55,7 @@ export default async function IncomesPage(props: {
 
       <div className='flex flex-col gap-2 pt-5'>
 
-        <IncomesTable query={query} currentPage={currentPage} month={month} year={year} />
+        <IncomesTable query={query} currentPage={currentPage} month={month} year={year} isAdmin={isAdmin} />
 
         <div className="mt-5 flex w-full justify-center">
           <Pagination totalPages={totalPages} />

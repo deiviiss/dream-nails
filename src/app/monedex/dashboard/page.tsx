@@ -1,3 +1,4 @@
+import { getUserSessionServer } from '@/actions'
 import { getAllWalletsSummary } from '@/actions/monedex/wallets/get-all-wallet-summary'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { MetricCard } from '@/components/monedex/wallets/MetricCard'
@@ -12,6 +13,9 @@ export default async function DashboardPage(props: {
   const currentYear = new Date().getFullYear()
   const month = Number(searchParams.month) || Number(currentMonth)
   const year = Number(searchParams.year) || currentYear
+
+  const user = await getUserSessionServer()
+  const isAdmin = user?.role === 'admin'
 
   const { walletsSummary, globalSummary } = await getAllWalletsSummary({ month, year })
 
@@ -38,10 +42,12 @@ export default async function DashboardPage(props: {
           <FilterMonth /> */}
         {/* </div> */}
 
-        {/* Physical Amount Modal Trigger */}
-        <div>
-          <PhysicalAmountModal wallets={wallets} />
-        </div>
+        {/* Physical Amount Modal Trigger - Admin only */}
+        {isAdmin && (
+          <div>
+            <PhysicalAmountModal wallets={wallets} />
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4 ">
