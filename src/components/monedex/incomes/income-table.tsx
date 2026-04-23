@@ -7,12 +7,14 @@ export default async function IncomesTable({
   query,
   currentPage,
   month,
-  year
+  year,
+  isAdmin
 }: {
   query: string
   month: number
   year?: number
   currentPage: number
+  isAdmin?: boolean
 }): Promise<JSX.Element> {
   const currentYear = year || new Date().getFullYear()
 
@@ -48,7 +50,7 @@ export default async function IncomesTable({
                       {/*  buttons delete - update */}
                       <div className='flex justify-end gap-2'>
                         <UpdateIncome id={income.id} />
-                        <DeleteIncome id={income.id} />
+                        {isAdmin && <DeleteIncome id={income.id} />}
                       </div>
                     </div>
                     {/* body card */}
@@ -125,8 +127,7 @@ export default async function IncomesTable({
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>
-                          {/* <UpdateCustomer id={customer.id} />
-                        <DeleteCustomer id={customer.id} /> */}
+                          {isAdmin && <DeleteIncome id={income.id} />}
                         </div>
                       </td>
                     </tr>

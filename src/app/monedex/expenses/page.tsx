@@ -1,5 +1,6 @@
 import { type Metadata } from 'next'
 import { Suspense } from 'react'
+import { getUserSessionServer } from '@/actions'
 
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { CreateExpense } from '@/components/monedex/expenses/buttons'
@@ -28,6 +29,9 @@ export default async function ExpensesPage(props: {
 
   const currentPage = Number(searchParams?.page) || 1
 
+  const user = await getUserSessionServer()
+  const isAdmin = user?.role === 'admin'
+
   const totalPages = await fetchExpensesPages(query, Number(month), Number(year))
 
   return (
@@ -51,7 +55,7 @@ export default async function ExpensesPage(props: {
       <div className='flex flex-col gap-2'>
 
         <Suspense key={`${query}${currentPage}`} fallback='Loading'>
-          <ExpensesTable query={query} currentPage={currentPage} month={month} year={year} />
+          <ExpensesTable query={query} currentPage={currentPage} month={month} year={year} isAdmin={isAdmin} />
         </Suspense>
 
         <div className="mt-5 flex w-full justify-center">

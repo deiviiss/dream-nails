@@ -1,3 +1,4 @@
+import { DeleteExpense } from './buttons'
 import SelectableExpenseCards from '@/components/monedex/selectable-expense-cards'
 import { fetchFilteredExpenses } from '@/lib/data'
 import { formatDateToLocal } from '@/lib/helpers'
@@ -6,12 +7,14 @@ export default async function ExpensesTable({
   query,
   currentPage,
   month,
-  year
+  year,
+  isAdmin
 }: {
   query: string
   month: number
   year?: number
   currentPage: number
+  isAdmin?: boolean
 }): Promise<JSX.Element> {
   const currentYear = year || new Date().getFullYear()
 
@@ -32,7 +35,7 @@ export default async function ExpensesTable({
           <div className='inline-block min-w-full align-middle'>
             <div className='overflow-hidden rounded-md bg-gray-50 p-2 md:pt-0'>
               <div className='md:hidden'>
-                <SelectableExpenseCards expenses={expenses} />
+                <SelectableExpenseCards expenses={expenses} isAdmin={isAdmin} />
               </div>
               <table className='hidden min-w-full rounded-md text-gray-900 md:table'>
                 <thead className='rounded-md bg-gray-50 text-left text-sm font-normal'>
@@ -80,9 +83,8 @@ export default async function ExpensesTable({
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>
-                          {/* <UpdateCustomer id={customer.id} />
-                        <DeleteCustomer id={customer.id} /> */}
-                        </div>b
+                          {isAdmin && <DeleteExpense id={expense.id} />}
+                        </div>
                       </td>
                     </tr>
                   ))}
