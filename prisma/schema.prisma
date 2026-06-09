@@ -3,34 +3,28 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
-  url      = env("DATABASE_URL")
-}
-
-enum Role {
-  admin // Role for admin
-  user // Role for user
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
-  email    String @unique
-  password String
-  role     String @default("customer")
-
-  created_at DateTime  @default(now())
+  id         Int        @id @default(autoincrement())
+  email      String     @unique
+  password   String
+  role       String     @default("customer")
+  created_at DateTime   @default(now())
   updated_at DateTime?
-
-  expenses Expense[]
-  incomes  Income[]
-  wallet   Wallet[]
-  Thought  Thought[]
+  name       String
+  expenses   Expense[]
+  incomes    Income[]
+  Thought    Thought[]
+  transfers  Transfer[]
+  wallet     Wallet[]
 
   @@map("users")
 }
 
-// SALON MODELS
 model SalonService {
   id          Int       @id @default(autoincrement())
   category    String
@@ -52,27 +46,24 @@ model Image {
   @@map("images")
 }
 
-// MONEDEX MODELS
-
 model ExpenseCategory {
   id             Int              @id @default(autoincrement())
   name           String
   description    String?
   created_at     DateTime         @default(now())
   updated_at     DateTime?
-  expenses       Expense[]
   BudgetCategory BudgetCategory[]
+  expenses       Expense[]
 
   @@map("expense_categories")
 }
 
 model BudgetCategory {
-  id        Int      @id @default(autoincrement())
-  name      String // Ej: Despensa, Combustible
-  amount    Float // Presupuesto asignado
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id                  Int             @id @default(autoincrement())
+  name                String
+  amount              Float
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
   expense_category_id Int
   expense_category    ExpenseCategory @relation(fields: [expense_category_id], references: [id])
   Expense             Expense[]
@@ -103,99 +94,117 @@ model Place {
 }
 
 model Expense {
-  id            Int      @id @default(autoincrement())
-  name          String
-  amount        Float
-  method        String
-  expense_date  DateTime @default(now())
-  expense_month Int      @default(12)
-  with_relation Boolean  @default(false)
-  is_reconciled Boolean  @default(false)
-
-  place_id            Int
-  place               Place           @relation(fields: [place_id], references: [id])
+  id                  Int             @id @default(autoincrement())
+  amount              Float
+  user_id             Int
   expense_category_id Int
+  created_at          DateTime        @default(now())
+  updated_at          DateTime?
+  method              String
+  name                String
+  expense_date        DateTime        @default(now())
+  expense_month       Int             @default(12)
+  is_reconciled       Boolean         @default(false)
+  with_relation       Boolean         @default(false)
+  place_id            Int
+  wallet_id           Int
+  budgetCategoryId    Int?
+  BudgetCategory      BudgetCategory? @relation(fields: [budgetCategoryId], references: [id])
   expense_category    ExpenseCategory @relation(fields: [expense_category_id], references: [id])
-
-  wallet_id Int
-  wallet    Wallet @relation(fields: [wallet_id], references: [id])
-
-  user_id Int
-  user    User @relation(fields: [user_id], references: [id])
-
-  created_at       DateTime        @default(now())
-  updated_at       DateTime?
-  BudgetCategory   BudgetCategory? @relation(fields: [budgetCategoryId], references: [id])
-  budgetCategoryId Int?
+  place               Place           @relation(fields: [place_id], references: [id])
+  user                User            @relation(fields: [user_id], references: [id])
+  wallet              Wallet          @relation(fields: [wallet_id], references: [id])
 
   @@map("expenses")
 }
 
 model Income {
-  id           Int      @id @default(autoincrement())
-  name         String
-  amount       Float
-  method       String
-  income_date  DateTime @default(now())
-  income_month Int      @default(12)
-
+  id                 Int            @id @default(autoincrement())
+  name               String
+  amount             Float
+  method             String
+  income_date        DateTime       @default(now())
   income_category_id Int
+  user_id            Int
+  created_at         DateTime       @default(now())
+  updated_at         DateTime?
+  income_month       Int            @default(12)
+  wallet_id          Int
   income_category    IncomeCategory @relation(fields: [income_category_id], references: [id])
-
-  wallet_id Int
-  wallet    Wallet @relation(fields: [wallet_id], references: [id])
-
-  user_id Int
-  user    User @relation(fields: [user_id], references: [id])
-
-  created_at DateTime  @default(now())
-  updated_at DateTime?
+  user               User           @relation(fields: [user_id], references: [id])
+  wallet             Wallet         @relation(fields: [wallet_id], references: [id])
 
   @@map("incomes")
 }
 
-enum WalletType {
-  debit
-  cash
-}
-
 model Wallet {
-  id         Int        @id @default(autoincrement())
-  user_id    Int
-  name       String
-  balance    Float      @default(0)
-  physical   Float?     @default(0)
-  type       WalletType @default(debit)
-  created_at DateTime   @default(now())
-  updated_at DateTime?
+  id                 Int        @id @default(autoincrement())
+  user_id            Int
+  name               String
+  balance            Float      @default(0)
+  created_at         DateTime   @default(now())
+  updated_at         DateTime?
+  type               WalletType @default(debit)
+  physical           Float?     @default(0)
+  excludeFromBalance Boolean    @default(false)
+  expenses           Expense[]
+  incomes            Income[]
+  outgoingTransfers  Transfer[] @relation("OutgoingTransfers")
+  incomingTransfers  Transfer[] @relation("IncomingTransfers")
+  user               User       @relation(fields: [user_id], references: [id])
 
-  user     User      @relation(fields: [user_id], references: [id])
-  expenses Expense[]
-  incomes  Income[]
+  @@map("wallets")
 }
 
-// APPEMOTIONS MODELS
+model Transfer {
+  id             Int       @id @default(autoincrement())
+  amount         Float
+  description    String?
+  transfer_date  DateTime  @default(now())
+  from_wallet_id Int
+  to_wallet_id   Int
+  user_id        Int
+  created_at     DateTime  @default(now())
+  updated_at     DateTime?
+  fromWallet     Wallet    @relation("OutgoingTransfers", fields: [from_wallet_id], references: [id])
+  toWallet       Wallet    @relation("IncomingTransfers", fields: [to_wallet_id], references: [id])
+  user           User      @relation(fields: [user_id], references: [id])
+
+  @@index([from_wallet_id])
+  @@index([to_wallet_id])
+  @@index([user_id])
+  @@map("transfers")
+}
+
 model Thought {
   id        Int      @id @default(autoincrement()) @map("thought_id")
   thought   String
   createdAt DateTime @default(now()) @map("create_at")
-
-  emotionId Int     @map("emotion_id")
-  emotion   Emotion @relation(fields: [emotionId], references: [id])
-
-  userId Int  @map("user_id")
-  user   User @relation(fields: [userId], references: [id])
+  emotionId Int      @map("emotion_id")
+  userId    Int      @map("user_id")
+  emotion   Emotion  @relation(fields: [emotionId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("thoughts")
 }
 
 model Emotion {
-  id          Int      @id @default(autoincrement()) @map("emotion_id")
-  name        String   @default("no-emotion")
-  description String   @default("Por definir")
-  createdAt   DateTime @default(now()) @map("create_at")
-
-  thoughts Thought[]
+  id          Int       @id @default(autoincrement()) @map("emotion_id")
+  name        String    @default("no-emotion")
+  description String    @default("Por definir")
+  createdAt   DateTime  @default(now()) @map("create_at")
+  thoughts    Thought[]
 
   @@map("emotions")
+}
+
+enum Role {
+  admin
+  user
+}
+
+enum WalletType {
+  debit
+  cash
+  savings
 }

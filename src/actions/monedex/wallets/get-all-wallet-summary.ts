@@ -43,6 +43,7 @@ export const getAllWalletsSummary = async ({
         balance: true,
         physical: true,
         type: true,
+        excludeFromBalance: true,
         incomes: {
           where: {
             income_date: {
@@ -56,6 +57,26 @@ export const getAllWalletsSummary = async ({
         expenses: {
           where: {
             expense_date: {
+              gte: startDate
+            }
+          },
+          select: {
+            amount: true
+          }
+        },
+        incomingTransfers: {
+          where: {
+            transfer_date: {
+              gte: startDate
+            }
+          },
+          select: {
+            amount: true
+          }
+        },
+        outgoingTransfers: {
+          where: {
+            transfer_date: {
               gte: startDate
             }
           },
@@ -82,17 +103,22 @@ export const getAllWalletsSummary = async ({
       // calculate total income and expenses
       const totalIncome = wallet.incomes.reduce((total, income) => total + income.amount, 0)
       const totalExpenses = wallet.expenses.reduce((total, expense) => total + expense.amount, 0)
-
-      totalIncomeGlobal += totalIncome
-      totalExpensesGlobal += totalExpenses
+      const totalIncomingTransfers = wallet.incomingTransfers.reduce((total, t) => total + t.amount, 0)
+      const totalOutgoingTransfers = wallet.outgoingTransfers.reduce((total, t) => total + t.amount, 0)
 
       // Calculate change in balance
-      const balance = totalIncome - totalExpenses
-      totalBalanceGlobal += balance
+      const balance = totalIncome - totalExpenses + totalIncomingTransfers - totalOutgoingTransfers
+      const physical = wallet.physical ?? 0
+
+      if (!wallet.excludeFromBalance) {
+        totalIncomeGlobal += totalIncome
+        totalExpensesGlobal += totalExpenses
+        totalBalanceGlobal += balance
+        totalPhysicalGlobal += physical
+      }
+
       const changeValue = totalExpenses > 0 ? ((totalIncome - totalExpenses) / totalExpenses) * 100 : 0
       const changeLabel = 'Balance financiero'
-      const physical = wallet.physical ?? 0
-      totalPhysicalGlobal += physical
       const difference = (wallet.physical ?? 0) - balance
 
       const differencePercentage = balance !== 0 ? (difference / balance) * 100 : 0
@@ -105,6 +131,7 @@ export const getAllWalletsSummary = async ({
         physical,
         difference,
         type: wallet.type,
+        excludeFromBalance: wallet.excludeFromBalance,
         change: {
           value: changeValue,
           label: changeLabel
@@ -122,7 +149,7 @@ export const getAllWalletsSummary = async ({
     const globalSummary = {
       totalIncome: totalIncomeGlobal,
       totalExpenses: totalExpensesGlobal,
-      totalBalance: totalIncomeGlobal - totalExpensesGlobal,
+      totalBalance: totalBalanceGlobal,
       difference: globalDifference,
       differencePercentage: globalDifferencePercentage,
       physical: totalPhysicalGlobal,

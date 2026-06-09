@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { BudgetModal } from '@/components/monedex/budget/BudgetModal'
+import { TransferModal } from '@/components/monedex/transfers/TransferModal'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,7 +16,8 @@ import {
 const menuItems = [
   { label: 'Crear gasto', path: '/monedex/expenses/create' },
   { label: 'Crear ingreso', path: '/monedex/incomes/create' },
-  { label: 'Crear presupuesto', path: '/monedex/budget', action: 'modal' },
+  { label: 'Crear presupuesto', path: '/monedex/budget', action: 'modal-budget' },
+  { label: 'Crear transferencia', path: '/monedex/transfers', action: 'modal-transfer' },
   { label: 'Crear categoría', path: '/monedex/categories/create' },
   { label: 'Crear lugar', path: '/monedex/places/create' }
 ]
@@ -24,6 +26,7 @@ export function FloatingMenuButton() {
   const router = useRouter()
   const pathname = usePathname()
   const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false)
+  const [isTransferModalOpen, setIsTransferModalOpen] = useState(false)
 
   const models = ['expenses', 'incomes', 'places', 'categories']
 
@@ -39,8 +42,10 @@ export function FloatingMenuButton() {
   }
 
   const handleItemClick = (path: string, action?: string) => {
-    if (action === 'modal') {
+    if (action === 'modal-budget') {
       setIsBudgetModalOpen(true)
+    } else if (action === 'modal-transfer') {
+      setIsTransferModalOpen(true)
     } else {
       router.push(path)
     }
@@ -73,6 +78,11 @@ export function FloatingMenuButton() {
       <BudgetModal
         open={isBudgetModalOpen}
         onOpenChange={setIsBudgetModalOpen}
+      />
+
+      <TransferModal
+        open={isTransferModalOpen}
+        onOpenChange={setIsTransferModalOpen}
       />
     </DropdownMenu>
   )
