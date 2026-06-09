@@ -1,7 +1,7 @@
 'use client'
 
 import { clsx } from 'clsx'
-import { MoreHorizontal } from 'lucide-react'
+import { ArrowLeftRight, MoreHorizontal, Search } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { BiCategory, BiLocationPlus } from 'react-icons/bi'
@@ -19,8 +19,9 @@ const primaryLinks = [
 ]
 
 const secondaryLinks = [
-  { name: 'Buscar Gastos', href: '/monedex/search-expenses', icon: TbCurrencyDollar },
+  { name: 'Buscar Gastos', href: '/monedex/search-expenses', icon: Search },
   { name: 'Gastos sin Presupuesto', href: '/monedex/unbudgeted-expenses', icon: TbCurrencyDollar },
+  { name: 'Transferencias', href: '/monedex/transfers', icon: ArrowLeftRight },
   { name: 'Categorías', href: '/monedex/categories', icon: BiCategory },
   { name: 'Lugares', href: '/monedex/places', icon: BiLocationPlus },
   { name: 'Diario', href: '/diary', icon: BsJournalText }

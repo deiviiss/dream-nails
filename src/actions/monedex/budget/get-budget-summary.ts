@@ -82,6 +82,7 @@ export const getBudgetSummary = async ({
         balance: true,
         physical: true,
         type: true,
+        excludeFromBalance: true,
         incomes: {
           where: {
             income_date: {
@@ -101,22 +102,45 @@ export const getBudgetSummary = async ({
           select: {
             amount: true
           }
+        },
+        incomingTransfers: {
+          where: {
+            transfer_date: {
+              gte: startDateBalance
+            }
+          },
+          select: {
+            amount: true
+          }
+        },
+        outgoingTransfers: {
+          where: {
+            transfer_date: {
+              gte: startDateBalance
+            }
+          },
+          select: {
+            amount: true
+          }
         }
       }
     })
 
     // Calculate total
-    let totalIncomeGlobal = 0
-    let totalExpensesGlobal = 0
+    let totalBalanceGlobal = 0
 
     walletSummaryDb.forEach(wallet => {
-      const totalIncome = wallet.incomes.reduce((sum, i) => sum + i.amount, 0)
-      const totalExpenses = wallet.expenses.reduce((sum, e) => sum + e.amount, 0)
-      totalIncomeGlobal += totalIncome
-      totalExpensesGlobal += totalExpenses
+      if (!wallet.excludeFromBalance) {
+        const totalIncome = wallet.incomes.reduce((sum, i) => sum + i.amount, 0)
+        const totalExpenses = wallet.expenses.reduce((sum, e) => sum + e.amount, 0)
+        const totalIncomingTransfers = wallet.incomingTransfers.reduce((sum, t) => sum + t.amount, 0)
+        const totalOutgoingTransfers = wallet.outgoingTransfers.reduce((sum, t) => sum + t.amount, 0)
+        const balance = totalIncome - totalExpenses + totalIncomingTransfers - totalOutgoingTransfers
+        totalBalanceGlobal += balance
+      }
     })
 
-    const balanceTotal = totalIncomeGlobal - totalExpensesGlobal
+    const balanceTotal = totalBalanceGlobal
 
     // Calculate budget vs actual for each category
     const budgetCategoriesWithCalculations = budgetCategories.map((category: any) => {

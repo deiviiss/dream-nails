@@ -158,7 +158,7 @@ export async function createExpense(
       },
       data: {
         balance: {
-          increment: amount
+          decrement: amount
         }
       }
     })
@@ -210,7 +210,7 @@ export async function deleteExpense(
       where: { id: expense.wallet_id },
       data: {
         balance: {
-          decrement: expense.amount
+          increment: expense.amount
         }
       }
     })
@@ -301,13 +301,13 @@ export async function updateExpense(
       // Update the old wallet balance
       await prisma.wallet.update({
         where: { id: oldExpense.wallet_id },
-        data: { balance: { decrement: oldExpense.amount } }
+        data: { balance: { increment: oldExpense.amount } }
       })
 
       // Update the new wallet balance
       await prisma.wallet.update({
         where: { id: newWallet.id },
-        data: { balance: { increment: amount } }
+        data: { balance: { decrement: amount } }
       })
 
       await prisma.expense.update({
@@ -335,7 +335,7 @@ export async function updateExpense(
     // Update the balance of the old wallet
     await prisma.wallet.update({
       where: { id: oldExpense.wallet_id },
-      data: { balance: { increment: newBalance } }
+      data: { balance: { decrement: newBalance } }
     })
 
     await prisma.expense.update({
