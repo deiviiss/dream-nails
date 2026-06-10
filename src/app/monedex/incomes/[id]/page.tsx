@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { fetchIncomeById } from '@/actions/monedex/incomes/fetch-income-by-id'
 import { fetchIncomeCategoriesToForm } from '@/actions/monedex/incomes/fetch-income-categories-to-form'
+import { getWalletsForForm } from '@/actions/monedex/wallets/get-wallets-for-form'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import { IncomeForm } from '@/components/monedex/incomes/income-form'
 
@@ -12,9 +13,10 @@ export default async function IncomePage(props: {
   const params = await props.params
   const id = Number(params.id)
 
-  const [{ income }, categories] = await Promise.all([
+  const [{ income }, categories, walletsResult] = await Promise.all([
     fetchIncomeById(id),
-    fetchIncomeCategoriesToForm()
+    fetchIncomeCategoriesToForm(),
+    getWalletsForForm()
   ])
 
   if (!categories) {
@@ -37,7 +39,7 @@ export default async function IncomePage(props: {
           }
         ]}
       />
-      <IncomeForm income={income} categories={categories} />
+      <IncomeForm income={income} categories={categories} wallets={walletsResult.wallets} />
     </main>
   )
 }

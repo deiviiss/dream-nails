@@ -195,6 +195,7 @@ export async function fetchExpenseById(id: number): Promise<ExpenseForm> {
         expense_category_id: true,
         place_id: true,
         method: true,
+        wallet_id: true,
         with_relation: true,
         is_reconciled: true
       }

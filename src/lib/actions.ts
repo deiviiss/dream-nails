@@ -32,8 +32,13 @@ const FormExpenseSchema = z.object({
   amount: z.coerce.number().gt(0, {
     message: 'Por favor ingrese una cantidad mayor que $0.'
   }),
-  method: z.enum(['cash', 'debit'], {
-    invalid_type_error: 'Seleccione un método de pago.'
+  // walletId replaces the old method enum — the user now selects a specific wallet
+  walletId: z.coerce.number().int().min(1, {
+    message: 'Seleccione una cartera.'
+  }),
+  // method is derived from wallet.type and sent by the form as a hidden field
+  method: z.string().min(1, {
+    message: 'Seleccione una cartera válida.'
   }),
   expenseDate: z.date({
     invalid_type_error: 'Por favor ingresa una fecha valida.'
@@ -86,6 +91,7 @@ export async function createExpense(
   const validatedFields = CreateExpenseSchema.safeParse({
     name: formData.get('name'),
     amount: formData.get('amount'),
+    walletId: formData.get('walletId'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
@@ -116,18 +122,14 @@ export async function createExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth, walletId } =
     validatedFields.data
 
   try {
-    const wallet = await prisma.wallet.findFirst({
-      where: {
-        type: method
-      },
-      select: {
-        id: true,
-        balance: true
-      }
+    // Fetch the selected wallet by its exact id — no longer looking up by type
+    const wallet = await prisma.wallet.findUnique({
+      where: { id: walletId },
+      select: { id: true, balance: true }
     })
 
     if (!wallet) {
@@ -248,6 +250,7 @@ export async function updateExpense(
   const validatedFields = UpdateExpense.safeParse({
     name: formData.get('name'),
     amount: formData.get('amount'),
+    walletId: formData.get('walletId'),
     method: formData.get('method'),
     expenseDate: expenseDateValue,
     expenseMonth: currentMonth,
@@ -263,7 +266,7 @@ export async function updateExpense(
   }
 
   // Prepare data for insertion into the database
-  const { name, amount, categoryId, expenseDate, method, expenseMonth } =
+  const { name, amount, categoryId, expenseDate, method, expenseMonth, walletId } =
     validatedFields.data
 
   try {
@@ -280,14 +283,10 @@ export async function updateExpense(
       return { message: 'Gasto no encontrado.' }
     }
 
-    // Get the new wallet according to the new method
-    const newWallet = await prisma.wallet.findFirst({
-      where: {
-        type: method
-      },
-      select: {
-        id: true
-      }
+    // Fetch the newly selected wallet by its exact id — no longer looking up by type
+    const newWallet = await prisma.wallet.findUnique({
+      where: { id: walletId },
+      select: { id: true }
     })
 
     if (!newWallet) {
@@ -296,8 +295,8 @@ export async function updateExpense(
       }
     }
 
-    // If the method has changed, we need to update the balance of the old wallet
-    if (oldExpense.method !== method) { // method has changed
+    // If the wallet changed, reverse the old balance and apply to the new wallet
+    if (oldExpense.wallet_id !== walletId) {
       // Update the old wallet balance
       await prisma.wallet.update({
         where: { id: oldExpense.wallet_id },
