@@ -12,3 +12,10 @@ export interface WalletSummary {
     label: string
   }
 }
+
+/** Lightweight wallet shape used to populate form selectors (expense / income forms). */
+export interface WalletOption {
+  id: number
+  name: string
+  type: WalletType
+}

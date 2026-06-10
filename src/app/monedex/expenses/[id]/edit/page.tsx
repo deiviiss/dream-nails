@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 
+import { getWalletsForForm } from '@/actions/monedex/wallets/get-wallets-for-form'
 import Breadcrumbs from '@/components/monedex/breadcrumbs'
 import Form from '@/components/monedex/expenses/edit-form'
 import {
@@ -16,10 +17,11 @@ export default async function Page(props: {
   const params = await props.params
   const id = Number(params.id)
 
-  const [expense, categories, places] = await Promise.all([
+  const [expense, categories, places, walletsResult] = await Promise.all([
     fetchExpenseById(id),
     fetchCategoriesToForm(),
-    fetchPlaces()
+    fetchPlaces(),
+    getWalletsForForm()
   ])
 
   if (expense == null || categories == null) {
@@ -38,7 +40,7 @@ export default async function Page(props: {
           }
         ]}
       />
-      <Form expense={expense} categories={categories} places={places} />
+      <Form expense={expense} categories={categories} places={places} wallets={walletsResult.wallets} />
     </main>
   )
 }

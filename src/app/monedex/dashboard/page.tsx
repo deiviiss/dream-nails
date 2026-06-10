@@ -35,7 +35,7 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
   }))
 
   return (
-    <section className="container mx-auto space-y-6 p-4">
+    <section>
       <div className="flex justify-between items-center">
         <Breadcrumbs breadcrumbs={[{ label: 'Wallets', href: '/monedex/wallets', active: true }]} />
         {/* Physical Amount Modal Trigger - Admin only */}
@@ -46,7 +46,7 @@ export default async function DashboardPage(props: { searchParams: SearchParams 
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         <MetricCard
           title="Total"
           balance={globalSummary.totalBalance}

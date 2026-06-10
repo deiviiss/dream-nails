@@ -38,6 +38,7 @@ export interface ExpenseForm {
   expense_category_id: number
   place_id: number
   method: string
+  wallet_id: number
   is_reconciled: boolean
 }
 
