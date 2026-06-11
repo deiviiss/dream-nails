@@ -4,6 +4,9 @@ import { unstable_noStore } from 'next/cache'
 import { getUserSessionServer } from '@/actions'
 import prisma from '@/lib/prisma'
 
+/** Rounds a number to 2 decimal places to avoid floating-point precision issues */
+const round2 = (n: number): number => Math.round(n * 100) / 100
+
 const messages = {
   success: 'Wallet summary get successfully',
   error: 'Error getting wallet summary'
@@ -104,13 +107,13 @@ export const getAllWalletsSummary = async ({
 
     const walletsSummary = walletSummaryDb.map(wallet => {
       // calculate total income and expenses
-      const totalIncome = wallet.incomes.reduce((total, income) => total + income.amount, 0)
-      const totalExpenses = wallet.expenses.reduce((total, expense) => total + expense.amount, 0)
-      const totalIncomingTransfers = wallet.incomingTransfers.reduce((total, t) => total + t.amount, 0)
-      const totalOutgoingTransfers = wallet.outgoingTransfers.reduce((total, t) => total + t.amount, 0)
+      const totalIncome = round2(wallet.incomes.reduce((total, income) => total + income.amount, 0))
+      const totalExpenses = round2(wallet.expenses.reduce((total, expense) => total + expense.amount, 0))
+      const totalIncomingTransfers = round2(wallet.incomingTransfers.reduce((total, t) => total + t.amount, 0))
+      const totalOutgoingTransfers = round2(wallet.outgoingTransfers.reduce((total, t) => total + t.amount, 0))
 
       // Calculate change in balance
-      const balance = totalIncome - totalExpenses + totalIncomingTransfers - totalOutgoingTransfers
+      const balance = round2(totalIncome - totalExpenses + totalIncomingTransfers - totalOutgoingTransfers)
       const physical = wallet.physical ?? 0
 
       if (!wallet.excludeFromBalance) {
@@ -122,9 +125,9 @@ export const getAllWalletsSummary = async ({
 
       const changeValue = totalExpenses > 0 ? ((totalIncome - totalExpenses) / totalExpenses) * 100 : 0
       const changeLabel = 'Balance financiero'
-      const difference = (wallet.physical ?? 0) - balance
+      const difference = round2((wallet.physical ?? 0) - balance)
 
-      const differencePercentage = balance !== 0 ? (difference / balance) * 100 : 0
+      const differencePercentage = round2(balance !== 0 ? (difference / balance) * 100 : 0)
 
       return {
         id: wallet.id,
@@ -142,12 +145,12 @@ export const getAllWalletsSummary = async ({
       }
     })
 
-    const globalDifference = totalPhysicalGlobal - totalBalanceGlobal
+    const globalDifference = round2(totalPhysicalGlobal - totalBalanceGlobal)
     const globalDifferencePercentage =
-      totalBalanceGlobal !== 0 ? (globalDifference / totalBalanceGlobal) * 100 : 0
-    const globalChangeValue = totalExpensesGlobal > 0
+      round2(totalBalanceGlobal !== 0 ? (globalDifference / totalBalanceGlobal) * 100 : 0)
+    const globalChangeValue = round2(totalExpensesGlobal > 0
       ? ((totalIncomeGlobal - totalExpensesGlobal) / totalExpensesGlobal) * 100
-      : 0
+      : 0)
     const globalChangeLabel = 'Balance total'
     const globalSummary = {
       totalIncome: totalIncomeGlobal,
