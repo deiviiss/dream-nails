@@ -97,15 +97,21 @@ export function MetricCard({ title, balance, type, physicalAmount, difference, d
             <div className="flex items-center gap-1 text-sm">
               {
                 !excludeFromBalance && (
-                  <div
-                    className={cn(
-                      'flex items-center gap-0.5 px-1.5 py-0.5 rounded',
-                      isPositive ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
-                    )}
-                  >
-                    <span className="text-xs">{isPositive ? '↗' : '↘'}</span>
-                    <span>{differencePercentage?.toFixed(2) ?? '0.00'}%</span>
-                  </div>
+                  differencePercentage === 0
+                    ? (
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs uppercase">
+                        Conciliado
+                      </Badge>)
+                    : (
+                      <div
+                        className={cn(
+                          'flex items-center gap-0.5 px-1.5 py-0.5 rounded',
+                          isPositive ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'
+                        )}
+                      >
+                        <span className="text-xs">{isPositive ? '↗' : '↘'}</span>
+                        <span>{differencePercentage?.toFixed(2) ?? '0.00'}%</span>
+                      </div>)
                 )
               }
             </div>

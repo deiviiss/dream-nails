@@ -138,7 +138,7 @@ export function TransferModal({ open, onOpenChange }: TransferModalProps) {
               setDate(e.target.value)
             }} />
           </div>
-          <DialogFooter>
+          <DialogFooter className='gap-2'>
             <Button
               type="button"
               variant="outline"
