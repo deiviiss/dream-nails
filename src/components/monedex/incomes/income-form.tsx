@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
+import { evaluate } from 'mathjs'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -169,29 +170,51 @@ export const IncomeForm = ({ income, categories, wallets }: IncomeFormProps) => 
                   <FormLabel>Cantidad</FormLabel>
                   <FormControl>
                     <div className='relative rounded-md'>
-                      <Popover open={isCalculatorAmountOpen} onOpenChange={setIsCalculatorAmountOpen}>
-                        <PopoverTrigger asChild>
-                          <Input
-                            className='pl-10 text-sm bg-monedex-light cursor-pointer'
-                            placeholder='Ingresa la cantidad'
-                            {...field}
-                            value={field.value ?? ''}
-                            type='text'
-                            readOnly
-                            disabled={isSubmitting}
-                          />
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calculator
-                            initialValue={field.value?.toString() ?? ''}
-                            onResult={(val) => {
-                              form.setValue('amount', val)
+                      {/* Mobile input: readOnly, opens calculator */}
+                      <Input
+                        className='pl-10 text-sm bg-monedex-light cursor-pointer block md:hidden'
+                        placeholder='Ingresa la cantidad'
+                        value={field.value ?? ''}
+                        type='text'
+                        readOnly
+                        disabled={isSubmitting}
+                        onClick={() => { setIsCalculatorAmountOpen(true) }}
+                      />
+                      {/* Desktop input: editable, supports expressions */}
+                      <Input
+                        className='pl-10 text-sm bg-monedex-light hidden md:block'
+                        placeholder='Ingresa la cantidad (ej: 100+50)'
+                        value={field.value ?? ''}
+                        type='text'
+                        disabled={isSubmitting}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          if (val === '' || /^[\d+\-*/.() ]*$/.test(val)) {
+                            form.setValue('amount', val === '' ? 0 : Number(val) || (val as unknown as number))
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            try {
+                              const result = evaluate(e.currentTarget.value)
+                              if (typeof result === 'number' && isFinite(result)) {
+                                form.setValue('amount', Number(result.toFixed(2)))
+                                form.trigger('amount')
+                              }
+                            } catch { /* ignore */ }
+                          }
+                        }}
+                        onBlur={(e) => {
+                          try {
+                            const result = evaluate(e.currentTarget.value)
+                            if (typeof result === 'number' && isFinite(result)) {
+                              form.setValue('amount', Number(result.toFixed(2)))
                               form.trigger('amount')
-                              setIsCalculatorAmountOpen(false)
-                            }}
-                          />
-                        </PopoverContent>
-                      </Popover>
+                            }
+                          } catch { /* ignore */ }
+                        }}
+                      />
                       <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 z-10' />
                     </div>
                   </FormControl>
@@ -199,6 +222,27 @@ export const IncomeForm = ({ income, categories, wallets }: IncomeFormProps) => 
                 </FormItem>
               )}
             />
+
+            {/* Calculator bottom sheet - mobile only */}
+            {isCalculatorAmountOpen && (
+              <>
+                <div
+                  className='fixed inset-0 bg-black/30 z-40 md:hidden'
+                  onClick={() => { setIsCalculatorAmountOpen(false) }}
+                />
+                <div className='fixed bottom-0 inset-x-0 h-[50vh] z-50 md:hidden'>
+                  <Calculator
+                    initialValue={form.getValues('amount')?.toString() ?? ''}
+                    onClose={() => { setIsCalculatorAmountOpen(false) }}
+                    onResult={(val) => {
+                      form.setValue('amount', val)
+                      form.trigger('amount')
+                      setIsCalculatorAmountOpen(false)
+                    }}
+                  />
+                </div>
+              </>
+            )}
 
             {/* Wallet selector — replaces hardcoded cash/debit radio buttons */}
             <FormField

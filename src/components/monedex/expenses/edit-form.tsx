@@ -1,28 +1,26 @@
 'use client'
 
+import { evaluate } from 'mathjs'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useFormState } from 'react-dom'
-import { BsCashStack } from 'react-icons/bs'
 import { FaDollarSign } from 'react-icons/fa'
-import { FaRegCreditCard } from 'react-icons/fa6'
 import { IoWalletOutline } from 'react-icons/io5'
 import { MdOutlineLocalGroceryStore, MdCalendarMonth } from 'react-icons/md'
 import { TbCategory } from 'react-icons/tb'
 import { ButtonBack } from '@/components/monedex/button-back'
 import { ButtonSaved } from '@/components/monedex/button-saved'
 import { Calculator } from '@/components/ui/calculator'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { type Category } from '@/interfaces/Category'
 import { type ExpenseForm } from '@/interfaces/Expense'
 import { type WalletOption } from '@/interfaces/wallet.interface'
 import { updateExpense } from '@/lib/actions'
 
 /** Returns the appropriate icon based on wallet type */
-function WalletTypeIcon({ type }: { type: WalletOption['type'] }) {
-  if (type === 'cash') return <BsCashStack className='h-4 w-4 inline ml-1' />
-  return <FaRegCreditCard className='h-4 w-4 inline ml-1' />
-}
+// function WalletTypeIcon({ type }: { type: WalletOption['type'] }) {
+//   if (type === 'cash') return <BsCashStack className='h-4 w-4 inline ml-1' />
+//   return <FaRegCreditCard className='h-4 w-4 inline ml-1' />
+// }
 
 export default function EditExpenseForm({
   expense,
@@ -95,29 +93,53 @@ export default function EditExpenseForm({
           </label>
           <div className='relative mt-2 rounded-md'>
             <div className='relative'>
-              <Popover open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
-                <PopoverTrigger asChild>
-                  <input
-                    id='amount'
-                    name='amount'
-                    type='text'
-                    readOnly
-                    placeholder='Ingresa la cantidad'
-                    className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 cursor-pointer bg-white'
-                    aria-describedby='amount-error'
-                    value={amountValue}
-                  />
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calculator
-                    initialValue={amountValue}
-                    onResult={(val) => {
-                      setAmountValue(val.toString())
-                      setIsCalculatorOpen(false)
-                    }}
-                  />
-                </PopoverContent>
-              </Popover>
+              {/* Mobile input: readOnly, opens calculator */}
+              <input
+                id='amount-mobile'
+                name='amount'
+                type='text'
+                readOnly
+                placeholder='Ingresa la cantidad'
+                className='peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 cursor-pointer bg-white md:hidden'
+                aria-describedby='amount-error'
+                value={amountValue}
+                onClick={() => { setIsCalculatorOpen(true) }}
+              />
+              {/* Desktop input: editable, supports expressions */}
+              <input
+                id='amount'
+                name='amount'
+                type='text'
+                placeholder='Ingresa la cantidad (ej: 100+50)'
+                className='peer w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500 bg-white hidden md:block'
+                aria-describedby='amount-error'
+                value={amountValue}
+                onChange={(e) => {
+                  const val = e.target.value
+                  if (val === '' || /^[\d+\-*/.() ]*$/.test(val)) {
+                    setAmountValue(val)
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    try {
+                      const result = evaluate(e.currentTarget.value)
+                      if (typeof result === 'number' && isFinite(result)) {
+                        setAmountValue(Number(result.toFixed(2)).toString())
+                      }
+                    } catch { /* ignore */ }
+                  }
+                }}
+                onBlur={(e) => {
+                  try {
+                    const result = evaluate(e.currentTarget.value)
+                    if (typeof result === 'number' && isFinite(result)) {
+                      setAmountValue(Number(result.toFixed(2)).toString())
+                    }
+                  } catch { /* ignore */ }
+                }}
+              />
               <FaDollarSign className='pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 z-10' />
             </div>
           </div>
@@ -127,6 +149,26 @@ export default function EditExpenseForm({
             ))}
           </div>
         </div>
+
+        {/* Calculator bottom sheet - mobile only */}
+        {isCalculatorOpen && (
+          <>
+            <div
+              className='fixed inset-0 bg-black/30 z-40 md:hidden'
+              onClick={() => { setIsCalculatorOpen(false) }}
+            />
+            <div className='fixed bottom-0 inset-x-0 h-[50vh] z-50 md:hidden'>
+              <Calculator
+                initialValue={amountValue}
+                onClose={() => { setIsCalculatorOpen(false) }}
+                onResult={(val) => {
+                  setAmountValue(val.toString())
+                  setIsCalculatorOpen(false)
+                }}
+              />
+            </div>
+          </>
+        )}
 
         {/* Wallet selector — replaces hardcoded cash/debit radio buttons */}
         <div className='mb-4'>
@@ -151,12 +193,12 @@ export default function EditExpenseForm({
           </div>
 
           {/* Visual indicator of the selected wallet type */}
-          {selectedWallet && (
+          {/* {selectedWallet && (
             <span className='mt-1 inline-flex items-center text-xs text-gray-500'>
               Tipo: {selectedWallet.type}
               <WalletTypeIcon type={selectedWallet.type} />
             </span>
-          )}
+          )} */}
 
           {/* Hidden field — sends the wallet type as method (derived from the selected wallet) */}
           <input type='hidden' name='method' value={selectedWallet?.type ?? ''} />

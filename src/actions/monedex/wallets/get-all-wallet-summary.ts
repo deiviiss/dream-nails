@@ -37,6 +37,9 @@ export const getAllWalletsSummary = async ({
 
   try {
     const walletSummaryDb = await prisma.wallet.findMany({
+      orderBy: {
+        type: 'asc'
+      },
       select: {
         id: true,
         name: true,
