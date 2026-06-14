@@ -10,7 +10,8 @@ export const formatDateToLocal = (
   const options: Intl.DateTimeFormatOptions = {
     day: 'numeric',
     month: 'short',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'UTC'
   }
   const formatter = new Intl.DateTimeFormat(locale, options)
   return formatter.format(date)
@@ -21,7 +22,7 @@ export const getDayName = (
   locale: string = 'es-MX'
 ): string => {
   const date = new Date(dateStr)
-  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'long', timeZone: 'UTC' })
   return capitalizeFirstLetter(formatter.format(date))
 }
 
