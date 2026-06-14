@@ -28,6 +28,9 @@ export interface ExpenseWithCategoryAndUserAndPlace extends ExpenseWithCategory 
   place: {
     name: string | null
   }
+  wallet: {
+    name: string
+  }
 }
 
 export interface ExpenseForm {

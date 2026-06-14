@@ -7,7 +7,7 @@ import {
 } from '@/interfaces/Expense'
 import prisma from '@/lib/prisma'
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 15
 
 // EXPENSES
 export async function fetchFilteredExpenses(
@@ -32,7 +32,7 @@ export async function fetchFilteredExpenses(
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
@@ -52,6 +52,11 @@ export async function fetchFilteredExpenses(
           }
         },
         place: {
+          select: {
+            name: true
+          }
+        },
+        wallet: {
           select: {
             name: true
           }
@@ -90,7 +95,7 @@ export async function fetchAmountExpenses(
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },
@@ -162,7 +167,7 @@ export async function fetchExpensesPages(query: string, month: number, year?: nu
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           },

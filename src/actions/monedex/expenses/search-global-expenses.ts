@@ -49,7 +49,7 @@ export const searchGlobalExpenses = async ({
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
@@ -72,6 +72,11 @@ export const searchGlobalExpenses = async ({
           select: {
             name: true
           }
+        },
+        wallet: {
+          select: {
+            name: true
+          }
         }
       },
       orderBy: [
@@ -90,7 +95,7 @@ export const searchGlobalExpenses = async ({
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
@@ -106,7 +111,7 @@ export const searchGlobalExpenses = async ({
           {
             OR: [
               { name: { contains: query, mode: 'insensitive' } },
-              { method: { contains: query, mode: 'insensitive' } },
+              { wallet: { name: { contains: query, mode: 'insensitive' } } },
               { expense_category: { name: { contains: query, mode: 'insensitive' } } }
             ]
           }
