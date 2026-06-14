@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { DeleteExpense, ReconciledExpense, UpdateExpense } from '@/components/monedex/expenses/buttons'
 import { Button } from '@/components/ui/button'
 import { type ExpenseWithCategoryAndUserAndPlace } from '@/interfaces/Expense'
-import { formatCurrency, formatWithRelation } from '@/lib/helpers'
+import { formatCurrency, getDayName, formatWithRelation } from '@/lib/helpers'
 
 export default function SelectableExpenseCards({ expenses, isAdmin }: { expenses: ExpenseWithCategoryAndUserAndPlace[], isAdmin?: boolean }) {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
@@ -80,6 +80,7 @@ export default function SelectableExpenseCards({ expenses, isAdmin }: { expenses
               <div className="flex w-1/2 flex-col">
                 <p className="text-xs">Fecha</p>
                 <p className="font-medium">{expense.expense_date.toISOString().split('T')[0]}</p>
+                <p className="text-xs text-gray-500">{getDayName(expense.expense_date.toISOString())}</p>
               </div>
 
               <div className="flex w-1/2 flex-col">

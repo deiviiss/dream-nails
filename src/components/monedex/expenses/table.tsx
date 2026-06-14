@@ -1,7 +1,7 @@
 import { DeleteExpense } from './buttons'
 import SelectableExpenseCards from '@/components/monedex/selectable-expense-cards'
 import { fetchFilteredExpenses } from '@/lib/data'
-import { formatDateToLocal } from '@/lib/helpers'
+import { formatDateToLocal, getDayName } from '@/lib/helpers'
 
 export default async function ExpensesTable({
   query,
@@ -76,10 +76,13 @@ export default async function ExpensesTable({
                         {expense.expense_category.name}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
-                        {formatDateToLocal(
-                          expense.expense_date.toISOString(),
-                          'es-Mx'
-                        )}
+                        <div>
+                          {formatDateToLocal(
+                            expense.expense_date.toISOString(),
+                            'es-Mx'
+                          )}
+                          <p className='text-xs text-gray-500'>{getDayName(expense.expense_date.toISOString())}</p>
+                        </div>
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>

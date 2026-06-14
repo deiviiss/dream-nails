@@ -1,7 +1,7 @@
 import { DeleteIncome, UpdateIncome } from './income-buttons'
 import { fetchFilteredIncomes } from '@/actions/monedex/incomes/fetch-filtered-incomes'
 import { Spinner } from '@/components/ui/spinner'
-import { formatDateToLocal, formatMethod, formatCurrency } from '@/lib/helpers'
+import { formatDateToLocal, getDayName, formatMethod, formatCurrency } from '@/lib/helpers'
 
 export default async function IncomesTable({
   query,
@@ -60,6 +60,7 @@ export default async function IncomesTable({
                         <p className='text-xs'>Fecha</p>
                         <p className='font-medium'>
                           {income.income_date.toISOString().split('T')[0]}
+                          <span className='block text-xs text-monedex-muted'>{getDayName(income.income_date.toISOString())}</span>
                         </p>
                       </div>
 
@@ -120,10 +121,13 @@ export default async function IncomesTable({
                         {income.income_category.name}
                       </td>
                       <td className='whitespace-nowrap px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
-                        {formatDateToLocal(
-                          income.income_date.toISOString(),
-                          'es-Mx'
-                        )}
+                        <div>
+                          {formatDateToLocal(
+                            income.income_date.toISOString(),
+                            'es-Mx'
+                          )}
+                          <p className='text-xs text-gray-500'>{getDayName(income.income_date.toISOString())}</p>
+                        </div>
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>

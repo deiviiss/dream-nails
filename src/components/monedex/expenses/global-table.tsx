@@ -1,6 +1,6 @@
 import { searchGlobalExpenses } from '@/actions/monedex/expenses/search-global-expenses'
 import SelectableExpenseCards from '@/components/monedex/selectable-expense-cards'
-import { formatDateToLocal } from '@/lib/helpers'
+import { formatDateToLocal, getDayName } from '@/lib/helpers'
 
 export default async function GlobalExpensesTable({
   query,
@@ -77,10 +77,13 @@ export default async function GlobalExpensesTable({
                         {expense.expense_category.name}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm group-first-of-type:rounded-md group-last-of-type:rounded-md'>
-                        {formatDateToLocal(
-                          expense.expense_date.toISOString(),
-                          'es-Mx'
-                        )}
+                        <div>
+                          {formatDateToLocal(
+                            expense.expense_date.toISOString(),
+                            'es-Mx'
+                          )}
+                          <p className='text-xs text-gray-500'>{getDayName(expense.expense_date.toISOString())}</p>
+                        </div>
                       </td>
                       <td>
                         <div className='flex justify-end gap-2'>

@@ -16,6 +16,15 @@ export const formatDateToLocal = (
   return formatter.format(date)
 }
 
+export const getDayName = (
+  dateStr: string,
+  locale: string = 'es-MX'
+): string => {
+  const date = new Date(dateStr)
+  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'long' })
+  return capitalizeFirstLetter(formatter.format(date))
+}
+
 export const formatDateToYYYYMMDD = (date: Date): string => {
   const currentDate = new Date(date)
   const year = currentDate.getFullYear()
