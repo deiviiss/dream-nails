@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '../ui/button'
 import { DeleteExpense, ReconciledExpense, UpdateExpense } from '@/components/monedex/expenses/buttons'
+import { Button } from '@/components/ui/button'
 import { type ExpenseWithCategoryAndUserAndPlace } from '@/interfaces/Expense'
-import { formatCurrency, formatMethod, formatWithRelation } from '@/lib/helpers'
+import { formatCurrency, formatWithRelation } from '@/lib/helpers'
 
 export default function SelectableExpenseCards({ expenses, isAdmin }: { expenses: ExpenseWithCategoryAndUserAndPlace[], isAdmin?: boolean }) {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
@@ -88,8 +88,8 @@ export default function SelectableExpenseCards({ expenses, isAdmin }: { expenses
               </div>
 
               <div className="flex w-1/2 flex-col">
-                <p className="text-xs">Método</p>
-                <p className="font-medium">{formatMethod(expense.method)}</p>
+                <p className="text-xs">Cartera</p>
+                <p className="font-medium">{expense.wallet.name}</p>
               </div>
 
               <div className="flex w-1/2 flex-col">

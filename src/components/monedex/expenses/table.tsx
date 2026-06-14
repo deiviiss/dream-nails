@@ -47,7 +47,7 @@ export default async function ExpensesTable({
                       Cantidad
                     </th>
                     <th scope='col' className='px-3 py-5 font-medium'>
-                      Método
+                      Cartera
                     </th>
                     <th scope='col' className='px-3 py-5 font-medium'>
                       Categoría
@@ -70,7 +70,7 @@ export default async function ExpensesTable({
                         {expense.amount}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm'>
-                        {expense.method}
+                        {expense.wallet.name}
                       </td>
                       <td className='whitespace-nowrap bg-white px-4 py-5 text-sm'>
                         {expense.expense_category.name}
