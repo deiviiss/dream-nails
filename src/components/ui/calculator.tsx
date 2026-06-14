@@ -118,10 +118,11 @@ export function Calculator({ onResult, initialValue, onClose, className }: Calcu
         <Button type='button' variant='outline' className={btnClass} onClick={() => { handlePress('1') }}>1</Button>
         <Button type='button' variant='outline' className={btnClass} onClick={() => { handlePress('2') }}>2</Button>
         <Button type='button' variant='outline' className={btnClass} onClick={() => { handlePress('3') }}>3</Button>
-        <Button type='button' variant='default' className={`${accentBtnClass} row-span-2`} onClick={handleEqual}>=</Button>
+        <div className="flex-1" />
 
         <Button type='button' variant='outline' className={`${btnClass} col-span-2`} onClick={() => { handlePress('0') }}>0</Button>
         <Button type='button' variant='outline' className={btnClass} onClick={() => { handlePress('.') }}>.</Button>
+        <Button type='button' variant='default' className={accentBtnClass} onClick={handleEqual}>=</Button>
       </div>
     </div>
   )

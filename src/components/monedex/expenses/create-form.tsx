@@ -143,7 +143,7 @@ export default function Form({
               className='fixed inset-0 bg-black/30 z-40 md:hidden'
               onClick={() => { setIsCalculatorOpen(false) }}
             />
-            <div className='fixed bottom-0 inset-x-0 h-[50vh] z-50 md:hidden'>
+            <div className='fixed bottom-0 inset-x-0 h-[55vh] z-50 md:hidden'>
               <Calculator
                 initialValue={amountValue}
                 onClose={() => { setIsCalculatorOpen(false) }}

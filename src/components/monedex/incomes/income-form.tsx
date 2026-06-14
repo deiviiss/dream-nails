@@ -230,7 +230,7 @@ export const IncomeForm = ({ income, categories, wallets }: IncomeFormProps) => 
                   className='fixed inset-0 bg-black/30 z-40 md:hidden'
                   onClick={() => { setIsCalculatorAmountOpen(false) }}
                 />
-                <div className='fixed bottom-0 inset-x-0 h-[50vh] z-50 md:hidden'>
+                <div className='fixed bottom-2 inset-x-0 h-[55vh] z-50 md:hidden'>
                   <Calculator
                     initialValue={form.getValues('amount')?.toString() ?? ''}
                     onClose={() => { setIsCalculatorAmountOpen(false) }}
