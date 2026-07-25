@@ -89,7 +89,7 @@ export default function SelectableTransferCards({ transfers }: { transfers: Tran
   const totalAmount = selectedTransfers.reduce((sum, t) => sum + t.amount, 0)
 
   return (
-    <div className="relative h-full overflow-y-auto pb-20">
+    <div className="pb-20">
       {/* Selection summary */}
       {totalSelected > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-50 mx-4 mb-4 md:mx-auto md:max-w-2xl rounded-md bg-blue-50 p-4 border border-blue-200 shadow-md">
