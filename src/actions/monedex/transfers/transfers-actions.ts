@@ -231,17 +231,27 @@ export async function deleteTransfer(id: number) {
   }
 }
 
-export async function getTransfers(currentPage: number = 1, limit: number = 10) {
+export async function getTransfers(currentPage: number = 1, limit: number = 10, query: string = '') {
   const user = await getUserSessionServer()
   if (!user) {
     return { ok: false, message: 'No autorizado.', transfers: [], totalPages: 0 }
   }
 
   const offset = (currentPage - 1) * limit
+  const where = query.trim()
+    ? {
+        OR: [
+          { description: { contains: query.trim(), mode: 'insensitive' as const } },
+          { fromWallet: { name: { contains: query.trim(), mode: 'insensitive' as const } } },
+          { toWallet: { name: { contains: query.trim(), mode: 'insensitive' as const } } }
+        ]
+      }
+    : {}
 
   try {
-    const count = await prisma.transfer.count()
+    const count = await prisma.transfer.count({ where })
     const transfers = await prisma.transfer.findMany({
+      where,
       orderBy: { transfer_date: 'desc' },
       take: limit,
       skip: offset,
