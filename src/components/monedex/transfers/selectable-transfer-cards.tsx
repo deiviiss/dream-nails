@@ -2,6 +2,9 @@
 
 import type { Transfer } from '@prisma/client'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { FaRegTrashAlt } from 'react-icons/fa'
+import { deleteTransfer } from '@/actions/monedex/transfers/transfers-actions'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/helpers'
@@ -14,6 +17,7 @@ interface TransferWithWallets extends Transfer {
 
 export default function SelectableTransferCards({ transfers }: { transfers: TransferWithWallets[] }) {
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set())
+  const [deletingId, setDeletingId] = useState<number | null>(null)
 
   const toggleSelection = (id: number) => {
     setSelectedIds((prev) => {
@@ -25,6 +29,59 @@ export default function SelectableTransferCards({ transfers }: { transfers: Tran
       }
       return newSet
     })
+  }
+
+  const handleDelete = (tItem: TransferWithWallets) => (e: React.MouseEvent) => {
+    e.stopPropagation()
+
+    toast(
+      (toastObj) => (
+        <div className="space-y-3 p-1">
+          <p className="text-sm font-medium text-gray-900">
+            ¿Seguro que deseas borrar la transferencia de <strong>{formatCurrency(tItem.amount)}</strong>?
+          </p>
+          <p className="text-xs text-gray-500">
+            Se revertirán los saldos de las carteras ({tItem.fromWallet?.name || 'Origen'} y {tItem.toWallet?.name || 'Destino'}).
+          </p>
+          <div className="flex items-center justify-end gap-2 pt-2">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => {
+                toast.dismiss(toastObj.id)
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={async () => {
+                toast.dismiss(toastObj.id)
+                setDeletingId(tItem.id)
+                const res = await deleteTransfer(tItem.id)
+                setDeletingId(null)
+                if (res.ok) {
+                  toast.success(res.message || 'Transferencia eliminada y saldos revertidos.')
+                  setSelectedIds((prev) => {
+                    const next = new Set(prev)
+                    next.delete(tItem.id)
+                    return next
+                  })
+                } else {
+                  toast.error(res.message || 'Error al eliminar la transferencia.')
+                }
+              }}
+            >
+              Eliminar
+            </Button>
+          </div>
+        </div>
+      ),
+      {
+        duration: 6000
+      }
+    )
   }
 
   const selectedTransfers = transfers.filter((t) => selectedIds.has(t.id))
@@ -58,11 +115,13 @@ export default function SelectableTransferCards({ transfers }: { transfers: Tran
       <div className="space-y-4">
         {transfers.map((t) => {
           const isSelected = selectedIds.has(t.id)
+          const isDeleting = deletingId === t.id
+
           return (
             <Card
               key={t.id}
               onClick={() => { toggleSelection(t.id) }}
-              className={`overflow-hidden cursor-pointer transition-all ${isSelected ? 'border-2 border-blue-500 bg-blue-50' : 'hover:border-gray-300'}`}
+              className={`overflow-hidden cursor-pointer transition-all ${isSelected ? 'border-2 border-blue-500 bg-blue-50' : 'hover:border-gray-300'} ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}
             >
               <CardContent className="p-4">
                 <div className="flex justify-between items-center">
@@ -74,8 +133,19 @@ export default function SelectableTransferCards({ transfers }: { transfers: Tran
                       {new Date(t.transfer_date).toLocaleDateString()} • De {t.fromWallet?.name} a {t.toWallet?.name}
                     </span>
                   </div>
-                  <div className={`text-lg font-semibold ${isSelected ? 'text-blue-700' : ''}`}>
-                    {formatCurrency(t.amount)}
+                  <div className="flex items-center gap-3">
+                    <div className={`text-lg font-semibold ${isSelected ? 'text-blue-700' : ''}`}>
+                      {formatCurrency(t.amount)}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50 rounded-full h-8 w-8 p-0"
+                      onClick={handleDelete(t)}
+                      title="Eliminar y revertir transferencia"
+                    >
+                      <FaRegTrashAlt className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
               </CardContent>
