@@ -20,10 +20,8 @@ export default async function TransfersPage(props: {
   }
 
   return (
-    <section className="container mx-auto space-y-6 p-4">
-      <div className="flex justify-between items-center mb-4">
-        <Breadcrumbs breadcrumbs={[{ label: 'Transferencias', href: '/monedex/transfers', active: true }]} />
-      </div>
+    <main>
+      <Breadcrumbs breadcrumbs={[{ label: 'Transferencias', href: '/monedex/transfers', active: true }]} />
 
       <div className="my-3 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Buscar transferencias..." />
@@ -36,6 +34,6 @@ export default async function TransfersPage(props: {
           <Pagination totalPages={totalPages} />
         </div>
       )}
-    </section>
+    </main>
   )
 }
