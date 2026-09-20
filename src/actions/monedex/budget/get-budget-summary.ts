@@ -31,9 +31,9 @@ export const getBudgetSummary = async ({
   const startDateBalance = new Date('2024-12-01')
   const currentYear = year || new Date().getFullYear()
 
-  // Get expenses for the specified month to calculate paid amounts
-  const startDateExpensesBadge = new Date(currentYear, month - 1, 1)
-  const endDateExpensesBadge = new Date(currentYear, month, 0, 23, 59, 59)
+  // Get expenses for the specified month to calculate paid amounts [startOfMonth, startOfNextMonth)
+  const startDateExpensesBadge = new Date(Date.UTC(currentYear, month - 1, 1, 0, 0, 0, 0))
+  const endDateExpensesBadge = new Date(Date.UTC(currentYear, month, 1, 0, 0, 0, 0))
 
   try {
     // Get all expenses for the month grouped by expense_category_id
@@ -42,7 +42,7 @@ export const getBudgetSummary = async ({
       where: {
         expense_date: {
           gte: startDateExpensesBadge,
-          lte: endDateExpensesBadge
+          lt: endDateExpensesBadge
         }
       },
       _sum: {
@@ -168,7 +168,10 @@ export const getBudgetSummary = async ({
     // Calculate global summary
     const totalBudget = budgetCategories.reduce((total, category) => total + category.amount, 0)
     const totalPaid = budgetCategoriesWithCalculations.reduce((total, category) => total + category.paidAmount, 0)
-    const totalPending = totalBudget - totalPaid
+    const totalPending = budgetCategoriesWithCalculations.reduce(
+      (total, category) => total + Math.max(category.budgetAmount - category.paidAmount, 0),
+      0
+    )
 
     const globalSummary = {
       totalBudget,

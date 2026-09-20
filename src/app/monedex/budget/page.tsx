@@ -78,7 +78,7 @@ export default async function BudgetPage(props: {
           <CardContent>
             <div className="text-2xl font-bold text-orange-600">${globalSummary.totalPending.toFixed(2)}</div>
             <p className="text-xs text-muted-foreground">
-              Presupuesto - Pagado
+              Suma de pendientes por categoría
             </p>
           </CardContent>
         </Card>
